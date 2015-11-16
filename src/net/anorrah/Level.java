@@ -8,7 +8,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Level 
 {
-	public int width = 200, height = 200;//match these to the correct width and height of the layout
+	public int width = 100, height = 100;//match these to the correct width and height of the layout
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
@@ -55,13 +55,21 @@ public class Level
 			for(int y = 0; y < bg[0].length; y++)
 			{
 				int tileid = map.getTileId(x, y, background);
-				if(tileid == 0)//look at what the tile editor says
+				if(tileid == 4)//look at what the tile editor says
 				{
-					bg[x][y].id = Tile.back;
+					bg[x][y].id = Tile.whitespace;
 				}
 				else if(tileid == 1)//look at what the tile editor says
 				{
+					bg[x][y].id = Tile.back;
+				}
+				else if(tileid == 2)//look at what the tile editor says
+				{
 					bg[x][y].id = Tile.path;
+				}
+				else if(tileid == 3)//look at what the tile editor says
+				{
+					bg[x][y].id = Tile.grass;
 				}
 			}
 		}

@@ -78,6 +78,7 @@ public class Core extends Applet implements Runnable
 		level = new Level(1);
 		new Tile();
 		initEntities();
+		trackplayer(player,level);
 		running = true;
 		new Thread(this).start();
 	}
@@ -98,6 +99,22 @@ public class Core extends Applet implements Runnable
 	public void remove(Entity entity)
 	{
 		removethese.add(entity);
+	}
+	
+	public void trackplayer(EntityPlayer p, Level l)//confirmed it works
+	{
+		for(int i = 0; i < l.width; i++)
+		{
+			for(int j = 0; j < l.height; j++)
+			{
+				if(l.solid[i][j].x == p.Rx && l.solid[i][j].y == p.Ry)
+				{
+					System.out.println(i + " " + j);
+					p.setTilePosition(i, j);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void tick(double delta)
@@ -136,7 +153,8 @@ public class Core extends Applet implements Runnable
 	public void render()
 	{
 		Graphics g = screen.getGraphics();
-		
+		g.setColor(Color.black);
+		g.drawRect(0, 0, screenSize.width, screenSize.height);
 		level.render(g, (int)offset_X, (int)offset_Y, (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
 		for(int i = 0; i < entities.size(); i++)

@@ -8,7 +8,7 @@ public class EntityPlayer extends Entity
 	public int moveSpeed = 2;
 	public static boolean isMoving = false;
 	
-	private static int Rx,Ry, tX, tY;
+	public static int Rx,Ry, tX, tY;
 	private static int moveDelta = 0;
 	
 	public int anim_frame = 0;
@@ -22,22 +22,27 @@ public class EntityPlayer extends Entity
 	public static int[][] pIMG_DEFAULT = {{0,0}};*/
 	
 	private Core gk;
+	private final int max_Xdistance;
+	private final int max_Ydistance;
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
 		super(Tile.playertile,x,y,width,height);
 		Rx = (int)(x - gk.offset_X);
 		Ry = (int)(y - gk.offset_Y);
+		System.out.println(Rx + " " + Ry);
 		moveSpeed = 2;
 		health = 100;
-		tX = 100;
-		tY = 100;
+		tX = 30;
+		tY = 30;
+		max_Xdistance = gk.level.width;
+		max_Ydistance = gk.level.height;
 	}
 	
 	public boolean canMove(int i, int j)
 	{
-		System.out.println(i + " " + j);
-		if(i < 0 || j < 0 || i >= 200 || j >= 200)
+		
+		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;
 		}

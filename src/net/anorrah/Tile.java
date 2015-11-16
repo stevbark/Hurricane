@@ -12,7 +12,8 @@ public class Tile
 	//background stuff
 	public static int[] back = {0, 0};
 	public static int[] path = {1,0};
-	public static int[] fire = {2,0};
+	public static int[] grass = {2,0};
+	public static int[] whitespace = {3,0};
 	
 	//collide-able/solids
 	public static int[] wall = {0,0};
