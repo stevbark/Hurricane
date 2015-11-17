@@ -9,13 +9,24 @@ public abstract class Entity
 	
 	protected double x,y;
 	protected int width, height, dx,dy;
-	protected int id[];
+	protected int id[] = {0,0};
 	protected int health;
 	protected double moveSpeed;
 	protected Image image;
 	
 	private Rectangle collider;
 	private Rectangle other = new Rectangle();
+	
+	public Entity()
+	{
+		x = 0;
+		y = 0;
+		width = 32;
+		height = 32;
+		moveSpeed = 1;
+		health = 100;
+		collider = new Rectangle((int)x, (int)y, width,height);
+	}
 	
 	public Entity(int[] i, double x, double y, int width, int height)
 	{
@@ -24,7 +35,7 @@ public abstract class Entity
 		this.width = width;
 		this.height = height;
 		id = i;
-		moveSpeed = 1.0;
+		moveSpeed = 1;
 		health = 100;
 		collider = new Rectangle((int)x, (int)y, width,height);
 	}
@@ -43,7 +54,7 @@ public abstract class Entity
 	public void render(Graphics g)
 	{
 		setImage(id);
-		g.drawImage(image,  (int)(x - Core.offset_X), (int)(y - Core.offset_Y), null);
+		g.drawImage(image,  (int)x, (int)y, null);
 	}
 	
 	public boolean collides(Entity entity)

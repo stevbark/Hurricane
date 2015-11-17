@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -29,8 +30,8 @@ public class Core extends Applet implements Runnable
 	public static boolean bW, bS, bA, bD, bE, bESC, bP;
 	
 	private Image screen;
-	public static Dimension screenSize = new Dimension(672,544);
-	public static Dimension pixel = new Dimension(screenSize.width,screenSize.height);
+	public static Dimension VIEWPORT_SIZE = new Dimension(672,544);
+	public static Dimension pixel = new Dimension(VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
 	public static Dimension Size;
 	
 	public static String name = "Prisoner of Anorrah";
@@ -42,14 +43,13 @@ public class Core extends Applet implements Runnable
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
 	public ArrayList<Entity> removethese = new ArrayList<Entity>();
 	
+	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
+	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
 	//Constructor
 	public Core()
 	{
-		//InputManager inpt = new InputManager();
-		setPreferredSize(screenSize);
+		setPreferredSize(VIEWPORT_SIZE);
 		addKeyListener(new InputManager());
-		//addKeyListener(inpt);
-		//addMouseListener(inpt);
 	}
 	
 	public static void main(String[] args) 
@@ -77,8 +77,12 @@ public class Core extends Applet implements Runnable
 		//Class declarations here
 		level = new Level(1);
 		new Tile();
+		
+		offset_MAX_X = level.width - VIEWPORT_SIZE.width;
+		offset_MAX_Y = level.height - VIEWPORT_SIZE.height;
+		
 		initEntities();
-		trackplayer(player,level);
+		//player.setTilePosition(20, 20);
 		running = true;
 		new Thread(this).start();
 	}
@@ -91,30 +95,16 @@ public class Core extends Applet implements Runnable
 	public void initEntities()
 	{
 		player = new EntityPlayer(t, 
-				(screenSize.width / 2) - (Tile.size / 2) + offset_X, 
-				(screenSize.height / 2) - (Tile.size / 2) + offset_Y,Tile.size,Tile.size);
+				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) + offset_X,
+				(VIEWPORT_SIZE.height / 2) - (Tile.size / 2) + offset_Y,
+				Tile.size,
+				Tile.size);
 		entities.add(player);
 	}
 	
 	public void remove(Entity entity)
 	{
 		removethese.add(entity);
-	}
-	
-	public void trackplayer(EntityPlayer p, Level l)//confirmed it works
-	{
-		for(int i = 0; i < l.width; i++)
-		{
-			for(int j = 0; j < l.height; j++)
-			{
-				if(l.solid[i][j].x == p.Rx && l.solid[i][j].y == p.Ry)
-				{
-					System.out.println(i + " " + j);
-					p.setTilePosition(i, j);
-					break;
-				}
-			}
-		}
 	}
 	
 	public void tick(double delta)
@@ -153,23 +143,21 @@ public class Core extends Applet implements Runnable
 	public void render()
 	{
 		Graphics g = screen.getGraphics();
-		g.setColor(Color.black);
-		g.drawRect(0, 0, screenSize.width, screenSize.height);
 		level.render(g, (int)offset_X, (int)offset_Y, (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
+		g.setColor(Color.orange);
+		g.drawString("offset_X: " + (int)offset_X , 590, 510);
+		g.drawString("offset_Y: " + (int)offset_Y , 590, 525);
+		g.drawString("FPS: " + renderFPS, 600, 540);
+		
+		//g.translate(-(player.Rx - VIEWPORT_SIZE.width/2 + Tile.size/2),-(player.Ry - VIEWPORT_SIZE.height/2 + Tile.size/2));
 		for(int i = 0; i < entities.size(); i++)
 		{
-			Entity ent = entities.get(i);
-			ent.render(g);
+			entities.get(i).render(g);
 		}
 		
-		g.setColor(Color.orange);
-		g.drawString("offset_X: " + (int)offset_X , 590, 515);
-		g.drawString("offset_Y: " + (int)offset_Y , 590, 530);
-		g.drawString("FPS: " + renderFPS, 600, 545);
-		
 		g = this.getGraphics();
-		g.drawImage(screen, 0, 0, screenSize.width, screenSize.height, 0, 0, pixel.width, pixel.height, null);
+		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);
 		g.dispose();//reset the image each tick
 	}
 	

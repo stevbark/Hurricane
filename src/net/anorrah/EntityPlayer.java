@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 public class EntityPlayer extends Entity 
 {
-	public int moveSpeed = 2;
+	public int moveSpeed;
 	public static boolean isMoving = false;
 	
 	public static int Rx,Ry, tX, tY;
@@ -24,24 +24,31 @@ public class EntityPlayer extends Entity
 	private Core gk;
 	private final int max_Xdistance;
 	private final int max_Ydistance;
+	private int camx =  0,camy = 0;
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
 		super(Tile.playertile,x,y,width,height);
-		Rx = (int)(x - gk.offset_X);
-		Ry = (int)(y - gk.offset_Y);
-		System.out.println(Rx + " " + Ry);
+		tX = 0;
+		tY = 0;
+		Rx = tX*32;
+		Ry = tY*32;
+		super.x = Rx;
+		super.y = Ry;
+		//Rx = (int)(x - gk.offset_X); //screen width / 2  where it's located on the screen 
+		//Ry = (int)(y - gk.offset_Y);//screen height / 2  should be centered on the camera
+		System.out.println("Render x and y:\t" + Rx + "\t" + Ry);
+		System.out.println("Tile x and y:\t" + tX + "\t" + tY);
 		moveSpeed = 2;
 		health = 100;
-		tX = 30;
-		tY = 30;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
 	}
 	
 	public boolean canMove(int i, int j)
 	{
-		
+		System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		System.out.println("" + super.getX() + " " + super.getY());
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;
@@ -163,6 +170,8 @@ public class EntityPlayer extends Entity
 				gk.bD = false;
 			}
 		}
+		Rx = tX*32;
+		Ry = tY*32;
 	}
 	
 	public void tick(double delta)
@@ -173,7 +182,11 @@ public class EntityPlayer extends Entity
 	@Override
 	public void render(Graphics g)
 	{
-		super.setImage(new int[] {0,0});
+		camx = (Rx - Core.VIEWPORT_SIZE.width/2 + Tile.size/2);
+		camy = (Ry - Core.VIEWPORT_SIZE.height/2 + Tile.size/2);
+		
+		g.translate(-camx,-camy);
+		super.setImage(super.id);
 		g.drawImage(image, Rx, Ry,null);
 		/*if(down)
 		{
@@ -187,50 +200,7 @@ public class EntityPlayer extends Entity
 					pIMG_DOWN[anim_frame][0] * Tile.size + Tile.size, 
 					pIMG_DOWN[anim_frame][1] * Tile.size + Tile.size, null);
 		}
-		else if(up)
-		{
-			g.drawImage(Tile.characters, this.x , 
-					this.y, 
-					this.x + width, 
-					this.y + height, 
-					pIMG_UP[anim_frame][0] * Tile.size, 
-					pIMG_UP[anim_frame][1] * Tile.size, 
-					pIMG_UP[anim_frame][0] * Tile.size + Tile.size, 
-					pIMG_UP[anim_frame][1] * Tile.size + Tile.size, null);
-		}
-		else if(right)
-		{
-			g.drawImage(Tile.characters, this.x , 
-					this.y, 
-					this.x + width, 
-					this.y + height, 
-					pIMG_RIGHT[anim_frame][0] * Tile.size, 
-					pIMG_RIGHT[anim_frame][1] * Tile.size, 
-					pIMG_RIGHT[anim_frame][0] * Tile.size + Tile.size, 
-					pIMG_RIGHT[anim_frame][1] * Tile.size + Tile.size, null);
-		}
-		else if(left)
-		{
-			g.drawImage(Tile.characters, this.x , 
-					this.y, 
-					this.x + width, 
-					this.y + height, 
-					pIMG_LEFT[anim_frame][0] * Tile.size, 
-					pIMG_LEFT[anim_frame][1] * Tile.size, 
-					pIMG_LEFT[anim_frame][0] * Tile.size + Tile.size, 
-					pIMG_LEFT[anim_frame][1] * Tile.size + Tile.size, null);
-		}
-		else
-		{
-			g.drawImage(Tile.characters, this.x , 
-					this.y, 
-					this.x + width, 
-					this.y + height, 
-					pIMG_DEFAULT[0][0] * Tile.size, 
-					pIMG_DEFAULT[0][1] * Tile.size, 
-					pIMG_DEFAULT[0][0] * Tile.size + Tile.size, 
-					pIMG_DEFAULT[0][1] * Tile.size + Tile.size, null);
-		}*/
+		*/
 	}
 
 	public void on_collided(Entity entity) 
@@ -242,5 +212,10 @@ public class EntityPlayer extends Entity
 	{
 		tX = r;
 		tY = c;
+		Rx = tX*32;
+		Ry = tY*32;
+		System.out.println("Updated Tile x and y:\t" + tX + "\t" + tY);
+		System.out.println("Updated Render x and y:\t" + Rx + "\t" + Ry);
+
 	}
 }
