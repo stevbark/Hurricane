@@ -3,9 +3,17 @@
  <tileset firstgid="1" name="background" tilewidth="32" tileheight="32" tilecount="100">
   <image source="../images/tile_test.png" width="320" height="320"/>
  </tileset>
+ <tileset firstgid="101" name="walls" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="../../../wall_tiles.png" width="320" height="320"/>
+ </tileset>
  <layer name="background" width="100" height="100">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3ZS24DIRBFUbfj/a85o0gR5lNAAQ+4g6tEikKXOabbkt+v1+tNUj0kER5a4aEVHlrhoRUeWuGhlcXjQ67hoRUeWuGhFR5a4aEVHlrhoRUeWuGhFR5azfRY/T3nqvDQCg+t8NAKD61O8vgptHqvb/IoWVhabXGKh4eFisuuHt4GKiY7eoy2WOmDh5bnzh4fgX32NtnN4//r283DYoKH33vbYy08fCxqjE72GG3SY9Figsd4j5jJyR6jTLwsYrOf7hEzSa29wuJ2j9L6sy2s96zdPaxnZcV5uNmj9DzJrTXD4gaPv56ET80aM2xO84gZhL9bLJ7IzyeyDh79HpYzkDpjLS41fqd7xM5F632qpb81P4Xr3uZhfT/H/pb7HBCap86P1cNicopH7ryk9iC0CF3CdVP3NDzSz+Nwr0pr5GbIXSf8fzzyHqn5YutZTFLPrF6P8P928kiZWPMwCd8LtR6lM3KTR86kNE/qmY6Hhkfr/Sr2Onb2CF+Lh0etSa8FHn4mKadWi9M8vJ7rrR6pz601s+/u0WtSWneUxW0eVpcWj9I+tlrc4FGyKu2lx97XzHuzh/c+W9//eMw18bo+HuPvR3jgsbtHr8vtHiNNWm08roHHd88rv2ees+Ax9jzhsb6emfCYc0as8+Hhv/exM2KdEQ9fj9QslhljrwkPX5ea2fDQ6jSP3Y1u8NjFJTX3qR7KLrl5T/dQMyxdG495LpZr4qEVHlrhoRUeWql6EB67hYdWeGiFh1Z4aIWHVnhohYdWeGiFh1a9HjQvPLTCQys8tMJDKzy0wkOr1d9z0ne/RjQ7W0CcAAA=
+  </data>
+ </layer>
+ <layer name="solid" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RKxKAMBBEwb0sGs3HobkzGHRiSEZ0V41bsVXvqKqrsb0YZem4WX//gk9PD8bRI4seWfTIokcWPbLokWV7dzd2TvsOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGCeB9Vt8KJAnAAA
   </data>
  </layer>
 </map>

@@ -29,14 +29,12 @@ public class EntityPlayer extends Entity
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
 		super(Tile.playertile,x,y,width,height);
-		tX = 0;
-		tY = 0;
+		tX = 10;
+		tY = 8;
 		Rx = tX*32;
 		Ry = tY*32;
 		super.x = Rx;
 		super.y = Ry;
-		//Rx = (int)(x - gk.offset_X); //screen width / 2  where it's located on the screen 
-		//Ry = (int)(y - gk.offset_Y);//screen height / 2  should be centered on the camera
 		System.out.println("Render x and y:\t" + Rx + "\t" + Ry);
 		System.out.println("Tile x and y:\t" + tX + "\t" + tY);
 		moveSpeed = 2;
@@ -48,7 +46,6 @@ public class EntityPlayer extends Entity
 	public boolean canMove(int i, int j)
 	{
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
-		System.out.println("" + super.getX() + " " + super.getY());
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;
@@ -83,7 +80,7 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				gk.offset_Y -= moveSpeed;
+				//gk.offset_Y -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -107,7 +104,7 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				gk.offset_Y += moveSpeed;
+				//gk.offset_Y += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -131,7 +128,7 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				gk.offset_X -= moveSpeed;
+				//gk.offset_X -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -155,7 +152,7 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				gk.offset_X += moveSpeed;
+				//gk.offset_X += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -185,7 +182,7 @@ public class EntityPlayer extends Entity
 		camx = (Rx - Core.VIEWPORT_SIZE.width/2 + Tile.size/2);
 		camy = (Ry - Core.VIEWPORT_SIZE.height/2 + Tile.size/2);
 		
-		g.translate(-camx,-camy);
+		//g.translate(-camx,-camy);
 		super.setImage(super.id);
 		g.drawImage(image, Rx, Ry,null);
 		/*if(down)

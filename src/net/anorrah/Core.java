@@ -143,7 +143,7 @@ public class Core extends Applet implements Runnable
 	public void render()
 	{
 		Graphics g = screen.getGraphics();
-		level.render(g, (int)offset_X, (int)offset_Y, (pixel.width/Tile.size), (pixel.height/Tile.size));
+		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
 		g.setColor(Color.orange);
 		g.drawString("offset_X: " + (int)offset_X , 590, 510);
