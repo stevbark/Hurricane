@@ -14,7 +14,7 @@ public class EntityPlayer extends Entity
 	public int anim_frame = 0;
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
-	
+	private int[] currentImage;
 	/*public static int[][] pIMG_UP = {{0,1},{1,1},{2,1},{3,1}};
 	public static int[][] pIMG_DOWN = {{0,0},{1,0},{2,0},{3,0}};
 	public static int[][] pIMG_LEFT = {{0,2},{1,2},{2,2},{3,2}};
@@ -28,7 +28,7 @@ public class EntityPlayer extends Entity
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
-		super(Tile.playertile,x,y,width,height);
+		super(Tile.playertile_DOWN,x,y,width,height);
 		tX = 10;
 		tY = 8;
 		Rx = tX*32;
@@ -41,6 +41,7 @@ public class EntityPlayer extends Entity
 		health = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
+		currentImage = super.id;
 	}
 	
 	public boolean canMove(int i, int j)
@@ -77,6 +78,7 @@ public class EntityPlayer extends Entity
 			{
 				isMoving = true;
 				tY -= 1;
+				currentImage = Tile.playertile_UP;
 			}
 			if(isMoving)
 			{
@@ -101,6 +103,7 @@ public class EntityPlayer extends Entity
 			{
 				isMoving = true;
 				tY += 1;
+				currentImage = Tile.playertile_DOWN;
 			}
 			if(isMoving)
 			{
@@ -125,6 +128,7 @@ public class EntityPlayer extends Entity
 			{
 				isMoving = true;
 				tX -= 1;
+				currentImage = Tile.playertile_LEFT;
 			}
 			if(isMoving)
 			{
@@ -149,6 +153,7 @@ public class EntityPlayer extends Entity
 			{
 				isMoving = true;
 				tX += 1;
+				currentImage = Tile.playertile_RIGHT;
 			}
 			if(isMoving)
 			{
@@ -182,8 +187,7 @@ public class EntityPlayer extends Entity
 		camx = (Rx - Core.VIEWPORT_SIZE.width/2 + Tile.size/2);
 		camy = (Ry - Core.VIEWPORT_SIZE.height/2 + Tile.size/2);
 		
-		//g.translate(-camx,-camy);
-		super.setImage(super.id);
+		super.setImage(currentImage);
 		g.drawImage(image, Rx, Ry,null);
 		/*if(down)
 		{
