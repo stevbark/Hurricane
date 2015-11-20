@@ -16,6 +16,7 @@ public class InputManager implements KeyListener, MouseListener
 		switch(key)
 		{
 		case KeyEvent.VK_W:
+		case KeyEvent.VK_UP:
 			if(!Core.player.isMoving)
 			{
 				Core.bW = true;
@@ -23,6 +24,8 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_A:
+		case KeyEvent.VK_LEFT:
+
 			if(!Core.player.isMoving)
 			{
 				Core.bA = true;
@@ -30,13 +33,16 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_S:
+		case KeyEvent.VK_DOWN:
 			if(!Core.player.isMoving)
 			{
 				Core.bS = true;
 			}
 			break;
 			
-		case KeyEvent.VK_D:
+		case KeyEvent.VK_D:	
+		case KeyEvent.VK_RIGHT:
+
 			if(!Core.player.isMoving)
 			{
 				Core.bD = true;
