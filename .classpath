@@ -8,10 +8,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick2D"/>
-	<classpathentry kind="lib" path="C:/Users/ATY/Desktop/UCI/senior/lwjglresources/jar/lwjgl.jar">
+	<classpathentry kind="lib" path="lib/jar/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/ATY/Desktop/UCI/senior/lwjglresources/native"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Zack/Desktop/lwjgl/jar"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/slick"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
