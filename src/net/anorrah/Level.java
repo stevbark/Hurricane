@@ -88,8 +88,8 @@ public class Level
 			bg[width-1][i] = new Background(new Rectangle( (width-1) * Tile.size,i*Tile.size, Tile.size, Tile.size),Tile.floorend);
 		}
 		
-		item[3][3] = new Item(new Rectangle(3*Tile.size, 3*Tile.size, Tile.size, Tile.size),3,3,Tile.item);
-		
+		item[5][5] = new Item(new Rectangle(5*Tile.size, 5*Tile.size, Tile.size, Tile.size),5,5,Tile.item);
+		item[7][7] = new Item(new Rectangle(7*Tile.size, 7*Tile.size, Tile.size, Tile.size),7,7,Tile.item2);
 	}
 	
 	public void loadworld()

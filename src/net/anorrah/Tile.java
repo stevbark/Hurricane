@@ -29,6 +29,7 @@ public class Tile
 	public static int[] corner_tl = {2,2};
 	public static int[] corner_br = {3,2};
 	public static int[] item  = {0,0};
+	public static int[] item2  = {1,1};
 	//items
 	
 	//characters

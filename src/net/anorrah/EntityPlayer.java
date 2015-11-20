@@ -3,6 +3,7 @@ package net.anorrah;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+
 public class EntityPlayer extends Entity 
 {
 	public int moveSpeed;
@@ -48,7 +49,9 @@ public class EntityPlayer extends Entity
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		if(gk.level.item[i][j].id != Tile.blank)
 		{
-			System.out.println("item");
+			gk.level.item[i][j].generateItem();
+			String str =gk.level.item[i][j].itemDescription();
+			System.out.println(str);
 			gk.level.item[i][j].id = Tile.blank;
 			return false;
 		}

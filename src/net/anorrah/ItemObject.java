@@ -1,14 +1,14 @@
 package net.anorrah;
 
-public class ItemObject {
+public abstract class ItemObject {
 	
+	private String itemDescription;
+
 	public ItemObject()
 	{
 		
 	}
 	
-	public void use()
-	{
-		
-	}
+	public abstract String description();
+	
 }
