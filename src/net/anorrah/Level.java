@@ -87,6 +87,9 @@ public class Level
 			bg[0][i] = new Background(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),Tile.floorend);
 			bg[width-1][i] = new Background(new Rectangle( (width-1) * Tile.size,i*Tile.size, Tile.size, Tile.size),Tile.floorend);
 		}
+		
+		item[3][3] = new Item(new Rectangle(3*Tile.size, 3*Tile.size, Tile.size, Tile.size),3,3,Tile.item);
+		
 	}
 	
 	public void loadworld()
@@ -178,6 +181,10 @@ public class Level
 					if(solid[x][y].id[0] != -1)
 					{
 						solid[x][y].render(g);
+					}
+					if(item[x][y].id[0] != -1)
+					{
+						item[x][y].render(g);
 					}
 				}
 			}

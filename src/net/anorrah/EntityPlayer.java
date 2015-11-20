@@ -46,6 +46,12 @@ public class EntityPlayer extends Entity
 	public boolean canMove(int i, int j)
 	{
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		if(gk.level.item[i][j].id != Tile.blank)
+		{
+			System.out.println("item");
+			gk.level.item[i][j].id = Tile.blank;
+			return false;
+		}
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;

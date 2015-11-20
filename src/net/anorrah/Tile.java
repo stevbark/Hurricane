@@ -28,7 +28,7 @@ public class Tile
 	public static int[] corner_tr = {1,2};
 	public static int[] corner_tl = {2,2};
 	public static int[] corner_br = {3,2};
-	
+	public static int[] item  = {0,0};
 	//items
 	
 	//characters
@@ -43,7 +43,7 @@ public class Tile
 		{
 			Tile.background = ImageIO.read(new File("res/images/floor_tiles.png"));
 			Tile.solid = ImageIO.read(new File("res/images/wall_tiles.png"));
-			//Tile.items = ImageIO.read(new File("res/images/__.png"));
+			Tile.items = ImageIO.read(new File("res/images/chests_32x32.png"));
 			Tile.characters = ImageIO.read(new File("res/images/character_test.png"));
 		}
 		catch(Exception e)
