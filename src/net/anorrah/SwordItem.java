@@ -1,12 +1,12 @@
 package net.anorrah;
 
-public class SwordItem extends ItemObject {
+public class SwordItem extends MeleeWeaponItem {
 
 	double damage;
 	String str;
-	public SwordItem(String r)
+	public SwordItem(String r, int currentLevel)
 	{
-		super();
+		super(currentLevel);
 		damage = 5;
 		str = r;
 	}
@@ -19,7 +19,7 @@ public class SwordItem extends ItemObject {
 	@Override
 	public String description() {
 		
-		return "stabby stabby stab! " + str;
+		return "stabby stabby stab! " + bonus;
 	}
 	
 	

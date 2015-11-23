@@ -49,7 +49,7 @@ public class EntityPlayer extends Entity
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		if(gk.level.item[i][j].id != Tile.blank)
 		{
-			gk.level.item[i][j].generateItem();
+			gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
 			System.out.println(str);
 			gk.level.item[i][j].id = Tile.blank;
