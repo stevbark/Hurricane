@@ -146,6 +146,8 @@ public class Level
 			
 		}
 		
+		item[5][5] = new Item(new Rectangle(5*Tile.size, 5*Tile.size, Tile.size, Tile.size),5,5,Tile.item);
+		item[7][7] = new Item(new Rectangle(7*Tile.size, 7*Tile.size, Tile.size, Tile.size),7,7,Tile.item2);
 		solid[0][0] = new Solid(new Rectangle(0, 0, Tile.size, Tile.size),0,0,Tile.corner_tl);
 		solid[width-1][0] = new Solid(new Rectangle((width-1)*Tile.size, 0, Tile.size, Tile.size),width-1,0,Tile.corner_tr);
 		solid[0][height-1]= new Solid(new Rectangle(0, (height-1)*Tile.size, Tile.size, Tile.size),0,height-1,Tile.corner_bl);
@@ -221,6 +223,10 @@ public class Level
 					if(solid[x][y].id[0] != -1)
 					{
 						solid[x][y].render(g);
+					}
+					if(item[x][y].id[0] != -1)
+					{
+						item[x][y].render(g);
 					}
 				}
 			}

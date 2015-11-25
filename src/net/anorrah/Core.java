@@ -9,7 +9,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-
+// head 17 width 21
 public class Core extends Applet implements Runnable 
 {
 	private static final long serialVersionUID = 1L;

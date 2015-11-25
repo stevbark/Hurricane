@@ -3,6 +3,7 @@ package net.anorrah;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+
 public class EntityPlayer extends Entity 
 {
 	public int moveSpeed;
@@ -47,6 +48,14 @@ public class EntityPlayer extends Entity
 	public boolean canMove(int i, int j)
 	{
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		if(gk.level.item[i][j].id != Tile.blank)
+		{
+			gk.level.item[i][j].generateItem(0);
+			String str =gk.level.item[i][j].itemDescription();
+			System.out.println(str);
+			gk.level.item[i][j].id = Tile.blank;
+			return false;
+		}
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;
