@@ -60,7 +60,6 @@ public abstract class ItemObject {
 				{
 					if(currentLevel -2 >0)
 					{	
-						System.out.println("caught");
 						return currentLevel -2;
 					}
 					else
@@ -73,9 +72,8 @@ public abstract class ItemObject {
 			
 	}
 	
-	public abstract void use();
 	
-	public abstract void generateBonus();
+	
 	
 	public Object generateEnchantment()
 	{

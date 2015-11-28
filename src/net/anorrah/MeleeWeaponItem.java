@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class MeleeWeaponItem extends ItemObject{
 
+	double damage;
 	
 	
 	public MeleeWeaponItem(int levelBonus)
@@ -18,15 +19,10 @@ public abstract class MeleeWeaponItem extends ItemObject{
 		return null;
 	}
 
-	@Override
-	public void use() {
-		// TODO Auto-generated method stub
-		
+	public double attack()
+	{
+		return damage;
 	}
 
-	@Override
-	public void generateBonus() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

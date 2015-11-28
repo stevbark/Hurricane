@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class ArmorItem extends ItemObject {
 
+	double defence;
+	
 	public ArmorItem(int currentLevel) {
 		super(currentLevel);
 		possibleEnchantments = new ArrayList<Object>();
@@ -16,17 +18,10 @@ public class ArmorItem extends ItemObject {
 		return null;
 	}
 
-	@Override
-	public void use() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
-	@Override
-	public void generateBonus() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 	
 	
 
