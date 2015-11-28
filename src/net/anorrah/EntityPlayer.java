@@ -28,6 +28,7 @@ public class EntityPlayer extends Entity
 	private int camx =  0,camy = 0;
 	
 	private MeleeWeaponItem equippedWeapon;
+	private ArmorItem equippedArmor;
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
@@ -45,6 +46,8 @@ public class EntityPlayer extends Entity
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
 		equippedWeapon = new SwordItem("stab",0);
+		equippedArmor = new ArmorItem(0);
+		this.gk = gk;
 	}
 	
 	public boolean canMove(int i, int j)
@@ -103,6 +106,7 @@ public class EntityPlayer extends Entity
 					moveDelta = 0;
 					anim_frame = 0;
 				}
+				gk.doATurn();
 			}
 			else
 			{
@@ -183,6 +187,7 @@ public class EntityPlayer extends Entity
 		}
 		Rx = tX*32;
 		Ry = tY*32;
+	    
 	}
 	
 	public void attack()
@@ -223,6 +228,11 @@ public class EntityPlayer extends Entity
 	public void on_collided(Entity entity) 
 	{
 		
+	}
+	
+	public void onHit(enemyEntities enemy)
+	{
+		equippedArmor.effect(enemy);
 	}
 	
 	public void setTilePosition(int r, int c)//row and column
