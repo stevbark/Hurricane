@@ -8,6 +8,7 @@ public abstract class enemyEntities extends Entity {
 	protected final int max_Xdistance;
 	protected final int max_Ydistance;
 	
+	double hp;
 	
 	public enemyEntities(Core gk, double x, double y, int width, int height)
 	{
@@ -56,6 +57,11 @@ public abstract class enemyEntities extends Entity {
 			return true;
 		}
 		return false;
+	}
+	
+	public void takeDamage(damageObject damage)
+	{
+		health -= damage.damage;
 	}
 
 	

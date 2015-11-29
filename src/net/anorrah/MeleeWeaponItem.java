@@ -19,9 +19,9 @@ public abstract class MeleeWeaponItem extends ItemObject{
 		return null;
 	}
 
-	public double attack()
+	public damageObject attack()
 	{
-		return damage;
+		return new damageObject(damage, null);
 	}
 
 	

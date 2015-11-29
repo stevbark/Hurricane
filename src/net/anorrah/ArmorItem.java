@@ -18,11 +18,12 @@ public class ArmorItem extends ItemObject {
 		return null;
 	}
 	
-	public void effect(enemyEntities enemy)
+	public void effect(enemyEntities enemy,damageObject damage)
 	{
-		System.out.println("hit");
-		knockback x = new knockback();
-		x.effect(enemy);
+		
+		TeleportBonus x = new TeleportBonus();
+		x.effect(enemy,damage);
+		System.out.println("hit for " + damage.damage + " damage");
 	}
 
 	

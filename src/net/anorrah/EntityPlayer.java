@@ -230,9 +230,9 @@ public class EntityPlayer extends Entity
 		
 	}
 	
-	public void onHit(enemyEntities enemy)
+	public void onHit(enemyEntities enemy, damageObject damage)
 	{
-		equippedArmor.effect(enemy);
+		equippedArmor.effect(enemy,damage);
 	}
 	
 	public void setTilePosition(int r, int c)//row and column

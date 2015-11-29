@@ -51,7 +51,9 @@ public class tempEnemy extends enemyEntities{
 	
 	public void attack()
 	{
-		gk.player.onHit(this);
+		damageObject damage = new damageObject(10, damageObject.Type.physical);
+		
+		gk.player.onHit(this,damage);
 		
 		
 	}
