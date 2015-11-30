@@ -2,25 +2,26 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Stack;
 //import org.newdawn.slick.SlickException;
 //import org.newdawn.slick.tiled.TiledMap;
 import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Level 
 {
-	public static int width = 21, height = 17, num_level = 1;//match these to the correct width and height of the layout
+	public static int width = 21, height = 17, num_level = 1, center_w = 11, center_h = 9;
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
 	public Item[][] item = new Item[width][height];
 	
-	private TreeMap<Integer,Set<Integer>> rooms;//contains all rooms in a single level
+	private TreeMap<Integer,Room> rooms;//contains all rooms in a single level
 	private int minRooms = 4, maxRooms = 7, delta = 5;
 	
 	public Level()
 	{	
+		rooms = new TreeMap<Integer,Room>();
 		for(int x = 0; x < bg.length; x++)//generate general background layer to render
 		{
 			for(int y = 0; y < bg[0].length; y++)
@@ -58,7 +59,7 @@ public class Level
 			}
 		}
 		setedge();
-		generateRooms();
+		//generateRooms();
 	}
 	
 	private void setedge()//turns surrounding edges into black tiles and places set
@@ -69,38 +70,24 @@ public class Level
 			bg[i][height-1] = new Background(new Rectangle(i * Tile.size, (height-1) * Tile.size, Tile.size, Tile.size),Tile.floorend);
 			int rand = (int)(Math.random() * 4 + 1);
 			if(rand == 1)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top1);
-			}
 			else if(rand == 2)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top2);
-			}
 			else if(rand == 3)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top3);
-			}
 			else
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top4);
-			}
+			
 			rand = (int)(Math.random()*4+1);
+			
 			if(rand == 1)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom1);
-			}
 			else if(rand == 2)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom3);
-			}
 			else if(rand == 3)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom2);
-			}
 			else
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom4);
-			}
 		}
 		for(int i = 0; i < height; i++)//along the top edge and bottom edge
 		{
@@ -109,39 +96,23 @@ public class Level
 			
 			int rand = (int)(Math.random() * 4 + 1);
 			if(rand == 1)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left1);
-			}
 			else if(rand == 2)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left2);
-			}
 			else if(rand == 3)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left3);
-			}
 			else
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left4);
-			}
 			
 			rand = (int)(Math.random() * 4 + 1);
 			if(rand == 1)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right1);
-			}
 			else if(rand == 2)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right2);
-			}
 			else if(rand == 3)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right3);
-			}
 			else
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right4);
-			}
 			
 		}
 		
@@ -155,23 +126,124 @@ public class Level
 	
 	public void generateRooms()
 	{
-		rooms = new TreeMap<Integer,Set<Integer>>();
 		int num_rooms = (int)(Math.random()*maxRooms + minRooms);//populate the map full of rooms
 		for(int i = 1; i <= num_rooms; i++)
 		{
-			rooms.put(i, new HashSet<Integer>());
+			rooms.put(i, new Room(num_level, i));
 		}
-		bridgeRooms();
+		bridgeConnections();
+		showRooms();
 	}
 	
-	private void bridgeRooms()//assign rooms to other rooms
+	private void bridgeConnections()//assign rooms to other rooms
 	{
-		int exit_room = rooms.size();
-		int other_room = 2;
-		int r = (int)(Math.random()*(exit_room-1) + other_room);//initial value for the first room
+		Stack<Integer> chosen = new Stack<Integer>();//used to store numbers that have been chosen, helps to tell us the remaining numbers that need to be chosen
+		LinkedBlockingQueue<RoomNumbertoDirectionPair> queued = new LinkedBlockingQueue<RoomNumbertoDirectionPair>();//represents numbers that need to be "processed"
 		
-		rooms.get(1).add(r);//add three rooms
-		other_room++;
+		int num_connections = 0, max_connections = rooms.size()-1;//number of connections between rooms, max is rooms.size()-1
+		int prevlocation = -1;
+		
+		firstroom(2);//1 and 2 are bridged
+		num_connections++;
+		prevlocation = 1;//1 = left, 2 = right, 3 = up, 4 = down
+		queued.add(new RoomNumbertoDirectionPair(2,prevlocation));//2nd room is next to be processed
+		chosen.push(2);
+		
+		while(chosen.size() != rooms.size())
+		{	
+			int currentroom = queued.peek().room_number;
+			int sum = 0;
+			
+			//find out which directions we want; some, all, or none
+			if(prevlocation != 2 && coinflip())//left //if the previous location was from the right, we shouldn't go left
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				leftandright(currentroom,chosen.peek());
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),1));
+			}
+			if(prevlocation != 1 && coinflip())//right
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				leftandright(chosen.peek(),currentroom);
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),2));
+			}
+			if(prevlocation != 4 && coinflip())//up
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				upanddown(currentroom, chosen.peek());
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),3));
+			}
+			if(prevlocation != 3 && coinflip())//down
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				upanddown(chosen.peek(),currentroom);
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),4));
+			}
+			if(sum == 0)//none picked, at most 3
+			{
+				//need to decide if we are to leave it as a "leaf"
+				//check (num_connections/max_connections)
+			}
+			queued.remove();//dequeue
+		}
+	}
+	
+	private void firstroom(int r)
+	{		
+		//left -> right -> up -> down 
+		if(coinflip())//else if's used for four actual coin flips		
+		{
+			leftandright(1,r);
+			return;
+		}
+		else if(coinflip())
+		{
+			leftandright(r,1);
+			return;
+		}
+		else if(coinflip())
+		{
+			upanddown(1,r);
+			return;
+		}
+		else if(coinflip())
+		{
+			upanddown(r,1);
+			return;
+		}
+		//in the rare case that all four flips fail
+		leftandright(1,r);
+	}
+	
+	public void showRooms()//debug purposes
+	{
+		//System.out.println("Player is currently at: "+EntityPlayer.player_room_num);
+		for(int i = 1; i <= rooms.size(); i++)
+		{
+			Room r = rooms.get(i);
+			System.out.println(i+"\t: left{"+ r.left+"}\tright{" + r.right + "}\tup{" + r.up +"}\tdown{"+ r.down +"}");
+		}
+	}
+	
+	private void leftandright(int left, int right)
+	{
+		rooms.get(left).right = right;
+		rooms.get(right).left = left;
+	}
+	
+	private void upanddown(int top, int bottom)
+	{
+		rooms.get(top).up = bottom;
+		rooms.get(bottom).down = top;
+	}
+	
+	private boolean coinflip()
+	{
+		return (Math.random() > 0.5);
 	}
 	
 	public void ExitReached()
@@ -217,6 +289,17 @@ public class Level
 					}
 				}
 			}
+		}
+	}
+	
+	private class RoomNumbertoDirectionPair
+	{
+		public int room_number;
+		public int direction;
+		public RoomNumbertoDirectionPair(int room_number, int direction)
+		{
+			this.room_number = room_number;
+			this.direction = direction;
 		}
 	}
 }

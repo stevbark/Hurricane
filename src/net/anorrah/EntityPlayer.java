@@ -13,6 +13,8 @@ public class EntityPlayer extends Entity
 	public static int Rx,Ry, tX, tY;
 	private static int moveDelta = 0;
 	
+	public static int player_room_num = 1;
+	
 	public int anim_frame = 0;
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
