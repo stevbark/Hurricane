@@ -2,27 +2,26 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
+import java.util.HashSet;
+import java.util.Set;
+//import org.newdawn.slick.SlickException;
+//import org.newdawn.slick.tiled.TiledMap;
+import java.util.TreeMap;
 
 public class Level 
 {
-	public int width = 21, height = 17;//match these to the correct width and height of the layout
+	public static int width = 21, height = 17, num_level = 1;//match these to the correct width and height of the layout
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
 	public Item[][] item = new Item[width][height];
 	
-	public final String dpath = "res/maps/testworld";
+	private TreeMap<Integer,Set<Integer>> rooms;//contains all rooms in a single level
+	private int minRooms = 4, maxRooms = 7, delta = 5;
 	
-	public String path = dpath;
-	
-	public TiledMap map = null;
-	
-	public Level(int id)
+	public Level()
 	{	
-		for(int x = 0; x < bg.length; x++)
+		for(int x = 0; x < bg.length; x++)//generate general background layer to render
 		{
 			for(int y = 0; y < bg[0].length; y++)
 			{
@@ -58,11 +57,11 @@ public class Level
 				item[x][y] = new Item(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
 			}
 		}
-		setedge(Tile.floorend);
-		//loadworld();
+		setedge();
+		generateRooms();
 	}
 	
-	public void setedge(int[] id)
+	private void setedge()//turns surrounding edges into black tiles and places set
 	{
 		for(int i = 0; i < width; i++)//along the top edge and bottom edge
 		{
@@ -154,58 +153,46 @@ public class Level
 		solid[width-1][height-1]= new Solid(new Rectangle((width-1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),width-1,height-1,Tile.corner_br);
 	}
 	
-	public void loadworld()
+	public void generateRooms()
 	{
-		int solids = map.getLayerIndex("solid");
-		
-		for(int x = 0; x < bg.length; x++)
+		rooms = new TreeMap<Integer,Set<Integer>>();
+		int num_rooms = (int)(Math.random()*maxRooms + minRooms);//populate the map full of rooms
+		for(int i = 1; i <= num_rooms; i++)
 		{
-			for(int y = 0; y < bg[0].length; y++)
-			{	
-				int tileid = map.getTileId(x,y,solids);
-				if(tileid == 122)
-				{
-					//tr
-					solid[x][y].id = Tile.corner_tr;
-				}
-				else if(tileid == 123)
-				{
-					//tl
-					solid[x][y].id = Tile.corner_tl;
-				}
-				else if(tileid == 121)
-				{
-					//bl
-					solid[x][y].id = Tile.corner_bl;
-				}
-				else if(tileid == 124)
-				{
-					//br
-					solid[x][y].id = Tile.corner_br;
-				}
-				else if(tileid == 101)
-				{
-					//left edge
-					solid[x][y].id = Tile.wall_left1;
-				}
-				else if(tileid == 111)
-				{
-					//left edge
-					solid[x][y].id = Tile.wall_right1;
-				}
-				else if(tileid == 131)
-				{
-					//top edge
-					solid[x][y].id = Tile.wall_top1;
-				}
-				else if(tileid == 141)
-				{
-					//bot edge
-					solid[x][y].id = Tile.wall_bottom1;
-				}
-			}
+			rooms.put(i, new HashSet<Integer>());
 		}
+		bridgeRooms();
 	}
+	
+	private void bridgeRooms()//assign rooms to other rooms
+	{
+		int exit_room = rooms.size();
+		int other_room = 2;
+		int r = (int)(Math.random()*(exit_room-1) + other_room);//initial value for the first room
+		
+		rooms.get(1).add(r);//add three rooms
+		other_room++;
+	}
+	
+	public void ExitReached()
+	{
+		rooms.clear();//level is cleared and next level is to load
+		num_level++;
+		
+		//change the min and max number of rooms if appropriate
+		minRooms++;
+		if(minRooms >= maxRooms)
+		{
+			minRooms = maxRooms;//cap off the min to max 
+		}
+		if(num_level % delta == 0)//every x levels change the min and max rooms
+		{
+			minRooms += 2;
+			maxRooms += minRooms;
+		}
+		generateRooms();
+	}
+	
 	public void tick(double delta)
 	{
 		

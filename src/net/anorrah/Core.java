@@ -76,7 +76,7 @@ public class Core extends Applet implements Runnable
 		requestFocus();
 		
 		//Class declarations here
-		level = new Level(1);
+		level = new Level();
 		new Tile();
 		
 		offset_MAX_X = level.width - VIEWPORT_SIZE.width;

@@ -39,8 +39,6 @@ public class EntityPlayer extends Entity
 		Ry = tY*32;
 		super.x = Rx;
 		super.y = Ry;
-		System.out.println("Render x and y:\t" + Rx + "\t" + Ry);
-		System.out.println("Tile x and y:\t" + tX + "\t" + tY);
 		moveSpeed = 2;
 		health = 100;
 		max_Xdistance = gk.level.width;
@@ -53,7 +51,7 @@ public class EntityPlayer extends Entity
 	
 	public boolean canMove(int i, int j)
 	{
-		System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
 			return false;

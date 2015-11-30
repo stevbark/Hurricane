@@ -12,7 +12,7 @@ public abstract class enemyEntities extends Entity {
 	
 	public enemyEntities(Core gk, double x, double y, int width, int height)
 	{
-		super(Tile.playertile,x,y,width,height);
+		super(Tile.playertile_DOWN,x,y,width,height);
 		tX = 10;
 		tY = 6;
 		max_Xdistance = gk.level.width;
