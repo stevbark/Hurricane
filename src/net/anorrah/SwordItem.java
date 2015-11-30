@@ -7,7 +7,7 @@ public class SwordItem extends MeleeWeaponItem {
 	public SwordItem(String r, int currentLevel)
 	{
 		super(currentLevel);
-		damage = 10+bonus;
+		damage = 10+enchantment;
 		str = r;
 	}
 
@@ -16,7 +16,7 @@ public class SwordItem extends MeleeWeaponItem {
 	@Override
 	public String description() {
 		
-		return "stabby stabby stab! " + bonus;
+		return "stabby stabby stab! " + enchantment;
 	}
 	
 	

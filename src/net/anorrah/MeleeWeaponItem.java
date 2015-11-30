@@ -10,7 +10,7 @@ public abstract class MeleeWeaponItem extends ItemObject{
 	public MeleeWeaponItem(int levelBonus)
 	{
 		super(levelBonus);
-		possibleEnchantments = new ArrayList<Object>();
+		possibleBonuses = new ArrayList<bonus>();
 	}
 
 	@Override
