@@ -27,6 +27,9 @@ public class EntityPlayer extends Entity
 	private final int max_Ydistance;
 	private int camx =  0,camy = 0;
 	
+	private MeleeWeaponItem equippedWeapon;
+	private ArmorItem equippedArmor;
+	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
 		super(Tile.playertile_DOWN,x,y,width,height);
@@ -42,24 +45,29 @@ public class EntityPlayer extends Entity
 		health = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
+		equippedWeapon = new SwordItem("stab",0);
+		equippedArmor = new ArmorItem(0);
+		this.gk = gk;
 		currentImage = super.id;
 	}
 	
 	public boolean canMove(int i, int j)
 	{
 		System.out.println("\nCurrently at:\t" + tX + " " + tY);
-		if(gk.level.item[i][j].id != Tile.blank)
+		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
-			gk.level.item[i][j].generateItem(0);
+			return false;
+		}
+		else if(gk.level.item[i][j].id != Tile.blank)
+		{
+			
+			equippedWeapon = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
 			System.out.println(str);
 			gk.level.item[i][j].id = Tile.blank;
 			return false;
 		}
-		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
-		{
-			return false;
-		}
+		
 		else if(gk.level.solid[i][j].id == Tile.blank)
 		{
 			return true;
@@ -100,6 +108,7 @@ public class EntityPlayer extends Entity
 					moveDelta = 0;
 					anim_frame = 0;
 				}
+				gk.doATurn();
 			}
 			else
 			{
@@ -183,6 +192,13 @@ public class EntityPlayer extends Entity
 		}
 		Rx = tX*32;
 		Ry = tY*32;
+	    
+	}
+	
+	public void attack()
+	{
+		System.out.println("smacked!" + tX+" " +tY);
+		equippedWeapon.attack();
 	}
 	
 	public void tick(double delta)
@@ -216,6 +232,11 @@ public class EntityPlayer extends Entity
 	public void on_collided(Entity entity) 
 	{
 		
+	}
+	
+	public void onHit(enemyEntities enemy, damageObject damage)
+	{
+		equippedArmor.effect(enemy,damage);
 	}
 	
 	public void setTilePosition(int r, int c)//row and column

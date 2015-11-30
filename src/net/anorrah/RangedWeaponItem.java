@@ -3,6 +3,8 @@ package net.anorrah;
 import java.util.ArrayList;
 
 public class RangedWeaponItem extends ItemObject{
+	
+	double damage;
 
 	public RangedWeaponItem(int levelBonus)
 	{
@@ -16,16 +18,9 @@ public class RangedWeaponItem extends ItemObject{
 		return null;
 	}
 
-	@Override
-	public void use() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void generateBonus() {
-		// TODO Auto-generated method stub
-		
+	public double attack()
+	{
+		return damage;
 	}
 	
 	

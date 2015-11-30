@@ -29,7 +29,7 @@ public class Item extends Rectangle
 				id[1] * Tile.size + Tile.size, null);
 	}
 	
-	public void generateItem (int currentLevel)
+	public ItemObject generateItem (int currentLevel)
 	{
 		int randomItemSeed = ((int) (Math.random()*100))%5;
 		switch(randomItemSeed)
@@ -52,6 +52,7 @@ public class Item extends Rectangle
 			break; 
 		}
 		
+		return itemObject;
 		
 	}
 	
