@@ -175,8 +175,12 @@ public class Core extends Applet implements Runnable
 	public void doATurn()
 	{
 		
-			enemyEntities otherobj = TempEnemy;
+		for(int j = 0; j < entities.size(); j++)
+		{
+			Entity otherobj = entities.get(j);
+			
 			otherobj.takeTurn();
+		}
 		
 	}
 	

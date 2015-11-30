@@ -11,6 +11,7 @@ public abstract class Entity
 	protected int width, height, dx,dy;
 	protected int id[] = {0,0};
 	protected int health;
+	protected int maxHealth;
 	protected double moveSpeed;
 	protected Image image;
 	
@@ -89,4 +90,9 @@ public abstract class Entity
 	}
 	
 	public abstract void on_collided(Entity entity);
+	
+	public void takeTurn()
+	{
+		
+	}
 }

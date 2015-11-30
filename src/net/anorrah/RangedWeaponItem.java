@@ -9,7 +9,7 @@ public class RangedWeaponItem extends ItemObject{
 	public RangedWeaponItem(int levelBonus)
 	{
 		super(levelBonus);
-		possibleEnchantments = new ArrayList<Object>();
+		possibleBonuses = new ArrayList<bonus>();
 	}
 
 	@Override

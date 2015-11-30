@@ -1,8 +1,8 @@
 package net.anorrah;
 
-public class venganceBonus extends bonuses {
+public class venganceBonus extends bonus {
 	
-	public void effect(enemyEntities enemy, damageObject damage)
+	public void onBeenHit(enemyEntities enemy, damageObject damage)
 	{
 		int doIReflect = ((int) (Math.random()*100))%2;
 		{

@@ -7,12 +7,14 @@ import java.util.Random;
 public abstract class ItemObject {
 	
 	private String itemDescription;
-	protected int bonus;
-	protected ArrayList<Object> possibleEnchantments;
+	protected int enchantment;
+	protected ArrayList<bonus> possibleBonuses;
+	protected  ArrayList<bonus> myBonus; 
+	protected int charges;
 	
 	public ItemObject(int currentLevel)
 	{
-		bonus = generateBonus(currentLevel); 	
+		enchantment = generateBonus(currentLevel); 	
 	}
 	
 	public abstract String description();
@@ -79,15 +81,55 @@ public abstract class ItemObject {
 	{
 		 if( ((int) (Math.random()*100)) <20)
 		 {
-			 if(possibleEnchantments.size()>0)
+			 if(possibleBonuses.size()>0)
 			 {
-				 int idx = new Random().nextInt(possibleEnchantments.size());
-				 Object random = (possibleEnchantments.get(idx));
-				 return random;
+				 int idx = new Random().nextInt(possibleBonuses.size());
+				 myBonus.add(possibleBonuses.get(idx));
+				 
 			 }
 		 }
 		 return null;
 	}
 	
+	public void onEquip()
+	{
+		if(myBonus !=null)
+		{
+			for(bonus b:myBonus)
+			{
+				b.onEquipped();
+				Core.player.addToList(b);
+			}
+		}
+	}
+	
+	public void onUnequip()
+	{
+		if(myBonus !=null)
+		{
+			for(bonus b:myBonus)
+			{
+				Core.player.removeFromList(b);
+				b.onUnequipped();
+			}
+		}
+	}
+	
+	public void onUseOnSelf()
+	{
+		if(myBonus!=null){
+			
+			for(bonus b:myBonus)
+			{	
+				b.onUseOnSelf();				
+			}
+			charges--;
+			if(charges <=0)
+			{
+				assert(Core.player.getUsableItem() == this);
+				Core.player.setUsableItem(null);
+			}
+		}
+	}
 	
 }

@@ -1,8 +1,8 @@
 package net.anorrah;
 
-public class DuelingBonus extends bonuses{
+public class DuelingBonus extends bonus{
 	
-	public void effect(enemyEntities enemy, damageObject damage)
+	public void onBeenHit(enemyEntities enemy, damageObject damage)
 	{
 		int vectorX = enemy.tX-Core.player.tX;
 		int vectorY = enemy.tY-Core.player.tY ;
