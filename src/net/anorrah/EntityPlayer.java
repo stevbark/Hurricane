@@ -113,11 +113,10 @@ public class EntityPlayer extends Entity
 		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
-			return false;
+			return true;
 		}
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
-			
 			equippedWeapon = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
 			System.out.println(str);

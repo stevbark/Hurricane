@@ -145,7 +145,7 @@ public class Core extends Applet implements Runnable
 				}
 			}
 		}
-		
+		level.tick();
 		entities.remove(removethese);
 		removethese.clear();
 	}

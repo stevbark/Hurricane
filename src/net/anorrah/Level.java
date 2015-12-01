@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Level 
 {
-	public static int width = 21, height = 17, num_level = 1, center_w = 11, center_h = 9;
+	public static int width = 21, height = 17, num_level = 1, center_w = 10, center_h = 8;
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
@@ -18,10 +18,19 @@ public class Level
 	
 	private TreeMap<Integer,Room> rooms;//contains all rooms in a single level
 	private int minRooms = 4, maxRooms = 7, delta = 5;
+	public int playerlocation = 1;
+	private boolean left = false, right = false, up = false, down = false;
+	private int nextleft = -1, nextright = -1, nexttop = -1, nextbottom = -1;
 	
 	public Level()
 	{	
 		rooms = new TreeMap<Integer,Room>();
+		setbackgroundtiles();
+		setedge();
+		generateRooms();
+	}
+	private void setbackgroundtiles()
+	{
 		for(int x = 0; x < bg.length; x++)//generate general background layer to render
 		{
 			for(int y = 0; y < bg[0].length; y++)
@@ -58,8 +67,7 @@ public class Level
 				item[x][y] = new Item(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
 			}
 		}
-		setedge();
-		//generateRooms();
+		
 	}
 	
 	private void setedge()//turns surrounding edges into black tiles and places set
@@ -105,6 +113,7 @@ public class Level
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left4);
 			
 			rand = (int)(Math.random() * 4 + 1);
+			
 			if(rand == 1)
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right1);
 			else if(rand == 2)
@@ -126,13 +135,15 @@ public class Level
 	
 	public void generateRooms()
 	{
-		int num_rooms = (int)(Math.random()*maxRooms + minRooms);//populate the map full of rooms
+		int num_rooms = (int)(Math.random()*((maxRooms - minRooms)+1)+minRooms);//populate the map full of rooms
+		System.out.println("Total # of Rooms: "+num_rooms);
 		for(int i = 1; i <= num_rooms; i++)
 		{
 			rooms.put(i, new Room(num_level, i));
 		}
 		bridgeConnections();
 		showRooms();
+		loadroom();
 	}
 	
 	private void bridgeConnections()//assign rooms to other rooms
@@ -140,83 +151,133 @@ public class Level
 		Stack<Integer> chosen = new Stack<Integer>();//used to store numbers that have been chosen, helps to tell us the remaining numbers that need to be chosen
 		LinkedBlockingQueue<RoomNumbertoDirectionPair> queued = new LinkedBlockingQueue<RoomNumbertoDirectionPair>();//represents numbers that need to be "processed"
 		
-		int num_connections = 0, max_connections = rooms.size()-1;//number of connections between rooms, max is rooms.size()-1
+		//int num_connections = 0, max_connections = rooms.size()-1;//number of connections between rooms, max is rooms.size()-1
 		int prevlocation = -1;
 		
-		firstroom(2);//1 and 2 are bridged
-		num_connections++;
-		prevlocation = 1;//1 = left, 2 = right, 3 = up, 4 = down
+		prevlocation = firstroom(2);//1 = left, 2 = right, 3 = up, 4 = down //1 and 2 are bridged
+		//num_connections++;
 		queued.add(new RoomNumbertoDirectionPair(2,prevlocation));//2nd room is next to be processed
 		chosen.push(2);
 		
-		while(chosen.size() != rooms.size())
+		while(queued.peek().room_number != rooms.size() && chosen.peek() != rooms.size())
 		{	
 			int currentroom = queued.peek().room_number;
+			prevlocation = queued.peek().direction;
 			int sum = 0;
-			
 			//find out which directions we want; some, all, or none
-			if(prevlocation != 2 && coinflip())//left //if the previous location was from the right, we shouldn't go left
+			if(prevlocation != 2 && coinflip() && chosen.peek() != rooms.size())//left //if the previous location was from the right, we shouldn't go left
 			{
 				sum++;
 				chosen.push(chosen.peek()+1);
 				leftandright(currentroom,chosen.peek());
 				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),1));
 			}
-			if(prevlocation != 1 && coinflip())//right
+			if(prevlocation != 1 && coinflip()&& chosen.peek() != rooms.size())//right
 			{
 				sum++;
 				chosen.push(chosen.peek()+1);
 				leftandright(chosen.peek(),currentroom);
 				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),2));
 			}
-			if(prevlocation != 4 && coinflip())//up
+			if(prevlocation != 4 && coinflip()&& chosen.peek() != rooms.size())//up
 			{
 				sum++;
 				chosen.push(chosen.peek()+1);
 				upanddown(currentroom, chosen.peek());
 				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),3));
 			}
-			if(prevlocation != 3 && coinflip())//down
+			if(prevlocation != 3 && coinflip()&& chosen.peek() != rooms.size())//down
 			{
 				sum++;
 				chosen.push(chosen.peek()+1);
 				upanddown(chosen.peek(),currentroom);
 				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),4));
 			}
-			if(sum == 0)//none picked, at most 3
+			if(sum != 0)//none picked, at most 3
 			{
-				//need to decide if we are to leave it as a "leaf"
-				//check (num_connections/max_connections)
+				queued.remove();//dequeue
 			}
-			queued.remove();//dequeue
+			else
+			{
+				System.out.println("Nothing chosen");
+				//need to decide if we are to leave it as a "leaf"
+				//check (num_connections/max_connections)				
+			}
 		}
 	}
 	
-	private void firstroom(int r)
+	private void loadroom()
+	{
+		System.out.println(playerlocation);
+		if(rooms.get(playerlocation).left != 0)
+		{
+			solid[0][center_h-1] = new Solid(new Rectangle(0, (center_h-1)*Tile.size, Tile.size, Tile.size), 0, center_h-1, Tile.wall_left_open_top);
+			solid[0][center_h+1] = new Solid(new Rectangle(0, (center_h+1)*Tile.size, Tile.size, Tile.size), 0, center_h+1, Tile.wall_left_open_bottom);
+			solid[0][center_h] = new Solid(new Rectangle(0, (center_h)*Tile.size, Tile.size, Tile.size), 0, center_h, Tile.blank);
+			bg[0][center_h] = new Background(new Rectangle(0, (center_h)*Tile.size, Tile.size, Tile.size),Tile.floor1);
+			left = true;
+			nextleft = rooms.get(playerlocation).left;
+		}
+		if(rooms.get(playerlocation).right != 0)
+		{
+			solid[width-1][center_h-1] = new Solid(new Rectangle((width-1)*Tile.size, (center_h-1)*Tile.size, Tile.size, Tile.size), (width-1), center_h-1, Tile.wall_right_open_top);
+			solid[width-1][center_h+1] = new Solid(new Rectangle((width-1)*Tile.size, (center_h+1)*Tile.size, Tile.size, Tile.size), (width-1), center_h+1, Tile.wall_right_open_bottom);
+			solid[width-1][center_h] = new Solid(new Rectangle((width-1)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), (width-1), center_h, Tile.blank);
+			bg[width-1][center_h] = new Background(new Rectangle((width-1)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.floor2);
+			right = true;
+			nextright = rooms.get(playerlocation).right;
+		}
+		if(rooms.get(playerlocation).up != 0)
+		{
+			solid[center_w-1][0] = new Solid(new Rectangle((center_w-1)*Tile.size, 0, Tile.size, Tile.size), center_w-1, 0, Tile.wall_open_left);
+			solid[center_w+1][0] = new Solid(new Rectangle((center_w+1)*Tile.size, 0, Tile.size, Tile.size), center_w+1, 0, Tile.wall_open_right);
+			solid[center_w][0] = new Solid(new Rectangle((center_w)*Tile.size, 0, Tile.size, Tile.size), center_w, 0, Tile.blank);
+			bg[center_w][0] = new Background(new Rectangle((center_w)*Tile.size, 0, Tile.size, Tile.size), Tile.floor3);
+			up = true;
+			nexttop = rooms.get(playerlocation).up;
+		}
+		if(rooms.get(playerlocation).down != 0)
+		{
+			solid[center_w-1][height-1] = new Solid(new Rectangle((center_w-1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w-1, (height-1), Tile.wall_open_left);
+			solid[center_w+1][height-1] = new Solid(new Rectangle((center_w+1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w+1, (height-1), Tile.wall_open_right);
+			solid[center_w][height-1] = new Solid(new Rectangle((center_w)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w, (height-1), Tile.blank);
+			bg[center_w][height-1] = new Background(new Rectangle((center_w)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), Tile.floor4);
+			down = true;
+			nextbottom = rooms.get(playerlocation).down;
+		}
+	}
+	
+	private int firstroom(int r)
 	{		
 		//left -> right -> up -> down 
+		int direction = 1;
 		if(coinflip())//else if's used for four actual coin flips		
 		{
 			leftandright(1,r);
-			return;
+			direction = 1;
+			return direction;
 		}
 		else if(coinflip())
 		{
 			leftandright(r,1);
-			return;
+			direction = 2;
+			return direction;
 		}
 		else if(coinflip())
 		{
 			upanddown(1,r);
-			return;
+			direction = 3;
+			return direction;
 		}
 		else if(coinflip())
 		{
 			upanddown(r,1);
-			return;
+			direction = 4;
+			return direction;
 		}
 		//in the rare case that all four flips fail
 		leftandright(1,r);
+		return direction;
 	}
 	
 	public void showRooms()//debug purposes
@@ -231,8 +292,8 @@ public class Level
 	
 	private void leftandright(int left, int right)
 	{
-		rooms.get(left).right = right;
-		rooms.get(right).left = left;
+		rooms.get(left).left = right;
+		rooms.get(right).right = left;
 	}
 	
 	private void upanddown(int top, int bottom)
@@ -265,9 +326,52 @@ public class Level
 		generateRooms();
 	}
 	
-	public void tick(double delta)
+	public void tick()
 	{
-		
+		if(left)//check if this room in particular has an exit, then check if the player is at this location
+		{
+			if(EntityPlayer.tX == -1 && EntityPlayer.tY == center_h)
+			{
+				EntityPlayer.player_room_num = nextleft;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tX = width-1;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(right)
+		{
+			if(EntityPlayer.tX == width && EntityPlayer.tY == center_h)
+			{
+				EntityPlayer.player_room_num = nextright;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tX = 0;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(up)
+		{
+			if(EntityPlayer.tX == center_w && EntityPlayer.tY == -1)
+			{
+				EntityPlayer.player_room_num = nexttop;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tY = height-1;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(down)
+		{
+			if(EntityPlayer.tX == center_w && EntityPlayer.tY == height)
+			{
+				EntityPlayer.player_room_num = nextbottom;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tY = 0;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
 	}
 	
 	public void render(Graphics g, int cam_x, int cam_y,int rend_x,int rend_y)

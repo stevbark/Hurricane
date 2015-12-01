@@ -7,12 +7,12 @@ public class Room {
 	private double chanceEnemy = 0.80;
 	private double chanceBlocked = 0.95;
 	
-	private boolean hasExit = false;
-	private boolean isStart = false;
-	private boolean hasPlayer = false;
+	public boolean hasExit = false;
+	public boolean isStart = false;
+	public boolean hasPlayer = false;
 	public boolean cleared = true;
 	
-	public int left, right, up, down;//adjacent rooms
+	public int left=0, right=0, up=0, down=0;//adjacent rooms
 	//private int chanceTrap = 100; not needed
 	
 	public Room(int levelnumber, int roomid)
@@ -22,71 +22,7 @@ public class Room {
 		if (levelNum > 30)//cap to 30
 			levelNum = 30;
 	}
-//-------------------------------------------Adjacent Rooms--------------------------------------------------	
-	public void assignLeft(int i)
-	{
-		left = i;
-	}
-	public void assignRight(int i)
-	{
-		right = i;
-	}
-	public void assignUp(int i)
-	{
-		up = i;
-	}
-	public void assignDown(int i)
-	{
-		down = i;
-	}
 	
-	public int getLeft()
-	{
-		return left;
-	}
-	public int getRight()
-	{
-		return right;
-	}
-	public int getUp()
-	{
-		return up;
-	}
-	public int getDown()
-	{
-		return down;
-	}
-	
-//-------------------------------------Boolean checks---------------------------------------------------------
-	public boolean containsPlayer()
-	{
-		return hasPlayer;
-	}
-	
-	public boolean isStartRoom()
-	{
-		return isStart;
-	}
-	
-	public boolean containsExit()
-	{
-		return hasExit;
-	}
-	
-	public void thisistheexit_YN(boolean yn)
-	{
-		hasExit = yn;
-	}
-	
-	public void thisisthestart_YN(boolean yn)
-	{
-		isStart = yn;
-	}
-	
-	public void player_YN(boolean yn)
-	{
-		hasPlayer = yn;
-	}
 //-----------------------------------------Room content generation-------------------------------------------
 	public void makeRoom()
 	{
@@ -117,8 +53,10 @@ public class Room {
 			}
 			
 		}
-		
-		
+	}
+	
+	public void render()
+	{
 		
 	}
 
