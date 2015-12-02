@@ -19,6 +19,7 @@ public abstract class bonus {
 	{
 		if(isTemp)
 		{
+			onTurn();
 			turnsLeft--;
 			if(turnsLeft<=0)
 			{

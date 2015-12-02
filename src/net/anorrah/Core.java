@@ -107,6 +107,7 @@ public class Core extends Applet implements Runnable
 				Tile.size);
 		 
 		entities.add(player);
+		player.setUp();
 		entities.add(TempEnemy);
 
 	}

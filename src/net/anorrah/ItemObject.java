@@ -15,6 +15,8 @@ public abstract class ItemObject {
 	public ItemObject(int currentLevel)
 	{
 		enchantment = generateBonus(currentLevel); 	
+		myBonus = new ArrayList<bonus>();
+		possibleBonuses = new ArrayList<bonus>();
 	}
 	
 	public abstract String description();

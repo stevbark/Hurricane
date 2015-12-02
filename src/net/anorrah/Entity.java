@@ -3,6 +3,7 @@ package net.anorrah;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public abstract class Entity
 {
@@ -18,6 +19,9 @@ public abstract class Entity
 	private Rectangle collider;
 	private Rectangle other = new Rectangle();
 	
+	protected ArrayList<bonus> bonuses = new ArrayList<bonus>();
+	protected ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
+	
 	public Entity()
 	{
 		x = 0;
@@ -26,6 +30,7 @@ public abstract class Entity
 		height = 32;
 		moveSpeed = 1;
 		health = 100;
+		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
 	}
 	
@@ -37,8 +42,52 @@ public abstract class Entity
 		this.height = height;
 		id = i;
 		moveSpeed = 1;
+		
 		health = 100;
+		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
+	}
+	
+	public void heal(int heal)
+	{
+		if(health + heal >maxHealth)
+		{
+			health = maxHealth;
+		}
+		else
+		{
+			health+=heal;
+		}
+	}
+	
+	public void takeTurn()
+	{
+		for(bonus b: bonuses)
+		{
+			b.doOnTurn();
+		}
+		cleanup();
+	}
+
+	public void addToList(bonus toAdd)
+	{
+		System.out.println(toAdd.isTemp);
+		bonuses.add(toAdd);
+	}
+	
+	// we cant remove directly from the list because we may be iteration through it and we will get an exception.
+	public void removeFromList(bonus toRemove)
+	{
+		toBeRemovedBonuses.add(toRemove);
+	}
+	
+	private void cleanup()
+	{
+		for(bonus b: toBeRemovedBonuses)
+		{
+			bonuses.remove(b);
+		}
+		toBeRemovedBonuses.clear();
 	}
 	
 	public void move(double delta)
@@ -91,8 +140,5 @@ public abstract class Entity
 	
 	public abstract void on_collided(Entity entity);
 	
-	public void takeTurn()
-	{
-		
-	}
+	
 }
