@@ -70,15 +70,6 @@ public class Level
 		
 	}
 	
-	private void placeStuff()
-	{
-		Room r = rooms.get(playerlocation);
-		
-		
-		
-		
-	}
-	
 	private void setedge()//turns surrounding edges into black tiles and places set
 	{
 		for(int i = 0; i < width; i++)//along the top edge and bottom edge

@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 
-public abstract class Entity 
+public abstract class Entity
 {
 	
 	protected double x,y;
