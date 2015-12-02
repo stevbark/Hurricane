@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class MeleeWeaponItem extends ItemObject{
 
-	double damage;
+	int damage;
 	
 	
 	public MeleeWeaponItem(int levelBonus)

@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.anorrah.damageObject.Type;
+
 
 public class EntityPlayer extends Entity 
 {
@@ -32,9 +34,9 @@ public class EntityPlayer extends Entity
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
 	
-	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
-	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
-
+//	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
+//	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
+	
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
@@ -48,7 +50,8 @@ public class EntityPlayer extends Entity
 		System.out.println("Render x and y:\t" + Rx + "\t" + Ry);
 		System.out.println("Tile x and y:\t" + tX + "\t" + tY);
 		moveSpeed = 2;
-		health = 100;
+		health = 50;
+		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
 		equippedWeapon = new SwordItem("stab",0);
@@ -57,46 +60,15 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
-	public void heal(int heal)
+	public void setUp()
 	{
-		if(health + heal >maxHealth)
-		{
-			health = maxHealth;
-		}
-		else
-		{
-			health+=heal;
-		}
+		equippedArmor.onEquip();
+		bandAidObject regenTest= new bandAidObject(0);
+		System.out.println("bandaid");
+		regenTest.onEquip();
 	}
 	
-	public void takeTurn()
-	{
-		for(bonus b: bonuses)
-		{
-			b.doOnTurn();
-		}
-		cleanup();
-	}
 
-	public void addToList(bonus toAdd)
-	{
-		bonuses.add(toAdd);
-	}
-	
-	// we cant remove directly from the list because we may be iteration through it and we will get an exception.
-	public void removeFromList(bonus toRemove)
-	{
-		toBeRemovedBonuses.add(toRemove);
-	}
-	
-	private void cleanup()
-	{
-		for(bonus b: toBeRemovedBonuses)
-		{
-			bonuses.remove(b);
-		}
-		toBeRemovedBonuses.clear();
-	}
 	
 	public ItemObject getUsableItem()
 	{
@@ -166,7 +138,7 @@ public class EntityPlayer extends Entity
 					anim_frame = 0;
 				}
 			// enable if you want to enable enemy attacks when you go to X:10 Y:7 ( one sqaure above your start location) when you hit the W key
-			//	gk.doATurn();
+				gk.doATurn();
 			}
 			else
 			{
@@ -253,10 +225,17 @@ public class EntityPlayer extends Entity
 	    
 	}
 	
-	public void attack()
+	public void attack(enemyEntities enemy)
 	{
 		System.out.println("smacked!" + tX+" " +tY);
-		equippedWeapon.attack();
+		damageObject damage = new damageObject(0, Type.physical);
+		for(bonus b:bonuses)
+		{
+			b.onAttack(enemy, damage, true);
+		}
+		enemy.takeDamage(damage);
+		
+		//equippedWeapon.attack();
 	}
 	
 	public void tick(double delta)
@@ -294,7 +273,11 @@ public class EntityPlayer extends Entity
 	
 	public void onHit(enemyEntities enemy, damageObject damage)
 	{
-		equippedArmor.onBeenHit(enemy,damage);
+		for(bonus b:bonuses)
+		{
+			b.onBeenHit(enemy, damage);
+		}
+	//	equippedArmor.onBeenHit(enemy,damage);
 	}
 	
 	public void setTilePosition(int r, int c)//row and column
@@ -307,4 +290,48 @@ public class EntityPlayer extends Entity
 		System.out.println("Updated Render x and y:\t" + Rx + "\t" + Ry);
 
 	}
+	
+	
+	// this was moved to the Entity baseclass.  
+//	public void heal(int heal)
+//	{
+//		if(health + heal >maxHealth)
+//		{
+//			health = maxHealth;
+//		}
+//		else
+//		{
+//			health+=heal;
+//		}
+//	}
+	
+//	public void takeTurn()
+//	{
+//		for(bonus b: bonuses)
+//		{
+//			b.doOnTurn();
+//		}
+//		cleanup();
+//	}
+//
+//	public void addToList(bonus toAdd)
+//	{
+//		System.out.println(toAdd.isTemp);
+//		bonuses.add(toAdd);
+//	}
+//	
+//	// we cant remove directly from the list because we may be iteration through it and we will get an exception.
+//	public void removeFromList(bonus toRemove)
+//	{
+//		toBeRemovedBonuses.add(toRemove);
+//	}
+//	
+//	private void cleanup()
+//	{
+//		for(bonus b: toBeRemovedBonuses)
+//		{
+//			bonuses.remove(b);
+//		}
+//		toBeRemovedBonuses.clear();
+//	}
 }
