@@ -70,6 +70,15 @@ public class Level
 		
 	}
 	
+	private void placeStuff()
+	{
+		Room r = rooms.get(playerlocation);
+		
+		
+		
+		
+	}
+	
 	private void setedge()//turns surrounding edges into black tiles and places set
 	{
 		for(int i = 0; i < width; i++)//along the top edge and bottom edge
@@ -208,6 +217,9 @@ public class Level
 	
 	private void loadroom()
 	{
+		
+		setbackgroundtiles();
+		setedge();
 		System.out.println(playerlocation);
 		if(rooms.get(playerlocation).left != 0)
 		{
@@ -217,7 +229,8 @@ public class Level
 			bg[0][center_h] = new Background(new Rectangle(0, (center_h)*Tile.size, Tile.size, Tile.size),Tile.floor1);
 			left = true;
 			nextleft = rooms.get(playerlocation).left;
-		}
+			
+					}
 		if(rooms.get(playerlocation).right != 0)
 		{
 			solid[width-1][center_h-1] = new Solid(new Rectangle((width-1)*Tile.size, (center_h-1)*Tile.size, Tile.size, Tile.size), (width-1), center_h-1, Tile.wall_right_open_top);
@@ -245,6 +258,11 @@ public class Level
 			down = true;
 			nextbottom = rooms.get(playerlocation).down;
 		}
+		for(Solid s: rooms.get(playerlocation).blocks)
+		{
+			solid[s.row][s.col]= s;
+		}
+		//Repeat this for rooms.get(playerlocation).enemies , items, and traps (when added)
 	}
 	
 	private int firstroom(int r)
