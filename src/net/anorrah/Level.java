@@ -10,7 +10,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Level 
 {
-	public static int width = 21, height = 17, num_level = 1, center_w = 10, center_h = 8;
+	public static final int width = 21, height = 17, center_w = 10, center_h = 8;
+	public static int num_level = 1;
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
@@ -245,6 +246,13 @@ public class Level
 			down = true;
 			nextbottom = rooms.get(playerlocation).down;
 		}
+		
+		if(playerlocation == rooms.size())
+			bg[center_w][center_h] = new Background(new Rectangle((center_w)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.exit);
+		else if(playerlocation == 1)
+			bg[center_w][center_h] = new Background(new Rectangle((center_w)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.sealed);
+		else
+			bg[center_w][center_h] = new Background(new Rectangle((center_w)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.floor1);
 	}
 	
 	private int firstroom(int r)
@@ -311,7 +319,8 @@ public class Level
 	{
 		rooms.clear();//level is cleared and next level is to load
 		num_level++;
-		
+		playerlocation = 1;
+		EntityPlayer.player_room_num = playerlocation;
 		//change the min and max number of rooms if appropriate
 		minRooms++;
 		if(minRooms >= maxRooms)
@@ -323,6 +332,8 @@ public class Level
 			minRooms += 2;
 			maxRooms += minRooms;
 		}
+		setbackgroundtiles();
+		setedge();
 		generateRooms();
 	}
 	
@@ -370,6 +381,13 @@ public class Level
 				EntityPlayer.tY = 0;//load player at the right
 				setedge();
 				loadroom();
+			}
+		}
+		if(playerlocation == rooms.size())
+		{
+			if(EntityPlayer.tX == center_w && EntityPlayer.tY == center_h)
+			{
+				ExitReached();
 			}
 		}
 	}

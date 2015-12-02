@@ -40,8 +40,8 @@ public class Core extends Applet implements Runnable
 	
 	public static EntityPlayer player;
 	public static Core t;
-	public ArrayList<Entity> entities = new ArrayList<Entity>();
-	public ArrayList<Entity> removethese = new ArrayList<Entity>();
+	public static ArrayList<Entity> entities = new ArrayList<Entity>();
+	public static ArrayList<Entity> removethese = new ArrayList<Entity>();
 	
 	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
 	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
@@ -49,8 +49,10 @@ public class Core extends Applet implements Runnable
 	//Constructor
 	public Core()
 	{
+		InputManager inpt = new InputManager();
 		setPreferredSize(VIEWPORT_SIZE);
-		addKeyListener(new InputManager());
+		addKeyListener(inpt);
+		addMouseListener(inpt);
 	}
 	
 	public static void main(String[] args) 
@@ -79,8 +81,8 @@ public class Core extends Applet implements Runnable
 		level = new Level();
 		new Tile();
 		
-		offset_MAX_X = level.width - VIEWPORT_SIZE.width;
-		offset_MAX_Y = level.height - VIEWPORT_SIZE.height;
+		offset_MAX_X = Level.width - VIEWPORT_SIZE.width;
+		offset_MAX_Y = Level.height - VIEWPORT_SIZE.height;
 		
 		initEntities();
 		//player.setTilePosition(20, 20);
@@ -111,7 +113,12 @@ public class Core extends Applet implements Runnable
 
 	}
 	
-	public void remove(Entity entity)
+	public static void addEntity(Entity entity)
+	{
+		entities.add(entity);
+	}
+	
+	public static void remove(Entity entity)
 	{
 		removethese.add(entity);
 	}
@@ -157,8 +164,7 @@ public class Core extends Applet implements Runnable
 		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
 		g.setColor(Color.orange);
-		g.drawString("offset_X: " + (int)offset_X , 590, 510);
-		g.drawString("offset_Y: " + (int)offset_Y , 590, 525);
+		g.drawString("LEVEL: " + level.num_level , 590, 510);
 		g.drawString("FPS: " + renderFPS, 600, 540);
 		
 		//g.translate(-(player.Rx - VIEWPORT_SIZE.width/2 + Tile.size/2),-(player.Ry - VIEWPORT_SIZE.height/2 + Tile.size/2));
