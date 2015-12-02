@@ -2,27 +2,36 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
+import java.util.Stack;
+//import org.newdawn.slick.SlickException;
+//import org.newdawn.slick.tiled.TiledMap;
+import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Level 
 {
-	public int width = 21, height = 17;//match these to the correct width and height of the layout
+	public static int width = 21, height = 17, num_level = 1, center_w = 10, center_h = 8;
 	
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
 	public Item[][] item = new Item[width][height];
 	
-	public final String dpath = "res/maps/testworld";
+	private TreeMap<Integer,Room> rooms;//contains all rooms in a single level
+	private int minRooms = 4, maxRooms = 7, delta = 5;
+	public int playerlocation = 1;
+	private boolean left = false, right = false, up = false, down = false;
+	private int nextleft = -1, nextright = -1, nexttop = -1, nextbottom = -1;
 	
-	public String path = dpath;
-	
-	public TiledMap map = null;
-	
-	public Level(int id)
+	public Level()
 	{	
-		for(int x = 0; x < bg.length; x++)
+		rooms = new TreeMap<Integer,Room>();
+		setbackgroundtiles();
+		setedge();
+		generateRooms();
+	}
+	private void setbackgroundtiles()
+	{
+		for(int x = 0; x < bg.length; x++)//generate general background layer to render
 		{
 			for(int y = 0; y < bg[0].length; y++)
 			{
@@ -58,11 +67,19 @@ public class Level
 				item[x][y] = new Item(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
 			}
 		}
-		setedge(Tile.floorend);
-		//loadworld();
+		
 	}
 	
-	public void setedge(int[] id)
+	private void placeStuff()
+	{
+		Room r = rooms.get(playerlocation);
+		
+		
+		
+		
+	}
+	
+	private void setedge()//turns surrounding edges into black tiles and places set
 	{
 		for(int i = 0; i < width; i++)//along the top edge and bottom edge
 		{
@@ -70,38 +87,24 @@ public class Level
 			bg[i][height-1] = new Background(new Rectangle(i * Tile.size, (height-1) * Tile.size, Tile.size, Tile.size),Tile.floorend);
 			int rand = (int)(Math.random() * 4 + 1);
 			if(rand == 1)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top1);
-			}
 			else if(rand == 2)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top2);
-			}
 			else if(rand == 3)
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top3);
-			}
 			else
-			{
 				solid[i][0]= new Solid(new Rectangle(i*Tile.size, 0, Tile.size, Tile.size),i,0,Tile.wall_top4);
-			}
+			
 			rand = (int)(Math.random()*4+1);
+			
 			if(rand == 1)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom1);
-			}
 			else if(rand == 2)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom3);
-			}
 			else if(rand == 3)
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom2);
-			}
 			else
-			{
 				solid[i][height-1]= new Solid(new Rectangle(i*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),i,height-1,Tile.wall_bottom4);
-			}
 		}
 		for(int i = 0; i < height; i++)//along the top edge and bottom edge
 		{
@@ -110,39 +113,24 @@ public class Level
 			
 			int rand = (int)(Math.random() * 4 + 1);
 			if(rand == 1)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left1);
-			}
 			else if(rand == 2)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left2);
-			}
 			else if(rand == 3)
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left3);
-			}
 			else
-			{
 				solid[0][i] = new Solid(new Rectangle(0, i * Tile.size, Tile.size, Tile.size),0,i,Tile.wall_left4);
-			}
 			
 			rand = (int)(Math.random() * 4 + 1);
+			
 			if(rand == 1)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right1);
-			}
 			else if(rand == 2)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right2);
-			}
 			else if(rand == 3)
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right3);
-			}
 			else
-			{
 				solid[width-1][i]= new Solid(new Rectangle((width-1)*Tile.size, i*Tile.size, Tile.size, Tile.size),width-1,i,Tile.wall_right4);
-			}
 			
 		}
 		
@@ -154,61 +142,254 @@ public class Level
 		solid[width-1][height-1]= new Solid(new Rectangle((width-1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size),width-1,height-1,Tile.corner_br);
 	}
 	
-	public void loadworld()
+	public void generateRooms()
 	{
-		int solids = map.getLayerIndex("solid");
-		
-		for(int x = 0; x < bg.length; x++)
+		int num_rooms = (int)(Math.random()*((maxRooms - minRooms)+1)+minRooms);//populate the map full of rooms
+		System.out.println("Total # of Rooms: "+num_rooms);
+		for(int i = 1; i <= num_rooms; i++)
 		{
-			for(int y = 0; y < bg[0].length; y++)
-			{	
-				int tileid = map.getTileId(x,y,solids);
-				if(tileid == 122)
-				{
-					//tr
-					solid[x][y].id = Tile.corner_tr;
-				}
-				else if(tileid == 123)
-				{
-					//tl
-					solid[x][y].id = Tile.corner_tl;
-				}
-				else if(tileid == 121)
-				{
-					//bl
-					solid[x][y].id = Tile.corner_bl;
-				}
-				else if(tileid == 124)
-				{
-					//br
-					solid[x][y].id = Tile.corner_br;
-				}
-				else if(tileid == 101)
-				{
-					//left edge
-					solid[x][y].id = Tile.wall_left1;
-				}
-				else if(tileid == 111)
-				{
-					//left edge
-					solid[x][y].id = Tile.wall_right1;
-				}
-				else if(tileid == 131)
-				{
-					//top edge
-					solid[x][y].id = Tile.wall_top1;
-				}
-				else if(tileid == 141)
-				{
-					//bot edge
-					solid[x][y].id = Tile.wall_bottom1;
-				}
+			rooms.put(i, new Room(num_level, i));
+		}
+		bridgeConnections();
+		showRooms();
+		loadroom();
+	}
+	
+	private void bridgeConnections()//assign rooms to other rooms
+	{
+		Stack<Integer> chosen = new Stack<Integer>();//used to store numbers that have been chosen, helps to tell us the remaining numbers that need to be chosen
+		LinkedBlockingQueue<RoomNumbertoDirectionPair> queued = new LinkedBlockingQueue<RoomNumbertoDirectionPair>();//represents numbers that need to be "processed"
+		
+		//int num_connections = 0, max_connections = rooms.size()-1;//number of connections between rooms, max is rooms.size()-1
+		int prevlocation = -1;
+		
+		prevlocation = firstroom(2);//1 = left, 2 = right, 3 = up, 4 = down //1 and 2 are bridged
+		//num_connections++;
+		queued.add(new RoomNumbertoDirectionPair(2,prevlocation));//2nd room is next to be processed
+		chosen.push(2);
+		
+		while(queued.peek().room_number != rooms.size() && chosen.peek() != rooms.size())
+		{	
+			int currentroom = queued.peek().room_number;
+			prevlocation = queued.peek().direction;
+			int sum = 0;
+			//find out which directions we want; some, all, or none
+			if(prevlocation != 2 && coinflip() && chosen.peek() != rooms.size())//left //if the previous location was from the right, we shouldn't go left
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				leftandright(currentroom,chosen.peek());
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),1));
+			}
+			if(prevlocation != 1 && coinflip()&& chosen.peek() != rooms.size())//right
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				leftandright(chosen.peek(),currentroom);
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),2));
+			}
+			if(prevlocation != 4 && coinflip()&& chosen.peek() != rooms.size())//up
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				upanddown(currentroom, chosen.peek());
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),3));
+			}
+			if(prevlocation != 3 && coinflip()&& chosen.peek() != rooms.size())//down
+			{
+				sum++;
+				chosen.push(chosen.peek()+1);
+				upanddown(chosen.peek(),currentroom);
+				queued.add(new RoomNumbertoDirectionPair(chosen.peek(),4));
+			}
+			if(sum != 0)//none picked, at most 3
+			{
+				queued.remove();//dequeue
+			}
+			else
+			{
+				System.out.println("Nothing chosen");
+				//need to decide if we are to leave it as a "leaf"
+				//check (num_connections/max_connections)				
 			}
 		}
 	}
-	public void tick(double delta)
+	
+	private void loadroom()
 	{
 		
+		setbackgroundtiles();
+		setedge();
+		System.out.println(playerlocation);
+		if(rooms.get(playerlocation).left != 0)
+		{
+			solid[0][center_h-1] = new Solid(new Rectangle(0, (center_h-1)*Tile.size, Tile.size, Tile.size), 0, center_h-1, Tile.wall_left_open_top);
+			solid[0][center_h+1] = new Solid(new Rectangle(0, (center_h+1)*Tile.size, Tile.size, Tile.size), 0, center_h+1, Tile.wall_left_open_bottom);
+			solid[0][center_h] = new Solid(new Rectangle(0, (center_h)*Tile.size, Tile.size, Tile.size), 0, center_h, Tile.blank);
+			bg[0][center_h] = new Background(new Rectangle(0, (center_h)*Tile.size, Tile.size, Tile.size),Tile.floor1);
+			left = true;
+			nextleft = rooms.get(playerlocation).left;
+			
+					}
+		if(rooms.get(playerlocation).right != 0)
+		{
+			solid[width-1][center_h-1] = new Solid(new Rectangle((width-1)*Tile.size, (center_h-1)*Tile.size, Tile.size, Tile.size), (width-1), center_h-1, Tile.wall_right_open_top);
+			solid[width-1][center_h+1] = new Solid(new Rectangle((width-1)*Tile.size, (center_h+1)*Tile.size, Tile.size, Tile.size), (width-1), center_h+1, Tile.wall_right_open_bottom);
+			solid[width-1][center_h] = new Solid(new Rectangle((width-1)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), (width-1), center_h, Tile.blank);
+			bg[width-1][center_h] = new Background(new Rectangle((width-1)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.floor2);
+			right = true;
+			nextright = rooms.get(playerlocation).right;
+		}
+		if(rooms.get(playerlocation).up != 0)
+		{
+			solid[center_w-1][0] = new Solid(new Rectangle((center_w-1)*Tile.size, 0, Tile.size, Tile.size), center_w-1, 0, Tile.wall_open_left);
+			solid[center_w+1][0] = new Solid(new Rectangle((center_w+1)*Tile.size, 0, Tile.size, Tile.size), center_w+1, 0, Tile.wall_open_right);
+			solid[center_w][0] = new Solid(new Rectangle((center_w)*Tile.size, 0, Tile.size, Tile.size), center_w, 0, Tile.blank);
+			bg[center_w][0] = new Background(new Rectangle((center_w)*Tile.size, 0, Tile.size, Tile.size), Tile.floor3);
+			up = true;
+			nexttop = rooms.get(playerlocation).up;
+		}
+		if(rooms.get(playerlocation).down != 0)
+		{
+			solid[center_w-1][height-1] = new Solid(new Rectangle((center_w-1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w-1, (height-1), Tile.wall_open_left);
+			solid[center_w+1][height-1] = new Solid(new Rectangle((center_w+1)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w+1, (height-1), Tile.wall_open_right);
+			solid[center_w][height-1] = new Solid(new Rectangle((center_w)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), center_w, (height-1), Tile.blank);
+			bg[center_w][height-1] = new Background(new Rectangle((center_w)*Tile.size, (height-1)*Tile.size, Tile.size, Tile.size), Tile.floor4);
+			down = true;
+			nextbottom = rooms.get(playerlocation).down;
+		}
+		for(Solid s: rooms.get(playerlocation).blocks)
+		{
+			solid[s.row][s.col]= s;
+		}
+		//Repeat this for rooms.get(playerlocation).enemies , items, and traps (when added)
+	}
+	
+	private int firstroom(int r)
+	{		
+		//left -> right -> up -> down 
+		int direction = 1;
+		if(coinflip())//else if's used for four actual coin flips		
+		{
+			leftandright(1,r);
+			direction = 1;
+			return direction;
+		}
+		else if(coinflip())
+		{
+			leftandright(r,1);
+			direction = 2;
+			return direction;
+		}
+		else if(coinflip())
+		{
+			upanddown(1,r);
+			direction = 3;
+			return direction;
+		}
+		else if(coinflip())
+		{
+			upanddown(r,1);
+			direction = 4;
+			return direction;
+		}
+		//in the rare case that all four flips fail
+		leftandright(1,r);
+		return direction;
+	}
+	
+	public void showRooms()//debug purposes
+	{
+		//System.out.println("Player is currently at: "+EntityPlayer.player_room_num);
+		for(int i = 1; i <= rooms.size(); i++)
+		{
+			Room r = rooms.get(i);
+			System.out.println(i+"\t: left{"+ r.left+"}\tright{" + r.right + "}\tup{" + r.up +"}\tdown{"+ r.down +"}");
+		}
+	}
+	
+	private void leftandright(int left, int right)
+	{
+		rooms.get(left).left = right;
+		rooms.get(right).right = left;
+	}
+	
+	private void upanddown(int top, int bottom)
+	{
+		rooms.get(top).up = bottom;
+		rooms.get(bottom).down = top;
+	}
+	
+	private boolean coinflip()
+	{
+		return (Math.random() > 0.5);
+	}
+	
+	public void ExitReached()
+	{
+		rooms.clear();//level is cleared and next level is to load
+		num_level++;
+		
+		//change the min and max number of rooms if appropriate
+		minRooms++;
+		if(minRooms >= maxRooms)
+		{
+			minRooms = maxRooms;//cap off the min to max 
+		}
+		if(num_level % delta == 0)//every x levels change the min and max rooms
+		{
+			minRooms += 2;
+			maxRooms += minRooms;
+		}
+		generateRooms();
+	}
+	
+	public void tick()
+	{
+		if(left)//check if this room in particular has an exit, then check if the player is at this location
+		{
+			if(EntityPlayer.tX == -1 && EntityPlayer.tY == center_h)
+			{
+				EntityPlayer.player_room_num = nextleft;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tX = width-1;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(right)
+		{
+			if(EntityPlayer.tX == width && EntityPlayer.tY == center_h)
+			{
+				EntityPlayer.player_room_num = nextright;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tX = 0;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(up)
+		{
+			if(EntityPlayer.tX == center_w && EntityPlayer.tY == -1)
+			{
+				EntityPlayer.player_room_num = nexttop;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tY = height-1;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
+		if(down)
+		{
+			if(EntityPlayer.tX == center_w && EntityPlayer.tY == height)
+			{
+				EntityPlayer.player_room_num = nextbottom;
+				playerlocation = EntityPlayer.player_room_num;
+				EntityPlayer.tY = 0;//load player at the right
+				setedge();
+				loadroom();
+			}
+		}
 	}
 	
 	public void render(Graphics g, int cam_x, int cam_y,int rend_x,int rend_y)
@@ -230,6 +411,17 @@ public class Level
 					}
 				}
 			}
+		}
+	}
+	
+	private class RoomNumbertoDirectionPair
+	{
+		public int room_number;
+		public int direction;
+		public RoomNumbertoDirectionPair(int room_number, int direction)
+		{
+			this.room_number = room_number;
+			this.direction = direction;
 		}
 	}
 }

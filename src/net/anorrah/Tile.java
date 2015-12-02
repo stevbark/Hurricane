@@ -30,10 +30,10 @@ public class Tile
 	public static int[] wall_right3 = {2,1};
 	public static int[] wall_right4 = {3,1};
 	
-	public static int[] wall_top1 = {0,3};
-	public static int[] wall_top2 = {1,3};
-	public static int[] wall_top3 = {2,3};
-	public static int[] wall_top4 = {3,3};
+	public static int[] wall_top1 = {0,4};
+	public static int[] wall_top2 = {1,4};
+	public static int[] wall_top3 = {2,4};
+	public static int[] wall_top4 = {3,4};
 	
 	public static int[] wall_bottom1 = {0,4};
 	public static int[] wall_bottom2 = {1,4};
@@ -44,9 +44,17 @@ public class Tile
 	public static int[] corner_tr = {1,2};
 	public static int[] corner_tl = {2,2};
 	public static int[] corner_br = {3,2};
+	
+	public static int[] wall_left_open_top = {0,5};
+	public static int[] wall_left_open_bottom = {0,6};
+	public static int[] wall_right_open_top = {1,5};
+	public static int[] wall_right_open_bottom = {1,6};
+	public static int[] wall_open_left = {2,5};
+	public static int[] wall_open_right = {3,5};
+	
+	//items
 	public static int[] item  = {0,0};
 	public static int[] item2  = {1,1};
-	//items
 	
 	//characters
 	public static int[] playertile_DOWN = {0, 0};

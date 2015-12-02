@@ -15,6 +15,8 @@ public class EntityPlayer extends Entity
 	public static int Rx,Ry, tX, tY;
 	private static int moveDelta = 0;
 	
+	public static int player_room_num = 1;
+	
 	public int anim_frame = 0;
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
@@ -47,8 +49,6 @@ public class EntityPlayer extends Entity
 		Ry = tY*32;
 		super.x = Rx;
 		super.y = Ry;
-		System.out.println("Render x and y:\t" + Rx + "\t" + Ry);
-		System.out.println("Tile x and y:\t" + tX + "\t" + tY);
 		moveSpeed = 2;
 		health = 50;
 		maxHealth = 100;
@@ -82,14 +82,13 @@ public class EntityPlayer extends Entity
 	
 	public boolean canMove(int i, int j)
 	{
-		System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 		{
-			return false;
+			return true;
 		}
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
-			
 			equippedWeapon = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
 			System.out.println(str);
