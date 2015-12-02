@@ -1,10 +1,13 @@
 package net.anorrah;
 
-import java.awt.event.KeyEvent;
+import java.awt.event.KeyEvent; 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.SwingUtilities;
+
+import org.newdawn.slick.Input;
 
 public class InputManager implements KeyListener, MouseListener
 {
@@ -47,6 +50,11 @@ public class InputManager implements KeyListener, MouseListener
 			{
 				Core.bD = true;
 			}
+			break;
+			
+		case KeyEvent.VK_SPACE:
+			
+			Core.player.attack();
 			break;
 			
 		default:
@@ -98,6 +106,7 @@ public class InputManager implements KeyListener, MouseListener
 	public void mouseClicked(MouseEvent e)//whenever a button has been pressed and Released 
 	{
 		
+		System.out.println("attack at " + e.getID());
 	}
 
 	public void mouseEntered(MouseEvent e)//whenever cursor enters a component
@@ -112,6 +121,7 @@ public class InputManager implements KeyListener, MouseListener
 
 	public void mousePressed(MouseEvent e)//only when a mouse-button is pressed 
 	{
+		
 		/*
 		 * To check for the mouse buttons
 		 * 

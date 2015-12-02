@@ -1,25 +1,35 @@
 package net.anorrah;
 
 public class Room {
-	public Level lev;
-	public double levelNum = 0;
-	private int chanceEmpty = 70;
-	private int chanceEnemy = 80;
-	private int chanceBlocked = 95;
+	public int levelNum = 0;
+	public int roomid = -1;
+	private double chanceEmpty = 0.70;
+	private double chanceEnemy = 0.80;
+	private double chanceBlocked = 0.95;
+	
+	public boolean hasExit = false;
+	public boolean isStart = false;
+	public boolean hasPlayer = false;
+	public boolean cleared = true;
+	
+	public int left=0, right=0, up=0, down=0;//adjacent rooms
 	//private int chanceTrap = 100; not needed
 	
-	public Room(int levId, double levelnumber){
-		lev = new Level(levId);
+	public Room(int levelnumber, int roomid)
+	{
 		levelNum = levelnumber;
-		if (levelNum > 30)
+		this.roomid = roomid;
+		if (levelNum > 30)//cap to 30
 			levelNum = 30;
 	}
 	
+//-----------------------------------------Room content generation-------------------------------------------
 	public void makeRoom()
 	{
-		for(int x = 0; x < lev.width; x++)
+		//assign left, right, up, down if they exist
+		for(int x = 0; x < Level.width; x++)
 		{
-			for(int y = 0; y < lev.height; y++)
+			for(int y = 0; y < Level.height; y++)
 			{
 				int dice = (int) (Math.random()*100)+1;
 				
@@ -43,8 +53,10 @@ public class Room {
 			}
 			
 		}
-		
-		
+	}
+	
+	public void render()
+	{
 		
 	}
 

@@ -45,6 +45,7 @@ public class Core extends Applet implements Runnable
 	
 	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
 	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
+	public tempEnemy TempEnemy;
 	//Constructor
 	public Core()
 	{
@@ -75,7 +76,7 @@ public class Core extends Applet implements Runnable
 		requestFocus();
 		
 		//Class declarations here
-		level = new Level(1);
+		level = new Level();
 		new Tile();
 		
 		offset_MAX_X = level.width - VIEWPORT_SIZE.width;
@@ -94,12 +95,20 @@ public class Core extends Applet implements Runnable
 	
 	public void initEntities()
 	{
+		TempEnemy = new tempEnemy(t, 
+				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2),
+				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) -30,
+				Tile.size,
+				Tile.size);
 		player = new EntityPlayer(t, 
 				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) + offset_X,
 				(VIEWPORT_SIZE.height / 2) - (Tile.size / 2) + offset_Y,
 				Tile.size,
 				Tile.size);
+		 
 		entities.add(player);
+		entities.add(TempEnemy);
+
 	}
 	
 	public void remove(Entity entity)
@@ -126,6 +135,8 @@ public class Core extends Applet implements Runnable
 				{
 					Entity otherobj = entities.get(j);
 					
+					
+					
 					if(thisobj.collides(otherobj))
 					{
 						thisobj.on_collided(otherobj);
@@ -134,7 +145,7 @@ public class Core extends Applet implements Runnable
 				}
 			}
 		}
-		
+		level.tick();
 		entities.remove(removethese);
 		removethese.clear();
 	}
@@ -161,6 +172,18 @@ public class Core extends Applet implements Runnable
 		g.dispose();//reset the image each tick
 	}
 	
+	public void doATurn()
+	{
+		
+		for(int j = 0; j < entities.size(); j++)
+		{
+			Entity otherobj = entities.get(j);
+			
+			otherobj.takeTurn();
+		}
+		
+	}
+	
 	public void run() 
 	{
 		screen = createVolatileImage(pixel.width,pixel.height);
@@ -183,7 +206,7 @@ public class Core extends Applet implements Runnable
 			
 			tick(delta);
 			render();
-			
+			//doATurn();
 			try//give the thread some time to calculate
 			{
 				Thread.sleep((last_loop_time - System.nanoTime() + OPTIMAL_TIME) / 1000000);
