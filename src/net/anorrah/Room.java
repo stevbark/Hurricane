@@ -8,7 +8,7 @@ public class Room {
 	public int levelNum = 0;
 	public int roomid = -1;
 	private double chanceEmpty = 70;
-	private double chanceEnemy = 10;
+	private double chanceEnemy = 35;
 	private double chanceBlocked = 15;
 	
 	public boolean hasExit = false;
@@ -45,15 +45,15 @@ public class Room {
 			{
 				int dice = (int) (Math.random()*100)+1;
 				
-					if(dice < chanceEmpty-levelNum)
+					if(dice > chanceEmpty-levelNum)
 					{
 						//place an empty tile at [x,y] 
 					}
-					else if(dice < chanceEnemy- Math.ceil(levelNum/2)){
+					else if(dice > chanceEnemy- Math.ceil(levelNum/2)){
 						//place an enemy  at [x,y](roll again for enemy type)
 
 					}
-					else if(dice<75-Math.ceil(levelNum/2)){
+					else if(dice > chanceBlocked-Math.ceil(levelNum/2)){
 						Rectangle rec = new Rectangle();
 						int[] sol = {1,1};
 						System.out.println("Got to the block generation");
