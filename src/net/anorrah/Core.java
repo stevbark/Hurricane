@@ -167,11 +167,14 @@ public class Core extends Applet implements Runnable
 		g.fillRect(40, 10, 150, 20);
 		
 		g.setColor(Color.RED);
-		g.fillRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20);
-		
+		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
 		
 		g.setColor(Color.WHITE);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		
+		// Item
+		g.drawString("ITEM: ",220, stringOffsetY);
+		g.drawRoundRect(220+40, 1, 33, 33, 5, 5);
 		
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
@@ -180,11 +183,6 @@ public class Core extends Applet implements Runnable
 		// Secondary Weapon
 		g.drawString("RANGED: ", weaponOffsetX+ 100, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+55+105, 1, 33, 33, 5, 5);
-
-		
-		// Item
-		g.drawString("ITEM: ",220, stringOffsetY);
-		g.drawRoundRect(220+40, 1, 33, 33, 5, 5);
 		
 		
 		g.setColor(Color.orange);
