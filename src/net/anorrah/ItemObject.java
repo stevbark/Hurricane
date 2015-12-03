@@ -11,6 +11,7 @@ public abstract class ItemObject {
 	protected ArrayList<bonus> possibleBonuses;
 	protected  ArrayList<bonus> myBonus; 
 	protected int charges;
+	protected boolean hasCharges = false;
 	
 	public ItemObject(int currentLevel)
 	{
@@ -126,7 +127,7 @@ public abstract class ItemObject {
 				b.onUseOnSelf(user);				
 			}
 			charges--;
-			if(charges <=0)
+			if(hasCharges && charges <=0)
 			{
 				assert(Core.player.getUsableItem() == this);
 				Core.player.setUsableItem(null);

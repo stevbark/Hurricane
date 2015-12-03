@@ -9,6 +9,7 @@ public abstract class Entity
 {
 	
 	protected double x,y;
+	protected static int Rx,Ry, tX, tY;
 	protected int width, height, dx,dy;
 	protected int id[] = {0,0};
 	protected int health;
@@ -149,6 +150,15 @@ public abstract class Entity
 		return y;
 	}
 	
+	public int getlocationX()
+	{
+		return tX;
+	}
+	public int getlocationY()
+	{
+		return tY;
+	}
+	
 	public double getWidth()
 	{
 		return width;
@@ -167,6 +177,15 @@ public abstract class Entity
 	public void takeDamage(damageObject damage)
 	{
 		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			for(bonus b: bonuses)
+			{
+				b.onDeath(this);
+			}
+			System.out.println("dead");
+		}
 	}
 
 	
