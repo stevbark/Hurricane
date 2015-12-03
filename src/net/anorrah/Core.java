@@ -17,6 +17,7 @@ public class Core extends Applet implements Runnable
 	public static final int res = 1;//pixel to frame
 	public static double offset_Y = 0, offset_X = 0;
 	public static int dir = 0;
+	public static int lol;
 	public static boolean moving = false;
 	public static boolean running = false;
 	public static boolean inGame = true;
@@ -157,13 +158,34 @@ public class Core extends Applet implements Runnable
 		Graphics g = screen.getGraphics();
 		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
-		//UI
+		// UI DRAWING STARTS HERE
+		
+		int stringOffsetY = 23;
+		int weaponOffsetX = 400;
+		//HP BAR
+		g.setColor(Color.BLACK);
+		g.fillRect(40, 10, 150, 20);
+		
 		g.setColor(Color.RED);
-		g.fillRect(40, 10, 200, 20);
+		g.fillRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20);
+		
 		
 		g.setColor(Color.WHITE);
-		g.drawString("HP: " + player.getHealth() + "/" + player.maxHealth, 12,23);
-				
+		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		
+		// Primary Weapon 
+		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
+		g.drawRoundRect(weaponOffsetX+55, 1, 33, 33, 5, 5);
+		
+		// Secondary Weapon
+		g.drawString("RANGED: ", weaponOffsetX+ 100, stringOffsetY);
+		g.drawRoundRect(weaponOffsetX+55+105, 1, 33, 33, 5, 5);
+
+		
+		// Item
+		g.drawString("ITEM: ",220, stringOffsetY);
+		g.drawRoundRect(220+40, 1, 33, 33, 5, 5);
+		
 		
 		g.setColor(Color.orange);
 		g.drawString("offset_X: " + (int)offset_X , 590, 510);
