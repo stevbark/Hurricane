@@ -54,6 +54,9 @@ public class Tile
 	public static int[] wall_open_left = {2,5};
 	public static int[] wall_open_right = {3,5};
 	
+	public static int[] pit = {0,7};
+	public static int[] boulder = {1,7};
+	
 	//items
 	public static int[] item  = {0,0};
 	public static int[] item2  = {1,1};
