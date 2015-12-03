@@ -15,6 +15,8 @@ public abstract class Entity
 	protected int maxHealth;
 	protected double moveSpeed;
 	protected Image image;
+	public boolean turned = false;
+	
 	
 	private Rectangle collider;
 	private Rectangle other = new Rectangle();
@@ -66,6 +68,8 @@ public abstract class Entity
 		{
 			b.doOnTurn();
 		}
+		turned = false;
+		
 		cleanup();
 	}
 

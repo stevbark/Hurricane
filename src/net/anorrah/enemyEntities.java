@@ -36,25 +36,24 @@ public abstract class enemyEntities extends Entity {
 			tY=j;
 			Rx = tX*32;
 			Ry = tY*32;
-			System.out.println("enemy moved to x:" + tX + " y:" +tY);
+			//System.out.println("enemy moved to x:" + tX + " y:" +tY);
 		}
+		turned = false;
 	}
 	
 	public boolean canMove(int i, int j)
 	{
-		System.out.println("\n enemy Currently at:\t" + tX + " " + tY);
-		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
+		if(turned)
 		{
-			return false;
-		}
-		else if(gk.level.item[i][j].id != Tile.blank)
-		{
-			return false;
-		}
-		
-		else if(gk.level.solid[i][j].id == Tile.blank)
-		{
-			return true;
+			System.out.println("\n enemy Currently at:\t" + tX + " " + tY);
+			if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
+				{
+				return false;
+				}
+			else if(gk.level.solid[i][j].id == Tile.blank)
+				{
+				return true;
+				}
 		}
 		return false;
 	}

@@ -2,7 +2,9 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import net.anorrah.damageObject.Type;
 
@@ -60,6 +62,16 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
+	/*public void takeTurn()
+	{
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("About to take a player turn");
+		while(!sc.next().equalsIgnoreCase("w") || !sc.next().equalsIgnoreCase("a")||
+				!sc.next().equalsIgnoreCase("s")|| !sc.next().equalsIgnoreCase("d"));
+	System.out.println("Took a player turn");
+	}
+	*/
 	public void setUp()
 	{
 		equippedArmor.onEquip();

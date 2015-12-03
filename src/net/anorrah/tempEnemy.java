@@ -69,7 +69,8 @@ public class tempEnemy extends enemyEntities{
 //	}
 
 	@Override
-	public void takeTurn() {
+	public void takeTurn() 
+	{
 		canAttack();		
 	}
 }

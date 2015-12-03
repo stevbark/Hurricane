@@ -54,8 +54,6 @@ public class Room {
 
 					}
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2)){
-						Rectangle rec = new Rectangle();
-						int[] sol = {1,1};
 						Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.item);
 						blocks.add(block);
 					}

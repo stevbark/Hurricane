@@ -181,6 +181,8 @@ public class Core extends Applet implements Runnable
 			Entity otherobj = entities.get(j);
 			
 			otherobj.takeTurn();
+			
+			System.out.println("Someone took a turn, " + otherobj.x + " " + otherobj.y);
 		}
 		
 	}
