@@ -62,11 +62,21 @@ public abstract class Entity
 		}
 	}
 	
+	public void onHit(Entity enemy, damageObject damage)
+	{
+		for(bonus b:bonuses)
+		{
+			b.onBeenHit(this,enemy, damage);
+		}
+		takeDamage(damage);
+	//	equippedArmor.onBeenHit(enemy,damage);
+	}
+	
 	public void takeTurn()
 	{
 		for(bonus b: bonuses)
 		{
-			b.doOnTurn();
+			b.doOnTurn(this);
 		}
 		turned = false;
 		
@@ -98,6 +108,18 @@ public abstract class Entity
 	{
 		x += (moveSpeed*delta) * dx;
 		y += (moveSpeed*delta) * dy;
+	}
+	
+	public void move(int i, int j)
+	{
+//		if(canMove(i,j))
+//		{
+//			tX =i;
+//			tY=j;
+//			Rx = tX*32;
+//			Ry = tY*32;
+//			System.out.println("enemy moved to x:" + tX + " y:" +tY);
+//		}
 	}
 	
 	public void setImage(int[] id)
@@ -141,6 +163,12 @@ public abstract class Entity
 	{
 		return health;
 	}
+	
+	public void takeDamage(damageObject damage)
+	{
+		health -= damage.damage;
+	}
+
 	
 	public abstract void on_collided(Entity entity);
 	

@@ -93,37 +93,37 @@ public abstract class ItemObject {
 		 return null;
 	}
 	
-	public void onEquip()
+	public void onEquip(Entity user)
 	{
 		if(myBonus !=null)
 		{
 			for(bonus b:myBonus)
 			{
-				b.onEquipped();
+				b.onEquipped(user);
 				Core.player.addToList(b);
 			}
 		}
 	}
 	
-	public void onUnequip()
+	public void onUnequip(Entity user)
 	{
 		if(myBonus !=null)
 		{
 			for(bonus b:myBonus)
 			{
 				Core.player.removeFromList(b);
-				b.onUnequipped();
+				b.onUnequipped(user);
 			}
 		}
 	}
 	
-	public void onUseOnSelf()
+	public void onUseOnSelf(Entity user)
 	{
 		if(myBonus!=null){
 			
 			for(bonus b:myBonus)
 			{	
-				b.onUseOnSelf();				
+				b.onUseOnSelf(user);				
 			}
 			charges--;
 			if(charges <=0)

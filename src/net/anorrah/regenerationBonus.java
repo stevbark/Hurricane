@@ -10,10 +10,10 @@ public class regenerationBonus extends bonus {
 		turnsLeft = 5;
 	}
 	
-	public void onTurn()
+	public void onTurn(Entity user)
 	{
-		Core.player.heal(healATurn);
-		System.out.println("healed:" + healATurn+ " playerHealth:" + Core.player.getHealth());
+		user.heal(healATurn);
+		System.out.println("healed:" + healATurn+ " playerHealth:" + user.getHealth());
 	}
 	
 }

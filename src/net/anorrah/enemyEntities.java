@@ -58,11 +58,7 @@ public abstract class enemyEntities extends Entity {
 		return false;
 	}
 	
-	public void takeDamage(damageObject damage)
-	{
-		health -= damage.damage;
-	}
-
+	
 	
 	
 }

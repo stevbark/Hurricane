@@ -107,7 +107,7 @@ public class Core extends Applet implements Runnable
 				Tile.size);
 		 
 		entities.add(player);
-		player.setUp();
+		player.setUp(player);
 		entities.add(TempEnemy);
 
 	}
@@ -157,6 +157,14 @@ public class Core extends Applet implements Runnable
 		Graphics g = screen.getGraphics();
 		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
+		//UI
+		g.setColor(Color.RED);
+		g.fillRect(40, 10, 200, 20);
+		
+		g.setColor(Color.WHITE);
+		g.drawString("HP: " + player.getHealth() + "/" + player.maxHealth, 12,23);
+				
+		
 		g.setColor(Color.orange);
 		g.drawString("offset_X: " + (int)offset_X , 590, 510);
 		g.drawString("offset_Y: " + (int)offset_Y , 590, 525);
@@ -167,6 +175,7 @@ public class Core extends Applet implements Runnable
 		{
 			entities.get(i).render(g);
 		}
+		
 		
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);

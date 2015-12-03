@@ -2,7 +2,7 @@ package net.anorrah;
 
 public class EnfeeblementBonus extends bonus{
 
-	public void onAttack(enemyEntities enemy,damageObject damage, boolean onHit)
+	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		
 		if( ((int) (Math.random()%2) )==0)

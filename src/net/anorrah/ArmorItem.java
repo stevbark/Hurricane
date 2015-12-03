@@ -6,10 +6,10 @@ public class ArmorItem extends ItemObject {
 
 //	double defence;
 	bonus bon = new knockback();
-	public ArmorItem(int currentLevel) {
+	public ArmorItem( int currentLevel) {
 		super(currentLevel);
 		
-		myBonus.add(new ArmorBonus(enchantment));
+		myBonus.add(new ArmorBonus( enchantment));
 		myBonus.add(bon);
 		
 		possibleBonuses = new ArrayList<bonus>();

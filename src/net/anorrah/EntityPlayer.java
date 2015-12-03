@@ -62,6 +62,7 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
+<<<<<<< HEAD
 	/*public void takeTurn()
 	{
 		
@@ -73,11 +74,14 @@ public class EntityPlayer extends Entity
 	}
 	*/
 	public void setUp()
+=======
+	public void setUp(Entity user)
+>>>>>>> 02ef41811998a3194870850f4753a912aa98e508
 	{
-		equippedArmor.onEquip();
+		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
 		System.out.println("bandaid");
-		regenTest.onEquip();
+		regenTest.onEquip(user);
 	}
 	
 
@@ -242,7 +246,7 @@ public class EntityPlayer extends Entity
 		damageObject damage = new damageObject(0, Type.physical);
 		for(bonus b:bonuses)
 		{
-			b.onAttack(enemy, damage, true);
+			b.onAttack(this,enemy, damage, true);
 		}
 		enemy.takeDamage(damage);
 		
@@ -282,14 +286,15 @@ public class EntityPlayer extends Entity
 		
 	}
 	
-	public void onHit(enemyEntities enemy, damageObject damage)
-	{
-		for(bonus b:bonuses)
-		{
-			b.onBeenHit(enemy, damage);
-		}
-	//	equippedArmor.onBeenHit(enemy,damage);
-	}
+//	public void onHit(Entity enemy, damageObject damage)
+//	{
+//		for(bonus b:bonuses)
+//		{
+//			b.onBeenHit(this,enemy, damage);
+//		}
+//		takeDamage(damage);
+//	//	equippedArmor.onBeenHit(enemy,damage);
+//	}
 	
 	public void setTilePosition(int r, int c)//row and column
 	{
