@@ -12,7 +12,7 @@ public class EntityPlayer extends Entity
 	public int moveSpeed;
 	public static boolean isMoving = false;
 	
-	public static int Rx,Ry, tX, tY;
+
 	private static int moveDelta = 0;
 	
 	public static int player_room_num = 1;
