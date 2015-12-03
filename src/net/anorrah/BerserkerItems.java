@@ -1,15 +1,14 @@
 package net.anorrah;
 
-public class potionObject extends otherObject {
+public class BerserkerItems extends otherItemObject{
 
-	public potionObject(int currentLevel) {
+	public BerserkerItems(int currentLevel) {
 		super(currentLevel);
+		myBonus.add(new berserkerBoost());
+		hasCharges = true;
+		charges = 5;
 		// TODO Auto-generated constructor stub
-//		myBonus.add();
-		charges = 1;
-		hasCharges= true;
 	}
-	
 	
 	@Override
 	public String description() {
