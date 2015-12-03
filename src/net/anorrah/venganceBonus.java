@@ -2,7 +2,7 @@ package net.anorrah;
 
 public class venganceBonus extends bonus {
 	
-	public void onBeenHit(enemyEntities enemy, damageObject damage)
+	public void onBeenHit(Entity user,Entity enemy, damageObject damage)
 	{
 		int doIReflect = ((int) (Math.random()*100))%2;
 		{
