@@ -8,6 +8,8 @@ public class SwordItem extends MeleeWeaponItem {
 	{
 		super(currentLevel);
 		damage = 10+enchantment;
+		myBonus.add(new MeleeWeaponBonus(damage));
+		
 		str = r;
 	}
 

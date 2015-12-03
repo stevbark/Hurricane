@@ -18,10 +18,10 @@ public class RangedWeaponItem extends ItemObject{
 		return null;
 	}
 
-	public double attack()
-	{
-		return damage;
-	}
+//	public double attack()
+//	{
+//		return damage;
+//	}
 	
 	
 }

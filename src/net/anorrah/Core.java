@@ -17,6 +17,7 @@ public class Core extends Applet implements Runnable
 	public static final int res = 1;//pixel to frame
 	public static double offset_Y = 0, offset_X = 0;
 	public static int dir = 0;
+	public static int lol;
 	public static boolean moving = false;
 	public static boolean running = false;
 	public static boolean inGame = true;
@@ -109,6 +110,7 @@ public class Core extends Applet implements Runnable
 				Tile.size);
 		 
 		entities.add(player);
+		player.setUp(player);
 		entities.add(TempEnemy);
 
 	}
@@ -163,6 +165,33 @@ public class Core extends Applet implements Runnable
 		Graphics g = screen.getGraphics();
 		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
+		// UI DRAWING STARTS HERE
+		
+		int stringOffsetY = 23;
+		int weaponOffsetX = 400;
+		//HP BAR
+		g.setColor(Color.BLACK);
+		g.fillRect(40, 10, 150, 20);
+		
+		g.setColor(Color.RED);
+		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		
+		g.setColor(Color.WHITE);
+		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		
+		// Item
+		g.drawString("ITEM: ",220, stringOffsetY);
+		g.drawRoundRect(220+40, 1, 33, 33, 5, 5);
+		
+		// Primary Weapon 
+		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
+		g.drawRoundRect(weaponOffsetX+55, 1, 33, 33, 5, 5);
+		
+		// Secondary Weapon
+		g.drawString("RANGED: ", weaponOffsetX+ 100, stringOffsetY);
+		g.drawRoundRect(weaponOffsetX+55+105, 1, 33, 33, 5, 5);
+		
+		
 		g.setColor(Color.orange);
 		g.drawString("LEVEL: " + level.num_level , 590, 510);
 		g.drawString("FPS: " + renderFPS, 600, 540);
@@ -172,6 +201,7 @@ public class Core extends Applet implements Runnable
 		{
 			entities.get(i).render(g);
 		}
+		
 		
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);

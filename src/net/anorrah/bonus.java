@@ -4,21 +4,23 @@ public abstract class bonus {
 	
 	protected boolean isTemp= false;
 	protected int turnsLeft;
+	
 
-	public void onBeenHit(enemyEntities enemy, damageObject damage)
+	public void onBeenHit(Entity user, Entity enemy, damageObject damage)
 	{
 		
 	}
 	
-	public void onDeath()
+	public void onDeath(Entity user)
 	{
 		
 	}
 	
-	final public void doOnTurn()
+	final public void doOnTurn(Entity user)
 	{
 		if(isTemp)
 		{
+			onTurn(user);
 			turnsLeft--;
 			if(turnsLeft<=0)
 			{
@@ -28,33 +30,33 @@ public abstract class bonus {
 		}
 	}
 	
-	public void onTurn()
+	public void onTurn(Entity user)
 	{
 		
 	}
 	
-	public void onAttack(enemyEntities enemy,damageObject damage, boolean onHit)
+	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		
 	}
 	
-	public void onAttackPosition(int x, int y)
+	public void onAttackPosition(Entity user,int x, int y)
 	{
 		
 	}
 
-	public void onUseOnSelf() {
+	public void onUseOnSelf(Entity user) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void onUnequipped() {
+	public void onUnequipped(Entity user) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	// do something special at time of bonus
-	public void onEquipped() {
+	public void onEquipped(Entity user) {
 		// TODO Auto-generated method stub
 		
 	}
