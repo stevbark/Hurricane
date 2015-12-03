@@ -10,8 +10,8 @@ public class InstantHealBonus extends bonus {
 		isTemp= true;
 	}
 	
-	public void onUseOnSelf()
+	public void onUseOnSelf(Entity user)
 	{
-		Core.player.heal(healAmount);
+		user.heal(healAmount);
 	}
 }

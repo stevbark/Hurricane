@@ -10,7 +10,7 @@ public class feebleBonus extends bonus{
 		turnsLeft = 1;
 	}
 	//changes this to work for enemies
-	public void onAttack(enemyEntities enemy,damageObject damage, boolean onHit)
+	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		damage.damage = damage.damage/2;
 	}

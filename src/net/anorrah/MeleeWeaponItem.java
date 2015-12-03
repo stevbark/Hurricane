@@ -14,15 +14,12 @@ public abstract class MeleeWeaponItem extends ItemObject{
 	}
 
 	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String description();
 
-	public damageObject attack()
-	{
-		return new damageObject(damage, null);
-	}
+//	public damageObject attack()
+//	{
+//	//	return new damageObject(damage, null);
+//	}
 
 	
 }

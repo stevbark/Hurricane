@@ -9,7 +9,7 @@ public class MeleeWeaponBonus extends bonus {
 		this.weaponDamage = damage;
 	}
 	
-	public void onAttack(enemyEntities enemy,damageObject damage, boolean onHit)
+	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		damage.damage +=weaponDamage;
 	}
