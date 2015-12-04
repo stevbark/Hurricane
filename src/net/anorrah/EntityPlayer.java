@@ -62,7 +62,7 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	/*public void takeTurn()
 	{
 		
@@ -73,10 +73,9 @@ public class EntityPlayer extends Entity
 	System.out.println("Took a player turn");
 	}
 	*/
-	public void setUp()
-=======
+	public void setUp(){}
 	public void setUp(Entity user)
->>>>>>> 02ef41811998a3194870850f4753a912aa98e508
+//>>>>>>> 02ef41811998a3194870850f4753a912aa98e508
 	{
 		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
