@@ -18,6 +18,8 @@ public class Tile
 	public static int[] floor6 = {5, 0};
 	public static int[] floor7 = {6, 0};
 	public static int[] floorend = {7,0};
+	public static int[] exit = {8,0};
+	public static int[] sealed = {9,0};
 	
 	//solids
 	public static int[] wall_left1 = {0,0};
@@ -51,6 +53,9 @@ public class Tile
 	public static int[] wall_right_open_bottom = {1,6};
 	public static int[] wall_open_left = {2,5};
 	public static int[] wall_open_right = {3,5};
+	
+	public static int[] pit = {0,7};
+	public static int[] boulder = {1,7};
 	
 	//items
 	public static int[] item  = {0,0};
