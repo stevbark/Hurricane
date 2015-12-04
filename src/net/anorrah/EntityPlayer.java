@@ -240,8 +240,11 @@ public class EntityPlayer extends Entity
 	    
 	}
 	
-	public void attack(enemyEntities enemy)
+	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
+			//How do we target a specific enemy?
+			enemyEntities enemy)
 	{
+		
 		System.out.println("smacked!" + tX+" " +tY);
 		damageObject damage = new damageObject(0, Type.physical);
 		for(bonus b:bonuses)
