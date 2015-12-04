@@ -2,7 +2,9 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import net.anorrah.damageObject.Type;
 
@@ -61,7 +63,20 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
+//<<<<<<< HEAD
+	/*public void takeTurn()
+	{
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("About to take a player turn");
+		while(!sc.next().equalsIgnoreCase("w") || !sc.next().equalsIgnoreCase("a")||
+				!sc.next().equalsIgnoreCase("s")|| !sc.next().equalsIgnoreCase("d"));
+	System.out.println("Took a player turn");
+	}
+	*/
+	public void setUp(){}
 	public void setUp(Entity user)
+//>>>>>>> 02ef41811998a3194870850f4753a912aa98e508
 	{
 		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
@@ -234,8 +249,11 @@ public class EntityPlayer extends Entity
 	    
 	}
 	
-	public void attack(enemyEntities enemy)
+	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
+			//How do we target a specific enemy?
+			enemyEntities enemy)
 	{
+		
 		System.out.println("smacked!" + tX+" " +tY);
 		damageObject damage = new damageObject(0, Type.physical);
 		for(bonus b:bonuses)

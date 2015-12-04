@@ -55,9 +55,23 @@ public class Room {
 						//place an enemy  at [x,y](roll again for enemy type)
 
 					}
+					else if(dice > chanceBlocked-Math.ceil(levelNum/2)){
+						int flip = (int)(Math.random()*2);
+						if(flip == 0)
+							{
+							Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit);
+							blocks.add(block);
+							}
+						else
+						{
+							Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.boulder);
+							blocks.add(block);
+						}
+/*=======
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
 					{
 						blocks.add(new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit));
+>>>>>>> 839140e688443b194785cfea5ce91f605ca2f1ca*/
 					}
 					else {
 						//place a trap tile at [x,y]

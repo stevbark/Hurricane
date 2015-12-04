@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public abstract class Entity 
+public abstract class Entity
 {
 	
 	protected double x,y;
@@ -16,6 +16,8 @@ public abstract class Entity
 	protected int maxHealth;
 	protected double moveSpeed;
 	protected Image image;
+	public boolean turned = false;
+	
 	
 	private Rectangle collider;
 	private Rectangle other = new Rectangle();
@@ -77,6 +79,8 @@ public abstract class Entity
 		{
 			b.doOnTurn(this);
 		}
+		turned = false;
+		
 		cleanup();
 	}
 
