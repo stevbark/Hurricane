@@ -185,6 +185,18 @@ public abstract class Entity
 	}
 
 	
+	public void setTilePosition(int r, int c)//row and column
+	{
+		tX = r;
+		tY = c;
+		Rx = tX*32;
+		Ry = tY*32;
+		System.out.println("Updated Tile x and y:\t" + tX + "\t" + tY);
+		System.out.println("Updated Render x and y:\t" + Rx + "\t" + Ry);
+
+	}
+	
+	
 	public abstract void on_collided(Entity entity);
 	
 	

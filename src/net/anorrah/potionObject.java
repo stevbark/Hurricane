@@ -10,7 +10,11 @@ public class potionObject extends otherObject {
 		hasCharges= true;
 	}
 	
-	
+	public void onUseOnSelf(Entity user)
+	{
+		user.heal(30);
+		super.onUseOnSelf(user);
+	}
 	@Override
 	public String description() {
 		// TODO Auto-generated method stub
