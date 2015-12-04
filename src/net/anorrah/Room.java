@@ -44,24 +44,32 @@ public class Room {
 			for(int y = 2; y < Level.height-2; y++)
 			{
 				int dice = (int) (Math.random()*100)+1;
-				
+				if(x != Level.center_w && y != Level.center_h)
+				{
 					if(dice > chanceEmpty-levelNum)
 					{
 						//place an empty tile at [x,y] 
 					}
-					else if(dice > chanceEnemy- Math.ceil(levelNum/2)){
+					else if(dice > chanceEnemy- Math.ceil(levelNum/2))
+					{
 						//place an enemy  at [x,y](roll again for enemy type)
 
 					}
+<<<<<<< HEAD
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2)){
 						Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.item);
 						blocks.add(block);
+=======
+					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
+					{
+						blocks.add(new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit));
+>>>>>>> 839140e688443b194785cfea5ce91f605ca2f1ca
 					}
 					else {
 						//place a trap tile at [x,y]
 						
 					}
-				
+				}
 			}
 			
 		}
