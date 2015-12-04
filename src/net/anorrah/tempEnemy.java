@@ -72,4 +72,10 @@ public class tempEnemy extends enemyEntities{
 	public void takeTurn() {
 		canAttack();		
 	}
+
+	@Override
+	public void on_death() {
+		// TODO Auto-generated method stub
+		
+	}
 }

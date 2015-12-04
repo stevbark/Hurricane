@@ -20,6 +20,16 @@ public abstract class ItemObject {
 		possibleBonuses = new ArrayList<bonus>();
 	}
 	
+	public boolean hasCharges()
+	{
+		return hasCharges;
+	}
+	
+	public int charges()
+	{
+		return charges;
+	}
+	
 	public abstract String description();
 	
 	public int generateBonus(int currentLevel) 	

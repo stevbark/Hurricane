@@ -35,6 +35,7 @@ public class EntityPlayer extends Entity
 	private MeleeWeaponItem equippedWeapon;
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
+	private boolean isInvisible;
 	
 //	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
 //	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
@@ -66,9 +67,17 @@ public class EntityPlayer extends Entity
 		bandAidObject regenTest= new bandAidObject(0);
 		System.out.println("bandaid");
 		regenTest.onEquip(user);
+		tempHealthBonus b = new tempHealthBonus(10000,100);
+		addToList(b);
+		rangedBonus z = new rangedBonus();
+		addToList(z);
+		
 	}
 	
-
+	public boolean isInvisible()
+	{
+		return isInvisible;
+	}
 	
 	public ItemObject getUsableItem()
 	{
@@ -238,6 +247,14 @@ public class EntityPlayer extends Entity
 		//equippedWeapon.attack();
 	}
 	
+	public void attack(int targX, int targY)
+	{
+		for(bonus b:bonuses)
+		{
+			b.onAttackPosition(this, targX,targY);
+		}
+	}
+	
 	public void tick(double delta)
 	{
 		
@@ -269,6 +286,20 @@ public class EntityPlayer extends Entity
 	public void on_collided(Entity entity) 
 	{
 		
+	}
+	
+	public void on_death()
+	{
+		
+		for(bonus b:bonuses)
+		{
+			b.onDeath(this);
+		}
+		
+		if(health<=0)
+		{
+			gk.stop();
+		}
 	}
 	
 //	public void onHit(Entity enemy, damageObject damage)

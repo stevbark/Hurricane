@@ -199,5 +199,7 @@ public abstract class Entity
 	
 	public abstract void on_collided(Entity entity);
 	
+	public abstract void on_death();
+	
 	
 }

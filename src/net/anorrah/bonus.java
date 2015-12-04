@@ -60,4 +60,16 @@ public abstract class bonus {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	protected void explode(Entity user, bonus effect, int x, int y)
+	{
+		for(int xradius = x-1;xradius<=x+1;xradius++)
+		{
+			for(int yradius = y-1;yradius<=y+1;yradius++)
+			{
+				
+				System.out.println("explode hit X: " + xradius + " Y: " + yradius);
+			}
+		}
+	}
 }

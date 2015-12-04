@@ -93,6 +93,7 @@ public class Core extends Applet implements Runnable
 	
 	public void stop()
 	{
+		System.out.println("stop");
 		running = false;
 	}
 	
