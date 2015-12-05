@@ -98,10 +98,10 @@ public class Core extends Applet implements Runnable
 		running = false;
 	}
 	
-//	public void setWaitForPlayerToFalse()
-//	{
-//		WaitForPlayer = false;
-//	}
+	public void setWaitForPlayerToFalse()
+	{
+		WaitForPlayer = false;
+	}
 	
 	public void initEntities()
 	{
