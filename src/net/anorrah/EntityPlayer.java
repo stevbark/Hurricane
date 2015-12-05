@@ -70,7 +70,7 @@ public class EntityPlayer extends Entity
 		bandAidObject regenTest= new bandAidObject(0);
 		System.out.println("bandaid");
 		regenTest.onEquip(user);
-		tempHealthBonus b = new tempHealthBonus(100,100);
+		tempHealthBonus b = new tempHealthBonus(4,100);
 		addToList(b);
 		rangedBonus z = new rangedBonus();
 		addToList(z);
