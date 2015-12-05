@@ -5,6 +5,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.anorrah.items.damageObject;
+import net.anorrah.items.bonus.bonus;
+
 public abstract class Entity 
 {
 	
@@ -12,7 +15,7 @@ public abstract class Entity
 	protected static int Rx,Ry, tX, tY;
 	protected int width, height, dx,dy;
 	protected int id[] = {0,0};
-	protected int health;
+	public int health;
 	protected int maxHealth;
 	protected double moveSpeed;
 	protected Image image;

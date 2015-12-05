@@ -58,8 +58,24 @@ public class Tile
 	public static int[] boulder = {1,7};
 	
 	//items
-	public static int[] item  = {0,0};
-	public static int[] item2  = {1,1};
+	public static int[] chest_open  = {0,0};
+	public static int[] chest_closed  = {1,0};
+	//item icons
+	public static int[] empty_item = {2,0};
+	public static int[] sword_icon = {0,1};
+	public static int[] hammer_icon = {1,1};
+	public static int[] spear_icon = {2,1};
+	public static int[] axe_icon = {3,1};
+	public static int[] whip_icon = {4,1};
+	public static int[] bow_icon = {5,1};
+	public static int[] fireball_icon = {6,1};
+	public static int[] lightning_icon = {7,1};
+	public static int[] laser_icon = {8,1};
+	//weapon:melee enchantments, filters
+	public static int[] no_enchant = {9,1};
+	public static int[] fire_melee_enchant = {7,0};
+	public static int[] enfeeblement = {8,0};
+	public static int[] vampire_melee_enchant = {9,0};
 	
 	//characters
 	public static int[] playertile_DOWN = {0, 0};
@@ -76,7 +92,7 @@ public class Tile
 		{
 			Tile.background = ImageIO.read(new File("res/images/floor_tiles.png"));
 			Tile.solid = ImageIO.read(new File("res/images/wall_tiles.png"));
-			Tile.items = ImageIO.read(new File("res/images/chests_32x32.png"));
+			Tile.items = ImageIO.read(new File("res/images/items.png"));
 			Tile.characters = ImageIO.read(new File("res/images/character_test.png"));
 		}
 		catch(Exception e)

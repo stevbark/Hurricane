@@ -47,7 +47,7 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_SPACE:
-			Core.player.attack();
+			//Core.player.attack();
 			break;
 			
 		case KeyEvent.VK_ESCAPE:

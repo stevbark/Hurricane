@@ -3,6 +3,7 @@ package net.anorrah;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -163,9 +164,16 @@ public class Core extends Applet implements Runnable
 	public void render()
 	{
 		Graphics g = screen.getGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
 		level.render(g, (int)(offset_X), (int)(offset_Y), (pixel.width/Tile.size), (pixel.height/Tile.size));
 		
+		for(int i = 0; i < entities.size(); i++)
+		{
+			entities.get(i).render(g);
+		}
 		// UI DRAWING STARTS HERE
+		//g.setFont(new Font("Arial",Font.PLAIN,10));
 		
 		int stringOffsetY = 23;
 		int weaponOffsetX = 400;
@@ -176,33 +184,33 @@ public class Core extends Applet implements Runnable
 		g.setColor(Color.RED);
 		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
 		
-		g.setColor(Color.WHITE);
+		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
 		
 		// Item
 		g.drawString("ITEM: ",220, stringOffsetY);
-		g.drawRoundRect(220+40, 1, 33, 33, 5, 5);
+		g.drawRoundRect(255, 0, 33, 32, 5, 5);
 		
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
-		g.drawRoundRect(weaponOffsetX+55, 1, 33, 33, 5, 5);
+		g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
 		
 		// Secondary Weapon
-		g.drawString("RANGED: ", weaponOffsetX+ 100, stringOffsetY);
-		g.drawRoundRect(weaponOffsetX+55+105, 1, 33, 33, 5, 5);
+		g.drawString("RANGED: ", weaponOffsetX+ 117, stringOffsetY);
+		g.drawRoundRect(weaponOffsetX+175, 0, 33, 32, 5, 5);
 		
-		
-		g.setColor(Color.orange);
+		g.setColor(Color.red);
 		g.drawString("LEVEL: " + level.num_level , 590, 510);
 		g.drawString("FPS: " + renderFPS, 600, 540);
 		
-		//g.translate(-(player.Rx - VIEWPORT_SIZE.width/2 + Tile.size/2),-(player.Ry - VIEWPORT_SIZE.height/2 + Tile.size/2));
-		for(int i = 0; i < entities.size(); i++)
+		if(!inGame)
 		{
-			entities.get(i).render(g);
+			g.setColor(new Color(1,1,1,0.3f));
+			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			g.setColor(Color.white);
+			g.drawString("PAUSED", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
 		}
-		
-		
+
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);
 		g.dispose();//reset the image each tick
