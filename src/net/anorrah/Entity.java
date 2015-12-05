@@ -180,11 +180,14 @@ public abstract class Entity
 		if(health <=0)
 		{
 			health = 0;
-			for(bonus b: bonuses)
-			{
-				b.onDeath(this);
-			}
-			System.out.println("dead");
+			
+			on_death();
+//			for(bonus b: bonuses)
+//			{
+//				
+//				b.onDeath(this);
+//			}
+//			System.out.println("dead");
 		}
 	}
 

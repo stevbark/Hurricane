@@ -22,6 +22,7 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bW = true;
+				Core.t.WaitForPlayer=false;
 			}
 			break;
 			
@@ -29,6 +30,7 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bA = true;
+				Core.t.WaitForPlayer=false;
 			}
 			break;
 			
@@ -36,6 +38,7 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bS = true;
+				Core.t.WaitForPlayer=false;
 			}
 			break;
 			
@@ -43,12 +46,17 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bD = true;
+				Core.t.WaitForPlayer=false;
 			}
 			break;
 			
 		case KeyEvent.VK_SPACE:
 			//Core.player.attack(null);
-			Core.player.attack(Core.player.getlocationX(),5);
+			if(Core.running)
+			{
+				Core.player.attack(Core.player.getlocationX(),5);
+				Core.t.WaitForPlayer=false;
+			}
 			break;
 			
 		case KeyEvent.VK_ESCAPE:

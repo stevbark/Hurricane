@@ -63,29 +63,19 @@ public class EntityPlayer extends Entity
 		currentImage = super.id;
 	}
 	
-//<<<<<<< HEAD
-	/*public void takeTurn()
-	{
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("About to take a player turn");
-		while(!sc.next().equalsIgnoreCase("w") || !sc.next().equalsIgnoreCase("a")||
-				!sc.next().equalsIgnoreCase("s")|| !sc.next().equalsIgnoreCase("d"));
-	System.out.println("Took a player turn");
-	}
-	*/
-	public void setUp(){}
+
 	public void setUp(Entity user)
-//>>>>>>> 02ef41811998a3194870850f4753a912aa98e508
 	{
 		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
 		System.out.println("bandaid");
 		regenTest.onEquip(user);
-		tempHealthBonus b = new tempHealthBonus(10000,100);
+		tempHealthBonus b = new tempHealthBonus(100,100);
 		addToList(b);
 		rangedBonus z = new rangedBonus();
 		addToList(z);
+		GABonus ga = new GABonus();
+		addToList(ga);
 		
 	}
 	
@@ -162,7 +152,7 @@ public class EntityPlayer extends Entity
 					anim_frame = 0;
 				}
 			// enable if you want to enable enemy attacks when you go to X:10 Y:7 ( one sqaure above your start location) when you hit the W key
-				gk.doATurn();
+			//	gk.doATurn();
 			}
 			else
 			{
@@ -246,6 +236,7 @@ public class EntityPlayer extends Entity
 		}
 		Rx = tX*32;
 		Ry = tY*32;
+		
 	    
 	}
 	
@@ -316,6 +307,7 @@ public class EntityPlayer extends Entity
 		
 		if(health<=0)
 		{
+			System.out.println("You are Dead");
 			gk.stop();
 		}
 	}

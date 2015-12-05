@@ -16,6 +16,11 @@ public abstract class bonus {
 		
 	}
 	
+	public void invisible()
+	{
+		
+	}
+	
 	final public void doOnTurn(Entity user)
 	{
 		if(isTemp)
