@@ -16,6 +16,7 @@ public class tempHealthBonus extends bonus{
 	
 	public void onBeenHit(Entity user, Entity enemy, damageObject damage)
 	{
+		int d = damage.damage;
 		if(damage.damage <=tempHealth)
 		{
 			tempHealth -= damage.damage;
@@ -27,5 +28,6 @@ public class tempHealthBonus extends bonus{
 			tempHealth = 0;
 			
 		}
+		System.out.println("Shields UP! temp Health: "+ tempHealth + " damage is: " + d);
 	} 
 }

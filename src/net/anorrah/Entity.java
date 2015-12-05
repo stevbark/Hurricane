@@ -189,6 +189,11 @@ public abstract class Entity
 
 	
 	public abstract void on_collided(Entity entity);
+
+	public void on_death() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

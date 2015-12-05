@@ -48,6 +48,8 @@ public class Core extends Applet implements Runnable
 	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
 	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
 	public tempEnemy TempEnemy;
+	
+	public boolean WaitForPlayer = true;
 	//Constructor
 	public Core()
 	{
@@ -95,6 +97,11 @@ public class Core extends Applet implements Runnable
 	public void stop()
 	{
 		running = false;
+	}
+	
+	public void setWaitForPlayerToFalse()
+	{
+		WaitForPlayer = false;
 	}
 	
 	public void initEntities()
@@ -224,6 +231,8 @@ public class Core extends Applet implements Runnable
 			Entity otherobj = entities.get(j);
 			
 			otherobj.takeTurn();
+			
+			//System.out.println("Someone took a turn, " + otherobj.x + " " + otherobj.y);
 		}
 		
 	}
@@ -238,11 +247,11 @@ public class Core extends Applet implements Runnable
 			long update_length = now - last_loop_time;
 			last_loop_time = now;
 			
-			double delta = update_length / (double)OPTIMAL_TIME;
+			double delta = update_length / (double)OPTIMAL_TIME; 
 			lastFPSTIME += update_length;
 			fps++;
 			if(lastFPSTIME >= 1000000000)
-			{
+			{ 
 				renderFPS = fps;
 				fps = 0;
 				lastFPSTIME = 0;
@@ -250,6 +259,11 @@ public class Core extends Applet implements Runnable
 			
 			tick(delta);
 			render();
+			if(!WaitForPlayer)
+			{
+				doATurn();
+				WaitForPlayer = true;
+			}
 			//doATurn();
 			try//give the thread some time to calculate
 			{
@@ -257,7 +271,7 @@ public class Core extends Applet implements Runnable
 			}
 			catch(Exception e)
 			{
-				System.out.println(e.getMessage() + " lol");
+				System.out.println(e.getMessage());
 			}
 		}
 	}

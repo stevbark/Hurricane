@@ -2,7 +2,9 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import net.anorrah.items.*;
 import net.anorrah.items.bonus.*;
@@ -26,7 +28,6 @@ public class EntityPlayer extends Entity
 	private Core gk;
 	private final int max_Xdistance;
 	private final int max_Ydistance;
-	private int camx =  0,camy = 0;
 	
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
@@ -34,6 +35,9 @@ public class EntityPlayer extends Entity
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
+	private boolean isInvisible;
+	
+	public static int facing = 4;//default is facing downward
 	
 //	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
 //	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
@@ -92,15 +96,26 @@ public class EntityPlayer extends Entity
 		//meleeitem.itemObject = new SwordItem("",Level.num_level);
 	}
 	
+
 	public void setUp(Entity user)
 	{
 		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
-		System.out.println("bandaid");
+		//System.out.println("bandaid");
 		regenTest.onEquip(user);
+		tempHealthBonus b = new tempHealthBonus(100,100);
+		addToList(b);
+		rangedBonus z = new rangedBonus();
+		addToList(z);
+		GABonus ga = new GABonus();
+		addToList(ga);
+		
 	}
 	
-
+	public boolean isInvisible()
+	{
+		return isInvisible;
+	}
 	
 	public ItemObject getUsableItem()
 	{
@@ -122,7 +137,7 @@ public class EntityPlayer extends Entity
 		{
 			meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
-			System.out.println(str);
+			//System.out.println(str);
 			gk.level.item[i][j].id = Tile.blank;
 			return false;
 		}
@@ -146,6 +161,7 @@ public class EntityPlayer extends Entity
 		if(gk.bW)
 		{
 			currentImage = Tile.playertile_UP;
+			facing = 3;
 			if(canMove(tX,tY-1) && !isMoving)
 			{
 				isMoving = true;
@@ -153,7 +169,6 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				//gk.offset_Y -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -163,7 +178,7 @@ public class EntityPlayer extends Entity
 					anim_frame = 0;
 				}
 			// enable if you want to enable enemy attacks when you go to X:10 Y:7 ( one sqaure above your start location) when you hit the W key
-				gk.doATurn();
+			//	gk.doATurn();
 			}
 			else
 			{
@@ -173,6 +188,7 @@ public class EntityPlayer extends Entity
 		if(gk.bS)
 		{
 			currentImage = Tile.playertile_DOWN;
+			facing = 4;
 			if(canMove(tX,tY+1) && !isMoving)
 			{
 				isMoving = true;
@@ -180,7 +196,6 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				//gk.offset_Y += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -198,6 +213,7 @@ public class EntityPlayer extends Entity
 		if(gk.bA)
 		{
 			currentImage = Tile.playertile_LEFT;
+			facing = 1;
 			if(canMove(tX-1,tY) && !isMoving)
 			{
 				isMoving = true;
@@ -205,7 +221,6 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				//gk.offset_X -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -223,6 +238,7 @@ public class EntityPlayer extends Entity
 		if(gk.bD)
 		{
 			currentImage = Tile.playertile_RIGHT;
+			facing = 2;
 			if(canMove(tX+1,tY) && !isMoving)
 			{
 				isMoving = true;
@@ -230,7 +246,6 @@ public class EntityPlayer extends Entity
 			}
 			if(isMoving)
 			{
-				//gk.offset_X += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -247,11 +262,15 @@ public class EntityPlayer extends Entity
 		}
 		Rx = tX*32;
 		Ry = tY*32;
+		
 	    
 	}
 	
-	public void attack(enemyEntities enemy)
+	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
+			//How do we target a specific enemy?
+			enemyEntities enemy)
 	{
+		
 		System.out.println("smacked!" + tX+" " +tY);
 		damageObject damage = new damageObject(0, Type.physical);
 		for(bonus b:bonuses)
@@ -263,6 +282,14 @@ public class EntityPlayer extends Entity
 		//equippedWeapon.attack();
 	}
 	
+	public void attack(int targX, int targY)
+	{
+		for(bonus b:bonuses)
+		{
+			b.onAttackPosition(this, targX,targY);
+		}
+	}
+	
 	public void tick(double delta)
 	{
 		
@@ -271,8 +298,6 @@ public class EntityPlayer extends Entity
 	@Override
 	public void render(Graphics g)
 	{
-		camx = (Rx - Core.VIEWPORT_SIZE.width/2 + Tile.size/2);
-		camy = (Ry - Core.VIEWPORT_SIZE.height/2 + Tile.size/2);
 		
 		super.setImage(currentImage);
 		meleeitem.render(g);
@@ -299,6 +324,28 @@ public class EntityPlayer extends Entity
 		
 	}
 	
+	public void on_death()
+	{
+		
+		for(bonus b:bonuses)
+		{
+			b.onDeath(this);
+		}
+		
+		if(health<=0)
+		{
+			System.out.println("You are Dead");
+			gk.stop();
+		}
+	}
+
+
+	public void setTilePosition(int i, int j) 
+	{
+		tX = i;
+		tY = j;
+	}
+	
 //	public void onHit(Entity enemy, damageObject damage)
 //	{
 //		for(bonus b:bonuses)
@@ -309,17 +356,7 @@ public class EntityPlayer extends Entity
 //	//	equippedArmor.onBeenHit(enemy,damage);
 //	}
 	
-	public void setTilePosition(int r, int c)//row and column
-	{
-		tX = r;
-		tY = c;
-		Rx = tX*32;
-		Ry = tY*32;
-		System.out.println("Updated Tile x and y:\t" + tX + "\t" + tY);
-		System.out.println("Updated Render x and y:\t" + Rx + "\t" + Ry);
 
-	}
-	
 	
 	// this was moved to the Entity baseclass.  
 //	public void heal(int heal)

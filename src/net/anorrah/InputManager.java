@@ -22,6 +22,8 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bW = true;
+				//Core.t.WaitForPlayer=false;
+				Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 			
@@ -29,6 +31,8 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bA = true;
+				//Core.t.WaitForPlayer=false;
+				Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 			
@@ -36,6 +40,8 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bS = true;
+				//Core.t.WaitForPlayer=false;
+				Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 			
@@ -43,11 +49,18 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.inGame && !Core.player.isMoving)
 			{
 				Core.bD = true;
+				//Core.t.WaitForPlayer=false;
+				Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 			
 		case KeyEvent.VK_SPACE:
-			//Core.player.attack();
+			//Core.player.attack(null);
+			if(Core.running)
+			{
+				Core.player.attack(Core.player.getlocationX(),5);
+				Core.t.setWaitForPlayerToFalse();
+			}
 			break;
 			
 		case KeyEvent.VK_ESCAPE:
@@ -76,7 +89,8 @@ public class InputManager implements KeyListener, MouseListener
 //Mouse Events--------------------------------------------------------------------------------------------
 //these need to be here
 	public void mouseClicked(MouseEvent e)//whenever a button has been pressed and Released 
-	{		
+	{	
+		Core.t.setWaitForPlayerToFalse();
 		System.out.println("attack at " + e.getID());
 	}
 
