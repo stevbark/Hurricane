@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import net.anorrah.damageObject.Type;
+import net.anorrah.items.*;
+import net.anorrah.items.bonus.*;
+import net.anorrah.items.damageObject.Type;
 
 
 public class EntityPlayer extends Entity 
@@ -14,7 +16,6 @@ public class EntityPlayer extends Entity
 	public int moveSpeed;
 	public static boolean isMoving = false;
 	
-
 	private static int moveDelta = 0;
 	
 	public static int player_room_num = 1;
@@ -23,25 +24,54 @@ public class EntityPlayer extends Entity
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
 	private int[] currentImage;
-	/*public static int[][] pIMG_UP = {{0,1},{1,1},{2,1},{3,1}};
-	public static int[][] pIMG_DOWN = {{0,0},{1,0},{2,0},{3,0}};
-	public static int[][] pIMG_LEFT = {{0,2},{1,2},{2,2},{3,2}};
-	public static int[][] pIMG_RIGHT = {{0,3},{1,3},{2,3},{3,3}};
-	public static int[][] pIMG_DEFAULT = {{0,0}};*/
 	
 	private Core gk;
 	private final int max_Xdistance;
 	private final int max_Ydistance;
-	private int camx =  0,camy = 0;
 	
-	private MeleeWeaponItem equippedWeapon;
+	public static PersonalItem meleeitem;
+	public static PersonalItem usableitem;
+	public static PersonalItem rangeditem;
+	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
 	private boolean isInvisible;
 	
+	public static int facing = 4;//default is facing downward
+	
 //	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
 //	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
 	
+	private class PersonalItem
+	{
+		public Item i;//for rendering the icon
+		public Item ib;//for rendering the icon
+		public ItemObject io;//Item represented in the data
+		public bonus b;
+		
+		public PersonalItem(Item i, ItemObject io, bonus b)
+		{
+			this.i = i;
+			this.io = io;
+			this.b = b;
+			if(b instanceof NoBonus)
+			{
+				ib = ItemsAndBonuses.no_bonus;
+			}
+		}
+		public PersonalItem(Item i, Item ib, ItemObject io, bonus b)
+		{
+			this.i = i;
+			this.ib = ib;
+			this.io = io;
+			this.b = b;
+		}
+		public void render(Graphics g)
+		{
+			i.render(g);
+			ib.render(g);
+		}
+	}
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
 	{
@@ -57,10 +87,13 @@ public class EntityPlayer extends Entity
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
-		equippedWeapon = new SwordItem("stab",0);
+		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("",0), new NoBonus());
+		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
+		usableitem = new PersonalItem(ItemsAndBonuses.no_item, new NoItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
 		currentImage = super.id;
+		//meleeitem.itemObject = new SwordItem("",Level.num_level);
 	}
 	
 
@@ -68,7 +101,7 @@ public class EntityPlayer extends Entity
 	{
 		equippedArmor.onEquip(user);
 		bandAidObject regenTest= new bandAidObject(0);
-		System.out.println("bandaid");
+		//System.out.println("bandaid");
 		regenTest.onEquip(user);
 		tempHealthBonus b = new tempHealthBonus(4,100);
 		addToList(b);
@@ -99,22 +132,17 @@ public class EntityPlayer extends Entity
 		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
-		{
 			return true;
-		}
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
-			equippedWeapon = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
+			meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
 			String str =gk.level.item[i][j].itemDescription();
-			System.out.println(str);
+			//System.out.println(str);
 			gk.level.item[i][j].id = Tile.blank;
 			return false;
 		}
-		
 		else if(gk.level.solid[i][j].id == Tile.blank)
-		{
 			return true;
-		}
 		return false;
 	}
 	
@@ -127,22 +155,20 @@ public class EntityPlayer extends Entity
 			anim_frame++;
 			anim_DELTA = 0;
 			if(anim_frame > 2)
-			{
 				anim_frame = 0;
-			}
 		}
 		
 		if(gk.bW)
 		{
+			currentImage = Tile.playertile_UP;
+			facing = 3;
 			if(canMove(tX,tY-1) && !isMoving)
 			{
 				isMoving = true;
 				tY -= 1;
-				currentImage = Tile.playertile_UP;
 			}
 			if(isMoving)
 			{
-				//gk.offset_Y -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -161,15 +187,15 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bS)
 		{
+			currentImage = Tile.playertile_DOWN;
+			facing = 4;
 			if(canMove(tX,tY+1) && !isMoving)
 			{
 				isMoving = true;
 				tY += 1;
-				currentImage = Tile.playertile_DOWN;
 			}
 			if(isMoving)
 			{
-				//gk.offset_Y += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -186,15 +212,15 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bA)
 		{
+			currentImage = Tile.playertile_LEFT;
+			facing = 1;
 			if(canMove(tX-1,tY) && !isMoving)
 			{
 				isMoving = true;
 				tX -= 1;
-				currentImage = Tile.playertile_LEFT;
 			}
 			if(isMoving)
 			{
-				//gk.offset_X -= moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -211,15 +237,15 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bD)
 		{
+			currentImage = Tile.playertile_RIGHT;
+			facing = 2;
 			if(canMove(tX+1,tY) && !isMoving)
 			{
 				isMoving = true;
 				tX += 1;
-				currentImage = Tile.playertile_RIGHT;
 			}
 			if(isMoving)
 			{
-				//gk.offset_X += moveSpeed;
 				moveDelta += moveSpeed;
 				if(moveDelta >= 32)
 				{
@@ -272,10 +298,11 @@ public class EntityPlayer extends Entity
 	@Override
 	public void render(Graphics g)
 	{
-		camx = (Rx - Core.VIEWPORT_SIZE.width/2 + Tile.size/2);
-		camy = (Ry - Core.VIEWPORT_SIZE.height/2 + Tile.size/2);
 		
 		super.setImage(currentImage);
+		meleeitem.render(g);
+		rangeditem.render(g);
+		usableitem.render(g);
 		g.drawImage(image, Rx, Ry,null);
 		/*if(down)
 		{
@@ -310,6 +337,13 @@ public class EntityPlayer extends Entity
 			System.out.println("You are Dead");
 			gk.stop();
 		}
+	}
+
+
+	public void setTilePosition(int i, int j) 
+	{
+		tX = i;
+		tY = j;
 	}
 	
 //	public void onHit(Entity enemy, damageObject damage)

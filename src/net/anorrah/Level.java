@@ -126,8 +126,8 @@ public class Level
 			
 		}
 		
-		item[5][5] = new Item(new Rectangle(5*Tile.size, 5*Tile.size, Tile.size, Tile.size),5,5,Tile.item);
-		item[7][7] = new Item(new Rectangle(7*Tile.size, 7*Tile.size, Tile.size, Tile.size),7,7,Tile.item2);
+		//item[5][5] = new Item(new Rectangle(5*Tile.size, 5*Tile.size, Tile.size, Tile.size),5,5,Tile.chest_open);
+		//item[7][7] = new Item(new Rectangle(7*Tile.size, 7*Tile.size, Tile.size, Tile.size),7,7,Tile.chest_closed);
 		solid[0][0] = new Solid(new Rectangle(0, 0, Tile.size, Tile.size),0,0,Tile.corner_tl);
 		solid[width-1][0] = new Solid(new Rectangle((width-1)*Tile.size, 0, Tile.size, Tile.size),width-1,0,Tile.corner_tr);
 		solid[0][height-1]= new Solid(new Rectangle(0, (height-1)*Tile.size, Tile.size, Tile.size),0,height-1,Tile.corner_bl);
@@ -212,7 +212,7 @@ public class Level
 		
 		setbackgroundtiles();
 		setedge();
-		System.out.println(playerlocation);
+		//System.out.println(playerlocation);
 		if(rooms.get(playerlocation).left != 0)
 		{
 			solid[0][center_h-1] = new Solid(new Rectangle(0, (center_h-1)*Tile.size, Tile.size, Tile.size), 0, center_h-1, Tile.wall_left_open_top);
@@ -257,6 +257,12 @@ public class Level
 			bg[center_w][center_h] = new Background(new Rectangle((center_w)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.sealed);
 		else
 			bg[center_w][center_h] = new Background(new Rectangle((center_w)*Tile.size, (center_h)*Tile.size, Tile.size, Tile.size), Tile.floor1);
+		
+		if(rooms.get(playerlocation).item != null)
+		{
+			item[rooms.get(playerlocation).item.row][rooms.get(playerlocation).item.col] = rooms.get(playerlocation).item;
+		}
+		
 		for(Solid s: rooms.get(playerlocation).blocks)
 		{
 			solid[s.row][s.col]= s;
@@ -299,7 +305,6 @@ public class Level
 	
 	public void showRooms()//debug purposes
 	{
-		//System.out.println("Player is currently at: "+EntityPlayer.player_room_num);
 		for(int i = 1; i <= rooms.size(); i++)
 		{
 			Room r = rooms.get(i);

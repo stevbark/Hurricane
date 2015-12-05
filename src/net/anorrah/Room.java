@@ -9,7 +9,7 @@ public class Room {
 	public int roomid = -1;
 	private double chanceEmpty = 70;
 	private double chanceEnemy = 35;
-	private double chanceBlocked = 15;
+	private double chanceBlocked = 30;
 	
 	public boolean hasExit = false;
 	public boolean isStart = false;
@@ -55,27 +55,33 @@ public class Room {
 						//place an enemy  at [x,y](roll again for enemy type)
 
 					}
-					else if(dice > chanceBlocked-Math.ceil(levelNum/2)){
-						int flip = (int)(Math.random()*2);
-						if(flip == 0)
-							{
-							Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit);
-							blocks.add(block);
-							}
-						else
-						{
-							Solid block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.boulder);
-							blocks.add(block);
-						}
-/*=======
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
 					{
-						blocks.add(new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit));
->>>>>>> 839140e688443b194785cfea5ce91f605ca2f1ca*/
+						int flip = (int)(Math.random()*2);
+						Solid block;
+						if(flip == 0)
+						{
+							block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.pit);
+						}
+						else
+						{
+							block = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.boulder);
+						}
+						blocks.add(block);
 					}
 					else {
 						//place a trap tile at [x,y]
 						
+					}
+				}
+				else if(roomid != 1 && x == Level.center_w && y == Level.center_h)//no items in room 1
+				{
+					//determine if an item is to be placed in the room
+					float chance = ((float)levelNum/10)+1;
+					chance = 1/chance;
+					if(Math.random() < chance)
+					{
+						item = new Item(new Rectangle(Level.center_w*Tile.size, Level.center_h*Tile.size, Tile.size, Tile.size),Level.center_w,Level.center_h,Tile.chest_closed);
 					}
 				}
 			}

@@ -5,19 +5,20 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public abstract class Entity
+import net.anorrah.items.damageObject;
+import net.anorrah.items.bonus.bonus;
+
+public abstract class Entity 
 {
 	
 	protected double x,y;
 	protected static int Rx,Ry, tX, tY;
 	protected int width, height, dx,dy;
 	protected int id[] = {0,0};
-	protected int health;
+	public int health;
 	protected int maxHealth;
 	protected double moveSpeed;
 	protected Image image;
-	public boolean turned = false;
-	
 	
 	private Rectangle collider;
 	private Rectangle other = new Rectangle();
@@ -79,8 +80,6 @@ public abstract class Entity
 		{
 			b.doOnTurn(this);
 		}
-		turned = false;
-		
 		cleanup();
 	}
 
@@ -180,33 +179,21 @@ public abstract class Entity
 		if(health <=0)
 		{
 			health = 0;
-			
-			on_death();
-//			for(bonus b: bonuses)
-//			{
-//				
-//				b.onDeath(this);
-//			}
-//			System.out.println("dead");
+			for(bonus b: bonuses)
+			{
+				b.onDeath(this);
+			}
+			System.out.println("dead");
 		}
 	}
 
 	
-	public void setTilePosition(int r, int c)//row and column
-	{
-		tX = r;
-		tY = c;
-		Rx = tX*32;
-		Ry = tY*32;
-		System.out.println("Updated Tile x and y:\t" + tX + "\t" + tY);
-		System.out.println("Updated Render x and y:\t" + Rx + "\t" + Ry);
-
-	}
-	
-	
 	public abstract void on_collided(Entity entity);
-	
-	public abstract void on_death();
+
+	public void on_death() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

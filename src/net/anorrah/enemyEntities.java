@@ -9,6 +9,7 @@ public abstract class enemyEntities extends Entity {
 	protected final int max_Ydistance;
 	
 	double hp;
+	private boolean turned;
 	
 	public enemyEntities(Core gk, double x, double y, int width, int height)
 	{
