@@ -26,6 +26,8 @@ public abstract class Entity
 	protected ArrayList<bonus> bonuses = new ArrayList<bonus>();
 	protected ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
 	
+	protected boolean isInvisible=false;
+	
 	public Entity()
 	{
 		x = 0;
@@ -50,6 +52,11 @@ public abstract class Entity
 		health = 100;
 		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
+	}
+	
+	public void becomeInvisible()
+	{
+		isInvisible=true;
 	}
 	
 	public void heal(int heal)
