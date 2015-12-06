@@ -25,7 +25,8 @@ public abstract class Entity
 	
 	protected ArrayList<bonus> bonuses = new ArrayList<bonus>();
 	protected ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
-	
+	protected boolean isInvisible;
+
 	public Entity()
 	{
 		x = 0;
@@ -51,6 +52,10 @@ public abstract class Entity
 		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
 	}
+	public int getMaxHealth()
+	{
+		return maxHealth;
+	}
 	
 	public void heal(int heal)
 	{
@@ -62,6 +67,22 @@ public abstract class Entity
 		{
 			health+=heal;
 		}
+	}
+	
+	public boolean isInvisible()
+	{
+		isInvisible = false;
+		for(bonus b: bonuses)
+		{
+			b.invisible(this);
+		}
+		System.out.println("isInvisible = " + isInvisible);
+		return isInvisible;
+	}
+	
+	public void becomeInvisible()
+	{
+		isInvisible=true;
 	}
 	
 	public void onHit(Entity enemy, damageObject damage)
@@ -80,9 +101,11 @@ public abstract class Entity
 		{
 			b.doOnTurn(this);
 		}
+		
 		cleanup();
 	}
 
+	
 	public void addToList(bonus toAdd)
 	{
 		System.out.println(toAdd.isTemp);
@@ -94,6 +117,7 @@ public abstract class Entity
 	{
 		toBeRemovedBonuses.add(toRemove);
 	}
+	
 	
 	private void cleanup()
 	{
