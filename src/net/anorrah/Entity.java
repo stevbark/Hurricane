@@ -191,11 +191,11 @@ public abstract class Entity
 		if(health <=0)
 		{
 			health = 0;
-			for(bonus b: bonuses)
+			
+			if(health<=0)
 			{
-				b.onDeath(this);
+				on_death();
 			}
-			System.out.println("dead");
 		}
 	}
 

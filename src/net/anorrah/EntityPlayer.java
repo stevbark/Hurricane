@@ -319,7 +319,7 @@ public class EntityPlayer extends Entity
 	
 	public void on_death()
 	{
-		
+		health=0;
 		for(bonus b:bonuses)
 		{
 			b.onDeath(this);
