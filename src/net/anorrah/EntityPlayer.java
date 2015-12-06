@@ -141,7 +141,7 @@ public class EntityPlayer extends Entity
 			gk.level.item[i][j].id = Tile.blank;
 			return false;
 		}
-		else if(gk.level.solid[i][j].id == Tile.blank)
+		else if((gk.level.solid[i][j].id == Tile.blank) && (Core.level.canMove(i,j)))
 			return true;
 		return false;
 	}
@@ -177,8 +177,6 @@ public class EntityPlayer extends Entity
 					moveDelta = 0;
 					anim_frame = 0;
 				}
-			// enable if you want to enable enemy attacks when you go to X:10 Y:7 ( one sqaure above your start location) when you hit the W key
-			//	gk.doATurn();
 			}
 			else
 			{
@@ -268,7 +266,7 @@ public class EntityPlayer extends Entity
 	
 	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
 			//How do we target a specific enemy?
-			enemyEntities enemy)
+			EnemyEntities enemy)
 	{
 		
 		System.out.println("smacked!" + tX+" " +tY);
