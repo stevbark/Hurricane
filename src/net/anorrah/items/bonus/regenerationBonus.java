@@ -5,11 +5,11 @@ import net.anorrah.Entity;
 public class regenerationBonus extends bonus {
 
 	private int healATurn;
-	public regenerationBonus(int healAmount)
+	public regenerationBonus(int healAmount, int totalTurns)
 	{
 		isTemp = true;
 		healATurn = healAmount;
-		turnsLeft = 5;
+		turnsLeft = totalTurns;
 	}
 	
 	public void onTurn(Entity user)

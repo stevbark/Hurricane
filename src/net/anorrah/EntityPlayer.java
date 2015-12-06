@@ -35,7 +35,6 @@ public class EntityPlayer extends Entity
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
-	private boolean isInvisible;
 	
 	public static int facing = 4;//default is facing downward
 	
@@ -83,7 +82,7 @@ public class EntityPlayer extends Entity
 		super.x = Rx;
 		super.y = Ry;
 		moveSpeed = 2;
-		health = 50;
+		health = 10;
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
@@ -100,22 +99,18 @@ public class EntityPlayer extends Entity
 	public void setUp(Entity user)
 	{
 		equippedArmor.onEquip(user);
-		bandAidObject regenTest= new bandAidObject(0);
+	//	bandAidObject regenTest= new bandAidObject(0);
 		//System.out.println("bandaid");
-		regenTest.onEquip(user);
-		tempHealthBonus b = new tempHealthBonus(4,100);
-		addToList(b);
-		rangedBonus z = new rangedBonus();
+	//	regenTest.onEquip(user);
+	//	tempHealthBonus b = new tempHealthBonus(4,100);
+	//	addToList(b);
+		fireballBonus z = new fireballBonus();
 		addToList(z);
 		GABonus ga = new GABonus();
 		addToList(ga);
 		
 	}
 	
-	public boolean isInvisible()
-	{
-		return isInvisible;
-	}
 	
 	public ItemObject getUsableItem()
 	{

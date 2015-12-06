@@ -23,6 +23,7 @@ public abstract class ItemObject {
 		enchantment = generateBonus(currentLevel); 	
 		myBonus = new ArrayList<bonus>();
 		possibleBonuses = new ArrayList<bonus>();
+		generateBonus();
 	}
 	
 	public boolean hasCharges()
@@ -95,7 +96,7 @@ public abstract class ItemObject {
 	
 	
 	
-	public Object generateEnchantment()
+	public Object generateBonus()
 	{
 		 if( ((int) (Math.random()*100)) <20)
 		 {
