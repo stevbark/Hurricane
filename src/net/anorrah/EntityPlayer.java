@@ -15,6 +15,7 @@ public class EntityPlayer extends Entity
 {
 	public int moveSpeed;
 	public static boolean isMoving = false;
+	public boolean isDead = false;
 	
 	private static int moveDelta = 0;
 	
@@ -328,10 +329,18 @@ public class EntityPlayer extends Entity
 		if(health<=0)
 		{
 			System.out.println("You are Dead");
-			gk.stop();
+			isDead = true;
+//			gk.stop();
 		}
 	}
-
+	
+	public boolean isDead(){
+		return isDead;
+	}
+	
+	public void stopGame(){
+		gk.stop();
+	}
 
 	public void setTilePosition(int i, int j) 
 	{
