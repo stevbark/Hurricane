@@ -172,7 +172,11 @@ public abstract class Entity
 	{
 		return health;
 	}
-	
+	public int getMaxHealth()
+	{
+		
+		return maxHealth;
+	}
 	
 	public void takeDamage(damageObject damage)
 	{

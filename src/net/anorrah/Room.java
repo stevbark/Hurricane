@@ -8,9 +8,9 @@ import java.awt.Rectangle;
 public class Room {
 	public int levelNum = 0;
 	public int roomid = -1;
-	private double chanceEmpty = 75;
-	private double chanceEnemy = 70;
-	private double chanceBlocked = 30;
+	private double chanceEmpty = 70;
+	private double chanceEnemy = 63;
+	private double chanceBlocked = 10;
 	
 	public boolean hasExit = false;
 	public boolean isStart = false;
