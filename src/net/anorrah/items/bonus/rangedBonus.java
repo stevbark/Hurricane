@@ -22,6 +22,9 @@ public abstract class rangedBonus extends bonus {
 				
 			}
 		}
+		
+		System.out.println("shot from X: " + user.getlocationX() + " Y: " + user.getlocationY());
+		
 		if(x==targetX&&y==targetY)
 		{
 			System.out.println("ranged hit X: " + x + " Y: " + y);
@@ -30,6 +33,7 @@ public abstract class rangedBonus extends bonus {
 		{
 			System.out.println("ranged miss... Hit:X " + x + " Y: "+ y);
 		}
+		
 		
 		hitEffects(user,x,y);
 	}

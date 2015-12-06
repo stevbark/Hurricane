@@ -477,13 +477,13 @@ public class Level
 			e.takeTurn(); 
 		}
 		//Updates the coordinates where the enemies are suppose to move
-		for(int i = 0; i < enemies.size()-1; i++)
+		/*for(int i = 0; i < enemies.size()-1; i++)
 		{ 	
 			//System.out.println(enemies.get(i))
 			//enemies.get(i).move(updateX.get(i), updateY.get(i));
-    	//	enemies.get(i).updateX(updateX.get(i));
-    		//enemies.get(i).updateY(updateY.get(i));	
-    	}
+    		enemies.get(i).updateX(updateX.get(i));
+    		enemies.get(i).updateY(updateY.get(i));	
+    	}*/
 	}
 	
 	//Player checks whether there is any enemy in this space or not
@@ -499,8 +499,8 @@ public class Level
 	}
 	
 	//Holds the coordinates of where the enemies will move next
-	ArrayList<Integer> updateX = new ArrayList<Integer>();
-	ArrayList<Integer> updateY = new ArrayList<Integer>();
+	//ArrayList<Integer> updateX;// = new ArrayList<Integer>();
+	//ArrayList<Integer> updateY;// = new ArrayList<Integer>();
 	
 	//Where the pathfinding happens
 	public void findPathTowardsPlayer(int enemyX, int enemyY)
@@ -510,14 +510,16 @@ public class Level
 		AStarPathFinder pathFinder = new AStarPathFinder(map, MAX_PATH_LENGTH, false);
         Path path = pathFinder.findPath(null, enemyX, enemyY, EntityPlayer.tX, EntityPlayer.tY);
 		
-       // System.out.println(path.getX(0) + ", "+ path.getY(0));
+        //System.out.println(path.getX(0) + ", "+ path.getY(0));
         //Crashes when an enemy is trapped between Obstacles
         int length = path.getLength();
         System.out.println("Found path of length: " + length + ".");
         
+        //updateX = new ArrayList<Integer>();
+        //updateY = new ArrayList<Integer>();
         
-        //updateX.add(path.getX(1));
-        //updateY.add(path.getY(1));
+        //updateX.add(path.getX(0));
+        //updateY.add(path.getY(0));
         
         for(int i = 0; i < length; i++) 
         {

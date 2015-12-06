@@ -107,8 +107,7 @@ public class EnemyEntities extends Entity {
 	public void takeTurn() 
 	{
 		Core.level.findPathTowardsPlayer(tX/Tile.size, tY/Tile.size);
-		canAttack();	
-		
+		canAttack();		
 	}
 	
 	public void on_death() 

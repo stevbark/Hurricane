@@ -7,7 +7,7 @@ public class GABonus extends bonus {
 	boolean canBeUsed = true;
 	public void onDeath(Entity user)
 	{
-		if(canBeUsed&&user.health<0)
+		if(canBeUsed&&user.health<=0)
 		{
 			user.heal(user.getMaxHealth());
 			canBeUsed=false;
