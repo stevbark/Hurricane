@@ -188,11 +188,14 @@ public class Core extends Applet implements Runnable
 		g.setColor(Color.BLACK);
 		g.fillRect(40, 10, 150, 20);
 		
-		g.setColor(Color.RED);
-		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
-		
+		if(player.health >0){
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		}
 		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		
+		g.drawRect(40, 10, 150, 20);
 		
 		// Item
 		g.drawString("ITEM: ",220, stringOffsetY);
@@ -213,9 +216,23 @@ public class Core extends Applet implements Runnable
 		if(!inGame)
 		{
 			g.setColor(new Color(1,1,1,0.3f));
+			g.setColor(Color.gray);
+			
 			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			
 			g.setColor(Color.white);
 			g.drawString("PAUSED", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+			
+			/* menu in progress
+			g.setColor(Color.white);
+			g.drawString("MENU", 10, 10);
+			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 20, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 10, false);
+			
+			// Items
+			
+			*/
 		}
 
 		g = this.getGraphics();
