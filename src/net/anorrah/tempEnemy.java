@@ -2,7 +2,7 @@ package net.anorrah;
 
 import net.anorrah.items.damageObject;
 
-public class tempEnemy extends enemyEntities{
+public class tempEnemy extends EnemyEntities{
 
 
 
