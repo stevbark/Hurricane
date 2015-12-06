@@ -10,7 +10,7 @@ public class fireballBonus extends rangedBonus {
 
 	protected void hitEffects(Entity user, int x, int y)
 	{
-		explode( user, new ImOnFire(5,5) ,  x,  y, 3);
+		explode( user, new ImOnFire(5,5) ,  x,  y, 1);
 	}
 	
 }
