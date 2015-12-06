@@ -513,7 +513,7 @@ public class Level
         //System.out.println(path.getX(0) + ", "+ path.getY(0));
         //Crashes when an enemy is trapped between Obstacles
         int length = path.getLength();
-        System.out.println("Found path of length: " + length + ".");
+        //System.out.println("Found path of length: " + length + ".");
         
         //updateX = new ArrayList<Integer>();
         //updateY = new ArrayList<Integer>();
