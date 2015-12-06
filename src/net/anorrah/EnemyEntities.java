@@ -106,14 +106,8 @@ public class EnemyEntities extends Entity {
 	}*/
 	public void takeTurn() 
 	{
-		try{
 		Core.level.findPathTowardsPlayer(tX/Tile.size, tY/Tile.size);
-		canAttack();	
-		}
-		catch(java.lang.NullPointerException nully){
-			return;
-			
-		}
+		canAttack();		
 	}
 	
 	public void on_death() 
