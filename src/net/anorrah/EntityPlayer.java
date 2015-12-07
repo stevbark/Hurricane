@@ -41,7 +41,7 @@ public class EntityPlayer extends Entity
 //	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
 //	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
 	
-	private class PersonalItem
+	private static class PersonalItem
 	{
 		public Item i;//for rendering the icon
 		public Item ib;//for rendering the icon
@@ -111,15 +111,45 @@ public class EntityPlayer extends Entity
 		
 	}
 	
-	
 	public ItemObject getUsableItem()
 	{
-		return useableItem;
+		return usableitem.io;
 	}
 	
-	public void setUsableItem(ItemObject item)
+	public static void setUsableItem(ItemObject item)
 	{
-		useableItem = item;
+		usableitem.io = item;
+	}
+	
+	public static void setMeleeItem(MeleeWeaponItem item)
+	{
+		meleeitem.io.onUnequip(Core.player);
+		if(item instanceof SwordItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,item, new NoBonus());
+		}
+		else if(item instanceof HammerItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+		}
+		else if(item instanceof SpearItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+		}
+		else if(item instanceof AxeItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.axeitem,item, new NoBonus());
+		}
+		else if(item instanceof WhipItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
+		}
+		meleeitem.io.onEquip(Core.player);
+	}
+	
+	public static void setRangeItem(RangedWeaponItem item)
+	{
+		rangeditem.io = item;
 	}
 	
 	public boolean canMove(int i, int j)
@@ -130,10 +160,11 @@ public class EntityPlayer extends Entity
 			return true;
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
-			meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
-			String str =gk.level.item[i][j].itemDescription();
-			//System.out.println(str);
-			gk.level.item[i][j].id = Tile.blank;
+			gk.level.item[i][j].id = Tile.chest_open;
+			//meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(Level.num_level);
+			Core.item(gk.level.item[i][j].generateItem(Level.num_level),gk.level.item[i][j].itemDescription());
+			//gk.level.item[i][j].id = Tile.blank;
+			//Core.itempicked = false; 
 			return false;
 		}
 		else if(gk.level.solid[i][j].id == Tile.blank)
