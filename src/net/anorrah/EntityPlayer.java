@@ -227,8 +227,6 @@ public class EntityPlayer extends Entity
 		
 		if(gk.bW)
 		{
-			currentImage = Tile.playertile_UP;
-			facing = 3;
 			if(canMove(tX,tY-1) && !isMoving)
 			{
 				isMoving = true;
@@ -252,8 +250,6 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bS)
 		{
-			currentImage = Tile.playertile_DOWN;
-			facing = 4;
 			if(canMove(tX,tY+1) && !isMoving)
 			{
 				isMoving = true;
@@ -277,8 +273,6 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bA)
 		{
-			currentImage = Tile.playertile_LEFT;
-			facing = 1;
 			if(canMove(tX-1,tY) && !isMoving)
 			{
 				isMoving = true;
@@ -302,8 +296,7 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bD)
 		{
-			currentImage = Tile.playertile_RIGHT;
-			facing = 2;
+
 			if(canMove(tX+1,tY) && !isMoving)
 			{
 				isMoving = true;
