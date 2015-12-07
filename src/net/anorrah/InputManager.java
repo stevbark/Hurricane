@@ -91,6 +91,7 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.running)
 			{
 				System.out.println("About to attack");
+				//System.out.println("invisibility is " + Core.player.amIInvisible());
 				int playerx = Core.player.getlocationX();
 				int playery = Core.player.getlocationY();
 				//int playerDir = Core.player.

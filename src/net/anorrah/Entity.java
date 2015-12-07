@@ -9,6 +9,7 @@ import net.anorrah.items.MeleeWeaponItem;
 import net.anorrah.items.RangedWeaponItem;
 import net.anorrah.items.damageObject;
 import net.anorrah.items.bonus.bonus;
+import net.anorrah.items.damageObject.Type;
 
 public abstract class Entity 
 {
@@ -54,6 +55,32 @@ public abstract class Entity
 		health = 100;
 		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
+	}
+	
+	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
+			//How do we target a specific enemy?
+			EnemyEntities bad)
+	{
+		
+		System.out.println("smacked!" + tX+" " +tY);
+		damageObject damage = new damageObject(0, Type.physical);
+		for(bonus b:bonuses)
+		{
+			b.onAttack(this,bad, damage, true);
+		}
+		bad.takeDamage(damage);
+		
+		//equippedWeapon.attack();
+	} 
+	
+	public boolean amIInvisible()
+	{
+		isInvisible = false;
+		for(bonus b: bonuses)
+		{
+			b.invisible(this);
+		}
+		return isInvisible;
 	}
 	
 	public void becomeInvisible()

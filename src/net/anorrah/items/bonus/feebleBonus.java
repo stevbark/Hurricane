@@ -15,7 +15,14 @@ public class feebleBonus extends bonus{
 	//changes this to work for enemies
 	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
-		damage.damage = damage.damage/2;
+		if(damage.damage-10 >0)
+		{
+			damage.damage = damage.damage-10;
+		}
+		else
+		{
+			damage.damage=0;
+		}
 	}
 	
 }

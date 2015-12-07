@@ -71,6 +71,11 @@ public class Tile
 	public static int[] fireball_icon = {6,1};
 	public static int[] lightning_icon = {7,1};
 	public static int[] laser_icon = {8,1};
+	
+	public static int[] potion_icon = {3,0};
+	public static int[] band_aid_icon = {4,0};
+	public static int[] cast_icon = {5,0};
+	public static int[] food_icon = {6,0};
 	//weapon:melee enchantments, filters
 	public static int[] no_enchant = {9,1};
 	public static int[] fire_melee_enchant = {7,0};
