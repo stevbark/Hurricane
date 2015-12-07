@@ -186,7 +186,6 @@ public class EntityPlayer extends Entity
 			currentImage = Tile.playertile_UP;
 			facing = UP;
 			gk.bUP = false;
-			System.out.println("PLAYER IS FACING UP");
 		}
 		if(gk.bDOWN){
 			currentImage = Tile.playertile_DOWN;

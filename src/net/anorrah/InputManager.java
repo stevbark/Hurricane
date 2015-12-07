@@ -59,7 +59,7 @@ public class InputManager implements KeyListener, MouseListener
 			{
 				Core.bUP = true;
 				//Core.t.WaitForPlayer=false;
-				Core.t.setWaitForPlayerToFalse();
+				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 		case KeyEvent.VK_DOWN:
@@ -67,7 +67,7 @@ public class InputManager implements KeyListener, MouseListener
 			{
 				Core.bDOWN = true;
 				//Core.t.WaitForPlayer=false;
-				Core.t.setWaitForPlayerToFalse();
+				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 		case KeyEvent.VK_LEFT:
@@ -75,7 +75,7 @@ public class InputManager implements KeyListener, MouseListener
 			{
 				Core.bLEFT = true;
 				//Core.t.WaitForPlayer=false;
-				Core.t.setWaitForPlayerToFalse();
+				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 		case KeyEvent.VK_RIGHT:
@@ -83,7 +83,7 @@ public class InputManager implements KeyListener, MouseListener
 			{
 				Core.bRIGHT = true;
 				//Core.t.WaitForPlayer=false;
-				Core.t.setWaitForPlayerToFalse();
+				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
 		case KeyEvent.VK_SPACE:
