@@ -15,10 +15,17 @@ public class EntityPlayer extends Entity
 {
 	public int moveSpeed;
 	public static boolean isMoving = false;
+	public boolean isDead = false;
 	
 	private static int moveDelta = 0;
 	
 	public static int player_room_num = 1;
+	
+	// facing/direction
+	public final int UP = 3;
+	public final int DOWN = 4;
+	public final int LEFT = 1;
+	public final int RIGHT = 2;
 	
 	public int anim_frame = 0;
 	public int anim_time = 20;
@@ -32,6 +39,7 @@ public class EntityPlayer extends Entity
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
+	public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
@@ -41,7 +49,7 @@ public class EntityPlayer extends Entity
 //	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
 //	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
 	
-	private class PersonalItem
+	private static class PersonalItem
 	{
 		public Item i;//for rendering the icon
 		public Item ib;//for rendering the icon
@@ -82,7 +90,7 @@ public class EntityPlayer extends Entity
 		super.x = Rx;
 		super.y = Ry;
 		moveSpeed = 2;
-		health = 10;
+		health = 100;
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
@@ -99,6 +107,7 @@ public class EntityPlayer extends Entity
 	public void setUp(Entity user)
 	{
 		equippedArmor.onEquip(user);
+		
 	//	bandAidObject regenTest= new bandAidObject(0);
 		//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
@@ -111,15 +120,45 @@ public class EntityPlayer extends Entity
 		
 	}
 	
-	
 	public ItemObject getUsableItem()
 	{
-		return useableItem;
+		return usableitem.io;
 	}
 	
-	public void setUsableItem(ItemObject item)
+	public static void setUsableItem(ItemObject item)
 	{
-		useableItem = item;
+		usableitem.io = item;
+	}
+	
+	public static void setMeleeItem(MeleeWeaponItem item)
+	{
+		meleeitem.io.onUnequip(Core.player);
+		if(item instanceof SwordItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,item, new NoBonus());
+		}
+		else if(item instanceof HammerItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+		}
+		else if(item instanceof SpearItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+		}
+		else if(item instanceof AxeItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.axeitem,item, new NoBonus());
+		}
+		else if(item instanceof WhipItem)
+		{
+			meleeitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
+		}
+		meleeitem.io.onEquip(Core.player);
+	}
+	
+	public static void setRangeItem(RangedWeaponItem item)
+	{
+		rangeditem.io = item;
 	}
 	
 	public boolean canMove(int i, int j)
@@ -130,10 +169,11 @@ public class EntityPlayer extends Entity
 			return true;
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
-			meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(0);
-			String str =gk.level.item[i][j].itemDescription();
-			//System.out.println(str);
-			gk.level.item[i][j].id = Tile.blank;
+			gk.level.item[i][j].id = Tile.chest_open;
+			//meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(Level.num_level);
+			Core.item(gk.level.item[i][j].generateItem(Level.num_level),gk.level.item[i][j].itemDescription());
+			//gk.level.item[i][j].id = Tile.blank;
+			//Core.itempicked = false; 
 			return false;
 		}
 		else if((gk.level.solid[i][j].id == Tile.blank) && (Core.level.canMove(i,j)))
@@ -141,6 +181,38 @@ public class EntityPlayer extends Entity
 		return false;
 	}
 	
+	public void changeDirection(){
+		if(gk.bUP){
+			currentImage = Tile.playertile_UP;
+			facing = UP;
+			gk.bUP = false;
+		}
+		if(gk.bDOWN){
+			currentImage = Tile.playertile_DOWN;
+			facing = DOWN;
+			gk.bDOWN = false;
+		}
+		if(gk.bLEFT){
+			currentImage = Tile.playertile_LEFT;
+			facing = LEFT;
+			gk.bLEFT = false;
+			
+		}
+		if(gk.bRIGHT){
+			currentImage = Tile.playertile_RIGHT;
+
+			facing = RIGHT;
+			gk.bRIGHT = false;
+		}
+		
+	}
+	
+	public char getDirection(){	
+		if(facing == UP) return 'U';
+		if(facing == DOWN) return 'D';
+		if(facing == LEFT) return 'L';
+		else return 'R';
+	}
 	@Override
 	public void move(double delta)
 	{
@@ -155,8 +227,6 @@ public class EntityPlayer extends Entity
 		
 		if(gk.bW)
 		{
-			currentImage = Tile.playertile_UP;
-			facing = 3;
 			if(canMove(tX,tY-1) && !isMoving)
 			{
 				isMoving = true;
@@ -180,8 +250,6 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bS)
 		{
-			currentImage = Tile.playertile_DOWN;
-			facing = 4;
 			if(canMove(tX,tY+1) && !isMoving)
 			{
 				isMoving = true;
@@ -205,8 +273,6 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bA)
 		{
-			currentImage = Tile.playertile_LEFT;
-			facing = 1;
 			if(canMove(tX-1,tY) && !isMoving)
 			{
 				isMoving = true;
@@ -230,8 +296,7 @@ public class EntityPlayer extends Entity
 		}
 		if(gk.bD)
 		{
-			currentImage = Tile.playertile_RIGHT;
-			facing = 2;
+
 			if(canMove(tX+1,tY) && !isMoving)
 			{
 				isMoving = true;
@@ -261,16 +326,16 @@ public class EntityPlayer extends Entity
 	
 	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
 			//How do we target a specific enemy?
-			EnemyEntities enemy)
+			EnemyEntities bad)
 	{
 		
 		System.out.println("smacked!" + tX+" " +tY);
-		damageObject damage = new damageObject(0, Type.physical);
+		damageObject damage = new damageObject(weapon.damage, Type.physical);
 		for(bonus b:bonuses)
 		{
-			b.onAttack(this,enemy, damage, true);
+			b.onAttack(this,bad, damage, true);
 		}
-		enemy.takeDamage(damage);
+		bad.takeDamage(damage);
 		
 		//equippedWeapon.attack();
 	}
@@ -279,6 +344,7 @@ public class EntityPlayer extends Entity
 	{
 		for(bonus b:bonuses)
 		{
+			System.out.println("Smacked");
 			b.onAttackPosition(this, targX,targY);
 		}
 	}
@@ -319,7 +385,7 @@ public class EntityPlayer extends Entity
 	
 	public void on_death()
 	{
-		
+		health=0;
 		for(bonus b:bonuses)
 		{
 			b.onDeath(this);
@@ -327,11 +393,17 @@ public class EntityPlayer extends Entity
 		
 		if(health<=0)
 		{
-			System.out.println("You are Dead");
-			gk.stop();
+			isDead = true;
 		}
 	}
-
+	
+	public boolean isDead(){
+		return isDead;
+	}
+	
+	public void stopGame(){
+		gk.stop();
+	}
 
 	public void setTilePosition(int i, int j) 
 	{

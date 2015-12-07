@@ -1,6 +1,9 @@
 package net.anorrah.items.bonus;
 
+import java.util.ArrayList;
+
 import net.anorrah.Core;
+import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
 import net.anorrah.Tile;
 import net.anorrah.items.damageObject;
@@ -18,6 +21,9 @@ private int weaponDamage;
 	
 	protected void hitEffects(Entity user, int x, int y)
 	{
+		
+		
+		//player_room_num
 		for(Entity e :Core.t.entities)
 		{
 			if(e.getlocationX()==x &&e.getlocationY()==y)

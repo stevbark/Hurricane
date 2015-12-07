@@ -19,6 +19,7 @@ public class Room {
 	public int r =0;
 	public Item item = null;
 	public ArrayList<EnemyEntities> enemies= new ArrayList<EnemyEntities>();
+	private  ArrayList<EnemyEntities> toBeRemovedEnemies = new ArrayList<EnemyEntities>();
 	public ArrayList<Solid> blocks = new ArrayList<Solid>();
 	public int left=0, right=0, up=0, down=0;//adjacent rooms
 	//private int chanceTrap = 100; not needed
@@ -35,6 +36,19 @@ public class Room {
 		makeRoom();
 	}
 	
+	public void addToRemoveList(EnemyEntities enemyToRemove)
+	{
+		toBeRemovedEnemies.add(enemyToRemove);
+	}
+	
+	public void cleanup()
+	{
+		for(EnemyEntities b: toBeRemovedEnemies)
+		{
+			enemies.remove(b);
+		}
+		toBeRemovedEnemies.clear();
+	}
 //-----------------------------------------Room content generation-------------------------------------------
 	public void makeRoom()
 	{

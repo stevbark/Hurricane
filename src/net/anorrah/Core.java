@@ -3,11 +3,11 @@ package net.anorrah;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import net.anorrah.items.*;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -23,6 +23,7 @@ public class Core extends Applet implements Runnable
 	public static boolean moving = false;
 	public static boolean running = false;
 	public static boolean inGame = true;
+	public static boolean itempicked = false;
 	
 	public final int TARGET_FPS = 60;
 	public final long OPTIMAL_TIME = 1000000000/TARGET_FPS;
@@ -30,7 +31,7 @@ public class Core extends Applet implements Runnable
 	public static int fps = 0;
 	public static int renderFPS = 0;
 	
-	public static boolean bW, bS, bA, bD, bE, bESC, bP;
+	public static boolean bW, bS, bA, bD, bE, bUP, bDOWN, bLEFT, bRIGHT,bESC, bP;
 	
 	private Image screen;
 	public static Dimension VIEWPORT_SIZE = new Dimension(672,544);
@@ -48,6 +49,9 @@ public class Core extends Applet implements Runnable
 	
 	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
 	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
+	private static Item itemtorender;
+	private static ItemObject tempholding;
+	private static String description;
 	
 	public boolean WaitForPlayer = true;
 	//Constructor
@@ -104,6 +108,48 @@ public class Core extends Applet implements Runnable
 		WaitForPlayer = false;
 	}
 	
+	public static void item(ItemObject io, String des)
+	{
+		tempholding = io;
+		itempicked = true;
+		int[] i = {-1,-1};
+		if(io instanceof SwordItem)
+			i = Tile.sword_icon;
+		else if(io instanceof HammerItem)
+			i = Tile.hammer_icon;
+		else if(io instanceof SpearItem)
+			i = Tile.spear_icon;
+		else if(io instanceof AxeItem)
+			i = Tile.axe_icon;
+		else if(io instanceof WhipItem)
+			i = Tile.whip_icon;
+		itemtorender = new Item(new Rectangle(Level.center_w*32,(Level.center_h-1)*32,32,32),Level.center_w,Level.center_h,i);
+		description = des;
+	}
+	
+	public static void itemclear()
+	{
+		itempicked = false;
+		level.item[Level.center_w][Level.center_h].id = Tile.blank;
+	}
+	
+	public static void equipitem()
+	{
+		if(tempholding instanceof MeleeWeaponItem)
+		{
+			EntityPlayer.setMeleeItem((MeleeWeaponItem)tempholding);
+		}
+		else if(tempholding instanceof RangedWeaponItem)
+		{
+			EntityPlayer.setRangeItem((RangedWeaponItem)tempholding);
+		}
+		else if(tempholding instanceof ItemObject)
+		{
+			EntityPlayer.setUsableItem(tempholding);
+		}
+		itemclear();
+	}
+	
 	public void initPlayer()
 	{
 		player = new EntityPlayer(t, 
@@ -140,6 +186,10 @@ public class Core extends Applet implements Runnable
 		
 		if(inGame)
 		{
+			if(player.isDead()){
+				player.stopGame();
+			}
+			player.changeDirection();
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);
@@ -164,8 +214,14 @@ public class Core extends Applet implements Runnable
 			}
 		}
 		level.tick();
-		entities.remove(removethese);
+		for(Entity toRemove:removethese)
+		{
+			entities.remove(toRemove);
+		}
+	//	entities.remove(removethese);
 		removethese.clear();
+		level.getPlayerRoom().cleanup();
+		level.cleanup();
 	}
 	
 	
@@ -190,11 +246,23 @@ public class Core extends Applet implements Runnable
 		g.setColor(Color.BLACK);
 		g.fillRect(40, 10, 150, 20);
 		
-		g.setColor(Color.RED);
-		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		g.setColor(Color.YELLOW);
+		g.drawRect(40, 10, 150, 20);
+		
+		if(player.health >0){
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		}
+		if(!player.isDead()){
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		}
 		
 		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		g.drawRect(40, 10, 150, 20);
+		
+		g.drawRect(40, 10, 150, 20);
 		
 		// Item
 		g.drawString("ITEM: ",220, stringOffsetY);
@@ -212,12 +280,60 @@ public class Core extends Applet implements Runnable
 		g.drawString("LEVEL: " + level.num_level , 590, 510);
 		g.drawString("FPS: " + renderFPS, 600, 540);
 		
+		if(itempicked)
+		{
+			g.setColor(Color.blue);
+			g.fillRoundRect(158, 308, 357, 65, 5, 5);
+			
+			g.setColor(Color.white);
+			g.fillRoundRect(318, 222, 36, 36,5,5);
+			g.fillRoundRect(160, 310, 352, 60, 5, 5);
+			
+			itemtorender.render(g);
+			
+			g.setColor(Color.black);
+			g.drawString(description, 162, 322);
+		}
 		if(!inGame)
 		{
 			g.setColor(new Color(1,1,1,0.3f));
+			g.setColor(Color.black);
+			
 			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			
+			/*
 			g.setColor(Color.white);
 			g.drawString("PAUSED", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+			*/
+			
+
+			g.setColor(Color.white);
+			// Stats
+			int statsOffsetX = 17;
+			g.drawRoundRect(10, 10, 200, 400, 20, 20);
+			g.drawString("STATS: ", statsOffsetX, stringOffsetY);
+			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, statsOffsetX,stringOffsetY+20);
+			
+			
+			// Items
+			int itemOffsetX = 220;
+			g.drawRoundRect(itemOffsetX, 10, 200, 200, 20, 20);
+			/*
+			g.drawString("ITEM: " ,itemOffsetX+10 , 20);
+			if(player.usableitem != null){
+				g.drawString("Desc: "+ player.getUsableItem().description(), itemOffsetX+10, 40);
+			}
+			*/
+			
+
+		}
+		
+		if(player.isDead()){
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			g.setColor(Color.RED);
+			g.drawString("YOU ARE DEAD", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+
 		}
 
 		g = this.getGraphics();
