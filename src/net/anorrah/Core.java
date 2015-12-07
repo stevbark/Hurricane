@@ -214,8 +214,14 @@ public class Core extends Applet implements Runnable
 			}
 		}
 		level.tick();
-		entities.remove(removethese);
+		for(Entity toRemove:removethese)
+		{
+			entities.remove(toRemove);
+		}
+	//	entities.remove(removethese);
 		removethese.clear();
+		level.getPlayerRoom().cleanup();
+		level.cleanup();
 	}
 	
 	

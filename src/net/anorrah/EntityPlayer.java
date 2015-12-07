@@ -90,7 +90,7 @@ public class EntityPlayer extends Entity
 		super.x = Rx;
 		super.y = Ry;
 		moveSpeed = 2;
-		health = 10;
+		health = 100;
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;

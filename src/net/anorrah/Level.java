@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Stack;
-
 import java.util.TreeMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import net.anorrah.items.bonus.bonus;
 
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
@@ -31,6 +32,10 @@ public class Level
 	private boolean left = false, right = false, up = false, down = false;
 	private int nextleft = -1, nextright = -1, nexttop = -1, nextbottom = -1;
 	private static final int MAX_PATH_LENGTH = 100;
+	
+	
+	protected ArrayList<EnemyEntities> toBeRemovedEnemies = new ArrayList<EnemyEntities>();
+	
 	
 	public Level()
 	{	
@@ -82,7 +87,10 @@ public class Level
 		}
 		
 	}
-	
+	public Room getPlayerRoom()
+	{
+		return rooms.get(playerlocation);
+	}
 	private void setedge()//turns surrounding edges into black tiles and places set
 	{
 		for(int i = 0; i < width; i++)//along the top edge and bottom edge
@@ -226,7 +234,21 @@ public class Level
 	
 	public void removeEnemyFromRoom(EnemyEntities baddie)
 	{
-		rooms.get(playerlocation).enemies.remove(baddie);
+		
+		toBeRemovedEnemies.add(baddie);
+		rooms.get(playerlocation).addToRemoveList(baddie);
+//		enemies.remove(baddie);
+//		rooms.get(playerlocation).enemies.remove(baddie);
+		Core.remove(baddie);
+	}
+	
+	public void cleanup()
+	{
+		for(EnemyEntities b: toBeRemovedEnemies)
+		{
+			enemies.remove(b);
+		}
+		toBeRemovedEnemies.clear();
 	}
 	private void loadroom()
 	{
@@ -288,12 +310,18 @@ public class Level
 		{
 			solid[s.row][s.col]= s;
 		}
-		
+		System.out.println("reseting room");
+		//cleanup();
+		//rooms.get(playerlocation).cleanup();
+		for(EnemyEntities enemyToBeRemoved:enemies)
+		{
+			Core.remove(enemyToBeRemoved);
+		}
 		enemies =  new ArrayList<EnemyEntities>();
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{
 			enemies.add(e);
-		//	Core.addEntity(e);
+			Core.addEntity(e);
 		}
 		//Repeat this for rooms.get(playerlocation).enemies , items, and traps (when added)
 	}
@@ -374,7 +402,7 @@ public class Level
 			minRooms += 2;
 			maxRooms += minRooms;
 		}
-		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		for(EnemyEntities e: enemies)
 		{
 			Core.remove(e);
 		}
@@ -491,7 +519,7 @@ public class Level
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
 			e.takeTurn();
-			
+		//	e.move(e.getlocationX(), e.getlocationY()-1);
 			// Arraylist<Int> = findpath(e.x,e.y);
 	//		e.move(updateX.get(i), updateY.get(i));
 		}
@@ -531,7 +559,8 @@ public class Level
 		
         //System.out.println(path.getX(0) + ", "+ path.getY(0));
         //Crashes when an enemy is trapped between Obstacles
-        int length = path.getLength();
+//        int length = path.getLength();
+        int length=0;
         //System.out.println("Found path of length: " + length + ".");
         
         //updateX = new ArrayList<Integer>();
@@ -539,6 +568,8 @@ public class Level
         
         //updateX.add(path.getX(0));
         //updateY.add(path.getY(0));
+        
+        
         
         for(int i = 0; i < length; i++) 
         {

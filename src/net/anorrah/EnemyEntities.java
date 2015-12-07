@@ -30,6 +30,7 @@ public class EnemyEntities extends Entity {
 		max_Ydistance = gk.level.height;
 		this.gk = gk;
 		currentImage = super.id;
+		health=10;
 	}
 	@Override
 	public void on_collided(Entity entity) {
@@ -53,7 +54,7 @@ public class EnemyEntities extends Entity {
 	
 	public boolean canMove(int i, int j)
 	{
-		if(turned)
+	//	if(turned)
 		{
 			System.out.println("\n enemy Currently at:\t" + tX + " " + tY);
 			if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
@@ -62,6 +63,7 @@ public class EnemyEntities extends Entity {
 			}
 			else if((gk.level.solid[i][j].id == Tile.blank)  && (Core.level.canMove(i,j)))
 			{
+				System.out.println("\n enemy Moved to:\t" + i + " " + j);
 				return true;
 			}
 		}
@@ -113,7 +115,8 @@ public class EnemyEntities extends Entity {
 	
 	public void on_death() 
 	{
-		Core.level.enemies.remove(this);
+		
+		//Core.level.enemies.remove(this);
 		Core.level.removeEnemyFromRoom(this);
 	}
 	
