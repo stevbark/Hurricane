@@ -7,7 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+
 import net.anorrah.items.*;
+
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -123,6 +125,32 @@ public class Core extends Applet implements Runnable
 			i = Tile.axe_icon;
 		else if(io instanceof WhipItem)
 			i = Tile.whip_icon;
+		
+		else if(io instanceof bowAndArrowItem)
+			i = Tile.bow_icon;
+		else if(io instanceof FireballRod)
+			i = Tile.fireball_icon;
+		else if(io instanceof LaserItem)
+			i = Tile.laser_icon;
+		
+		else if(io instanceof potionObject)
+			i = Tile.empty_item;
+		else if(io instanceof bandAidObject)
+			i = Tile.empty_item;
+		else if(io instanceof castObject)
+			i = Tile.empty_item;
+		else if(io instanceof FoodItem)
+			i = Tile.empty_item;
+		
+		else if(io instanceof BerserkerItems)
+			i = Tile.empty_item;
+		else if(io instanceof runeOfTeleportation)
+			i = Tile.empty_item;
+		else if(io instanceof ringOfInvisibility)
+			i = Tile.empty_item;
+		else if(io instanceof pendentOfFleetingHealth)
+			i = Tile.empty_item;
+		
 		itemtorender = new Item(new Rectangle(Level.center_w*32,(Level.center_h-1)*32,32,32),Level.center_w,Level.center_h,i);
 		description = des;
 	}

@@ -39,6 +39,7 @@ public class EntityPlayer extends Entity
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
+	
 	public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	
 	private ArmorItem equippedArmor;
@@ -117,7 +118,8 @@ public class EntityPlayer extends Entity
 		addToList(z);
 		GABonus ga = new GABonus();
 		addToList(ga);
-		
+		invisibilityBonus iv = new invisibilityBonus(3);
+		addToList(iv);
 	}
 	
 	public ItemObject getUsableItem()
@@ -127,7 +129,50 @@ public class EntityPlayer extends Entity
 	
 	public static void setUsableItem(ItemObject item)
 	{
-		usableitem.io = item;
+		usableitem.io.onUnequip(Core.player); 
+		
+		
+		if(item instanceof potionObject)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.sworditem,item, new NoBonus());
+		}
+		else if(item instanceof bandAidObject)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+		}
+		else if(item instanceof castObject)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+		}
+		else if(item instanceof FoodItem)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+		}
+		else if(item instanceof BerserkerItems)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+		}
+		else if(item instanceof runeOfTeleportation)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+		}
+		else if(item instanceof ringOfInvisibility)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.axeitem,item, new NoBonus());
+		}
+		else if(item instanceof pendentOfFleetingHealth)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
+		}
+		usableitem.io.onEquip(Core.player);
 	}
 	
 	public static void setMeleeItem(MeleeWeaponItem item)
@@ -158,7 +203,22 @@ public class EntityPlayer extends Entity
 	
 	public static void setRangeItem(RangedWeaponItem item)
 	{
-		rangeditem.io = item;
+		rangeditem.io.onUnequip(Core.player);
+		if(item instanceof bowAndArrowItem)
+		{
+			rangeditem = new PersonalItem(ItemsAndBonuses.bowitem,item, new NoBonus());
+		}
+		else if(item instanceof FireballRod)
+		{
+			rangeditem = new PersonalItem(ItemsAndBonuses.fireballitem,item, new NoBonus());
+		}
+		
+		else if(item instanceof LaserItem)
+		{
+			rangeditem = new PersonalItem(ItemsAndBonuses.laseritem,item, new NoBonus());
+		}
+		
+		rangeditem.io.onEquip(Core.player);
 	}
 	
 	public boolean canMove(int i, int j)
@@ -324,21 +384,21 @@ public class EntityPlayer extends Entity
 	    
 	}
 	
-	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
-			//How do we target a specific enemy?
-			EnemyEntities bad)
-	{
-		
-		System.out.println("smacked!" + tX+" " +tY);
-		damageObject damage = new damageObject(weapon.damage, Type.physical);
-		for(bonus b:bonuses)
-		{
-			b.onAttack(this,bad, damage, true);
-		}
-		bad.takeDamage(damage);
-		
-		//equippedWeapon.attack();
-	}
+//	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
+//			//How do we target a specific enemy?
+//			EnemyEntities bad)
+//	{
+//		
+//		System.out.println("smacked!" + tX+" " +tY);
+//		damageObject damage = new damageObject(weapon.damage, Type.physical);
+//		for(bonus b:bonuses)
+//		{
+//			b.onAttack(this,bad, damage, true);
+//		}
+//		bad.takeDamage(damage);
+//		
+//		//equippedWeapon.attack();
+//	}
 	
 	public void attack(int targX, int targY)
 	{
