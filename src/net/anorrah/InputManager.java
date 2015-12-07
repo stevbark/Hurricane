@@ -19,7 +19,7 @@ public class InputManager implements KeyListener, MouseListener
 		switch(key)
 		{
 		case KeyEvent.VK_W:
-			if(Core.inGame && !Core.player.isMoving)
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
 			{
 				Core.bW = true;
 				//Core.t.WaitForPlayer=false;
@@ -28,7 +28,7 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_A:
-			if(Core.inGame && !Core.player.isMoving)
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
 			{
 				Core.bA = true;
 				//Core.t.WaitForPlayer=false;
@@ -37,7 +37,7 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_S:
-			if(Core.inGame && !Core.player.isMoving)
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
 			{
 				Core.bS = true;
 				//Core.t.WaitForPlayer=false;
@@ -46,7 +46,7 @@ public class InputManager implements KeyListener, MouseListener
 			break;
 			
 		case KeyEvent.VK_D:
-			if(Core.inGame && !Core.player.isMoving)
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
 			{
 				Core.bD = true;
 				//Core.t.WaitForPlayer=false;
@@ -70,7 +70,15 @@ public class InputManager implements KeyListener, MouseListener
 			else
 				System.out.println("Paused");
 			break;
-			
+		
+		case KeyEvent.VK_ENTER:
+			if(Core.itempicked && Core.inGame)
+				Core.equipitem();
+			break;
+		case KeyEvent.VK_BACK_SPACE:
+			if(Core.itempicked && Core.inGame)
+				System.out.println("pass");
+				Core.itemclear();
 		default:
 			break;
 		}
