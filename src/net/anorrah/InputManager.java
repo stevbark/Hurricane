@@ -94,15 +94,41 @@ public class InputManager implements KeyListener, MouseListener
 				int playerx = Core.player.getlocationX();
 				int playery = Core.player.getlocationY();
 				//int playerDir = Core.player.
-				for(EnemyEntities bad : Core.level.enemies)
-				{
-					if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
-					{	
-						Core.player.attack(bad);
-					//	bad.takeDamage(Core.player.weapon);
+				char facing = Core.player.getDirection();
+				
+				switch (facing){
+				case 'D':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
+						{	
+							Core.player.attack(bad);
+						}
 					}
-					
-					
+				case 'U':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+				case 'L':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+				
 				}
 				
 			}
