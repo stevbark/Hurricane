@@ -21,6 +21,12 @@ public class EntityPlayer extends Entity
 	
 	public static int player_room_num = 1;
 	
+	// facing/direction
+	public final int UP = 3;
+	public final int DOWN = 4;
+	public final int LEFT = 1;
+	public final int RIGHT = 2;
+	
 	public int anim_frame = 0;
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
@@ -175,6 +181,38 @@ public class EntityPlayer extends Entity
 		return false;
 	}
 	
+	public void changeDirection(){
+		if(gk.bUP){
+			currentImage = Tile.playertile_UP;
+			facing = UP;
+			gk.bUP = false;
+		}
+		if(gk.bDOWN){
+			currentImage = Tile.playertile_DOWN;
+			facing = DOWN;
+			gk.bDOWN = false;
+		}
+		if(gk.bLEFT){
+			currentImage = Tile.playertile_LEFT;
+			facing = LEFT;
+			gk.bLEFT = false;
+			
+		}
+		if(gk.bRIGHT){
+			currentImage = Tile.playertile_RIGHT;
+
+			facing = RIGHT;
+			gk.bRIGHT = false;
+		}
+		
+	}
+	
+	public char getDirection(){	
+		if(facing == UP) return 'U';
+		if(facing == DOWN) return 'D';
+		if(facing == LEFT) return 'L';
+		else return 'R';
+	}
 	@Override
 	public void move(double delta)
 	{
@@ -362,9 +400,7 @@ public class EntityPlayer extends Entity
 		
 		if(health<=0)
 		{
-			System.out.println("You are Dead");
 			isDead = true;
-//			gk.stop();
 		}
 	}
 	

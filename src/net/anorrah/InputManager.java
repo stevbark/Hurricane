@@ -54,6 +54,38 @@ public class InputManager implements KeyListener, MouseListener
 			}
 			break;
 			
+		case KeyEvent.VK_UP:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.bUP = true;
+				//Core.t.WaitForPlayer=false;
+				//Core.t.setWaitForPlayerToFalse();
+			}
+			break;
+		case KeyEvent.VK_DOWN:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.bDOWN = true;
+				//Core.t.WaitForPlayer=false;
+				//Core.t.setWaitForPlayerToFalse();
+			}
+			break;
+		case KeyEvent.VK_LEFT:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.bLEFT = true;
+				//Core.t.WaitForPlayer=false;
+				//Core.t.setWaitForPlayerToFalse();
+			}
+			break;
+		case KeyEvent.VK_RIGHT:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.bRIGHT = true;
+				//Core.t.WaitForPlayer=false;
+				//Core.t.setWaitForPlayerToFalse();
+			}
+			break;
 		case KeyEvent.VK_SPACE:
 			//Core.player.attack(null);
 			if(Core.running)

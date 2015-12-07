@@ -31,7 +31,7 @@ public class Core extends Applet implements Runnable
 	public static int fps = 0;
 	public static int renderFPS = 0;
 	
-	public static boolean bW, bS, bA, bD, bE, bESC, bP;
+	public static boolean bW, bS, bA, bD, bE, bUP, bDOWN, bLEFT, bRIGHT,bESC, bP;
 	
 	private Image screen;
 	public static Dimension VIEWPORT_SIZE = new Dimension(672,544);
@@ -189,6 +189,7 @@ public class Core extends Applet implements Runnable
 			if(player.isDead()){
 				player.stopGame();
 			}
+			player.changeDirection();
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);
@@ -246,6 +247,7 @@ public class Core extends Applet implements Runnable
 			g.setColor(Color.RED);
 			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
 		}
+		
 		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
 		g.drawRect(40, 10, 150, 20);
