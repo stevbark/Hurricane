@@ -181,6 +181,39 @@ public class EntityPlayer extends Entity
 		return false;
 	}
 	
+	public void changeDirection(){
+		if(gk.bUP){
+			currentImage = Tile.playertile_UP;
+			facing = UP;
+			gk.bUP = false;
+			System.out.println("PLAYER IS FACING UP");
+		}
+		if(gk.bDOWN){
+			currentImage = Tile.playertile_DOWN;
+			facing = DOWN;
+			gk.bDOWN = false;
+		}
+		if(gk.bLEFT){
+			currentImage = Tile.playertile_LEFT;
+			facing = LEFT;
+			gk.bLEFT = false;
+			
+		}
+		if(gk.bRIGHT){
+			currentImage = Tile.playertile_RIGHT;
+
+			facing = RIGHT;
+			gk.bRIGHT = false;
+		}
+		
+	}
+	
+	public char getDirection(){	
+		if(facing == UP) return 'U';
+		if(facing == DOWN) return 'D';
+		if(facing == LEFT) return 'L';
+		else return 'R';
+	}
 	@Override
 	public void move(double delta)
 	{

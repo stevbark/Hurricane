@@ -189,6 +189,7 @@ public class Core extends Applet implements Runnable
 			if(player.isDead()){
 				player.stopGame();
 			}
+			player.changeDirection();
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);
