@@ -131,6 +131,8 @@ public class InputManager implements KeyListener, MouseListener
 				
 				}
 				
+				//	Core.player.attack(Core.player.tX, 1);
+				
 			}
 			Core.t.setWaitForPlayerToFalse();
 			break;
