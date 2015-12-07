@@ -135,22 +135,22 @@ public class EntityPlayer extends Entity
 		if(item instanceof potionObject)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.sworditem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.potionitem,item, new NoBonus());
 		}
 		else if(item instanceof bandAidObject)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.bandaiditem,item, new NoBonus());
 		}
 		else if(item instanceof castObject)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.castitem,item, new NoBonus());
 		}
 		else if(item instanceof FoodItem)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.hammeritem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.fooditem,item, new NoBonus());
 		}
 		else if(item instanceof BerserkerItems)
 		{

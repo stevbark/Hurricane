@@ -23,7 +23,10 @@ public class ItemsAndBonuses
 	
 	//Usable Items
 	public static final Item no_item = new Item(new Rectangle(itemicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.empty_item);
-	
+	public static final Item potionitem = new Item(new Rectangle(rangedicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.potion_icon);
+	public static final Item bandaiditem = new Item(new Rectangle(rangedicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.band_aid_icon);
+	public static final Item castitem = new Item(new Rectangle(rangedicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.cast_icon);
+	public static final Item fooditem = new Item(new Rectangle(rangedicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.food_icon);
 	//Bonuses
 	public static final Item no_bonus = new Item(new Rectangle(meleeicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.no_enchant);
 	//melee Bonuses
