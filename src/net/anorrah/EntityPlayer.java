@@ -21,6 +21,12 @@ public class EntityPlayer extends Entity
 	
 	public static int player_room_num = 1;
 	
+	// facing/direction
+	public final int UP = 3;
+	public final int DOWN = 4;
+	public final int LEFT = 1;
+	public final int RIGHT = 2;
+	
 	public int anim_frame = 0;
 	public int anim_time = 20;
 	public int anim_DELTA = 0;
@@ -328,9 +334,7 @@ public class EntityPlayer extends Entity
 		
 		if(health<=0)
 		{
-			System.out.println("You are Dead");
 			isDead = true;
-//			gk.stop();
 		}
 	}
 	
