@@ -6,7 +6,7 @@ import net.anorrah.items.bonus.bonus;
 
 public class RangedWeaponItem extends ItemObject{
 	
-	double damage;
+	public double damage;
 
 	public RangedWeaponItem(int levelBonus)
 	{

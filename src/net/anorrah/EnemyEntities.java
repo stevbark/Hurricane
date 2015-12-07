@@ -2,7 +2,8 @@ package net.anorrah;
 
 import java.awt.Graphics;
 
-
+import net.anorrah.items.MeleeWeaponItem;
+import net.anorrah.items.RangedWeaponItem;
 import net.anorrah.items.damageObject;
 
 public class EnemyEntities extends Entity {
@@ -112,7 +113,7 @@ public class EnemyEntities extends Entity {
 	
 	public void on_death() 
 	{
-		
+		Core.remove(this);
 	}
 	
 	public int getlocationX()
@@ -133,6 +134,19 @@ public class EnemyEntities extends Entity {
 		tY = y;
 	}
 	
-	
+	public void takeDamage(damageObject damage)
+	{
+		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			
+			if(health<=0)
+			{
+				on_death();
+			}
+		}
+		System.out.println("Enemy got hurt! Took " + damage.damage + " Damage. Now has " + health + " health left");
+	}
 	
 }
