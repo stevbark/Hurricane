@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.anorrah.items.MeleeWeaponItem;
+import net.anorrah.items.RangedWeaponItem;
 import net.anorrah.items.damageObject;
 import net.anorrah.items.bonus.bonus;
 
@@ -25,6 +27,8 @@ public abstract class Entity
 	
 	protected ArrayList<bonus> bonuses = new ArrayList<bonus>();
 	protected ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
+	
+	protected boolean isInvisible=false;
 	
 	public Entity()
 	{
@@ -50,6 +54,11 @@ public abstract class Entity
 		health = 100;
 		maxHealth=100;
 		collider = new Rectangle((int)x, (int)y, width,height);
+	}
+	
+	public void becomeInvisible()
+	{
+		isInvisible=true;
 	}
 	
 	public void heal(int heal)
@@ -172,6 +181,11 @@ public abstract class Entity
 	{
 		return health;
 	}
+	public int getMaxHealth()
+	{
+		
+		return maxHealth;
+	}
 	
 	public void takeDamage(damageObject damage)
 	{
@@ -179,14 +193,37 @@ public abstract class Entity
 		if(health <=0)
 		{
 			health = 0;
-			for(bonus b: bonuses)
-			{
-				b.onDeath(this);
-			}
-			System.out.println("dead");
+			on_death();
+			
 		}
 	}
 
+	public void takeDamage(MeleeWeaponItem damage)
+	{
+		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			
+			if(health<=0)
+			{
+				on_death();
+			}
+		}
+	}
+	public void takeDamage(RangedWeaponItem damage)
+	{
+		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			
+			if(health<=0)
+			{
+				on_death();
+			}
+		}
+	}
 	
 	public abstract void on_collided(Entity entity);
 

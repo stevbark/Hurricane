@@ -3,20 +3,30 @@ package net.anorrah.items;
 import java.util.ArrayList;
 
 import net.anorrah.items.bonus.ArmorBonus;
+import net.anorrah.items.bonus.DuelingBonus;
+import net.anorrah.items.bonus.GABonus;
+import net.anorrah.items.bonus.TeleportBonus;
 import net.anorrah.items.bonus.bonus;
 import net.anorrah.items.bonus.knockback;
+import net.anorrah.items.bonus.venganceBonus;
 
 public class ArmorItem extends ItemObject {
 
-//	double defence;
+//	double defense;
 	bonus bon = new knockback();
 	public ArmorItem( int currentLevel) {
 		super(currentLevel);
-		
 		myBonus.add(new ArmorBonus( enchantment));
-		myBonus.add(bon);
 		
-		possibleBonuses = new ArrayList<bonus>();
+		possibleBonuses = new ArrayList<bonus>() {{
+		    add(new knockback());
+		    add(new GABonus());
+		    add(new TeleportBonus());
+		    add(new DuelingBonus());
+		    add(new venganceBonus());
+		}};
+		
+		 
 		// TODO Auto-generated constructor stub
 	}
 

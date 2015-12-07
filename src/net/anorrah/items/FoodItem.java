@@ -2,14 +2,14 @@ package net.anorrah.items;
 
 import net.anorrah.items.bonus.regenerationBonus;
 
-public class bandAidObject extends otherObject {
+public class FoodItem extends ItemObject {
 
 	private int restoreATurn = 10;
 	 
-	public bandAidObject(int currentLevel) {
+	public FoodItem(int currentLevel) {
 		super(currentLevel);
-		charges = 3;
-		myBonus.add(new regenerationBonus(restoreATurn,5));
+		charges = 2;
+		myBonus.add(new regenerationBonus(restoreATurn, 10));
 	}
 
 	@Override
@@ -17,5 +17,4 @@ public class bandAidObject extends otherObject {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

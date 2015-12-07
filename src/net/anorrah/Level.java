@@ -2,11 +2,17 @@ package net.anorrah;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Stack;
-//import org.newdawn.slick.SlickException;
-//import org.newdawn.slick.tiled.TiledMap;
+
 import java.util.TreeMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Mover;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.PathFindingContext;
+import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 public class Level 
 {
@@ -16,12 +22,15 @@ public class Level
 	public Background[][] bg = new Background[width][height];
 	public Solid[][] solid = new Solid[width][height];
 	public Item[][] item = new Item[width][height];
+	//public Enemies[][] enemyMatrix = new Enemies[width][height];
+	public ArrayList<EnemyEntities> enemies = new ArrayList<EnemyEntities>();
 	
 	private TreeMap<Integer,Room> rooms;//contains all rooms in a single level
 	private int minRooms = 4, maxRooms = 7, delta = 5;
 	public int playerlocation = 1;
 	private boolean left = false, right = false, up = false, down = false;
 	private int nextleft = -1, nextright = -1, nexttop = -1, nextbottom = -1;
+	private static final int MAX_PATH_LENGTH = 100;
 	
 	public Level()
 	{	
@@ -29,6 +38,7 @@ public class Level
 		setbackgroundtiles();
 		setedge();
 		generateRooms();
+		//System.out.println(enemies.size());
 	}
 	private void setbackgroundtiles()
 	{
@@ -66,6 +76,8 @@ public class Level
 				}
 				solid[x][y] = new Solid(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
 				item[x][y] = new Item(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
+				//enemyMatrix[x][y] = new Enemies(new Rectangle(x*Tile.size, y*Tile.size, Tile.size, Tile.size),x,y,Tile.blank);
+				
 			}
 		}
 		
@@ -206,7 +218,16 @@ public class Level
 			}
 		}
 	}
+	/*public  TreeMap<Integer,Room> getRooms()
+	{
+		return rooms;
+		
+	}*/
 	
+	public void removeEnemyFromRoom(EnemyEntities baddie)
+	{
+		rooms.get(playerlocation).enemies.remove(baddie);
+	}
 	private void loadroom()
 	{
 		
@@ -266,6 +287,13 @@ public class Level
 		for(Solid s: rooms.get(playerlocation).blocks)
 		{
 			solid[s.row][s.col]= s;
+		}
+		
+		enemies =  new ArrayList<EnemyEntities>();
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{
+			enemies.add(e);
+		//	Core.addEntity(e);
 		}
 		//Repeat this for rooms.get(playerlocation).enemies , items, and traps (when added)
 	}
@@ -346,6 +374,10 @@ public class Level
 			minRooms += 2;
 			maxRooms += minRooms;
 		}
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{
+			Core.remove(e);
+		}
 		setbackgroundtiles();
 		setedge();
 		generateRooms();
@@ -423,9 +455,17 @@ public class Level
 					{
 						item[x][y].render(g);
 					}
+
+					
 				}
 			}
 		}
+		
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{ 	
+			e.render(g);
+		}
+		
 	}
 	
 	private class RoomNumbertoDirectionPair
@@ -438,4 +478,74 @@ public class Level
 			this.direction = direction;
 		}
 	}
+	
+	//Testing Purposes. Probably dont need this
+	public ArrayList<EnemyEntities> retrieveEnemies()
+	{
+		return enemies;
+	}
+	
+	//Enemies move right after the Player takes there turn
+	public void enemiesMove()
+	{
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{ 	
+			e.takeTurn();
+			
+			// Arraylist<Int> = findpath(e.x,e.y);
+	//		e.move(updateX.get(i), updateY.get(i));
+		}
+		//Updates the coordinates where the enemies are suppose to move
+		/*for(int i = 0; i < enemies.size()-1; i++)
+		{ 	
+			//System.out.println(enemies.get(i))
+			//
+    		enemies.get(i).updateX(updateX.get(i));
+    		enemies.get(i).updateY(updateY.get(i));	
+    	}*/
+	}
+	
+	//Player checks whether there is any enemy in this space or not
+	public boolean canMove(int x, int y) {
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{ 	
+			if((e.getlocationX()) == x && (e.getlocationY() == y)) 
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//Holds the coordinates of where the enemies will move next
+	//ArrayList<Integer> updateX;// = new ArrayList<Integer>();
+	//ArrayList<Integer> updateY;// = new ArrayList<Integer>();
+	
+	//Where the pathfinding happens
+	public void findPathTowardsPlayer(int enemyX, int enemyY)
+	{
+		Map map = new Map(solid);
+
+		AStarPathFinder pathFinder = new AStarPathFinder(map, MAX_PATH_LENGTH, false);
+        Path path = pathFinder.findPath(null, enemyX, enemyY, EntityPlayer.tX, EntityPlayer.tY);
+		
+        //System.out.println(path.getX(0) + ", "+ path.getY(0));
+        //Crashes when an enemy is trapped between Obstacles
+        int length = path.getLength();
+        //System.out.println("Found path of length: " + length + ".");
+        
+        //updateX = new ArrayList<Integer>();
+        //updateY = new ArrayList<Integer>();
+        
+        //updateX.add(path.getX(0));
+        //updateY.add(path.getY(0));
+        
+        for(int i = 0; i < length; i++) 
+        {
+        	//System.out.println("Move to: " + path.getX(i) + "," + path.getY(i) + ".");
+        }
+		
+	}
+	
+	//Somehow need to call the move method in EnemyEntities
 }

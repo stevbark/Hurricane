@@ -1,7 +1,11 @@
 package net.anorrah.items.bonus;
 
+import java.util.ArrayList;
+
 import net.anorrah.Core;
+import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
+import net.anorrah.Tile;
 import net.anorrah.items.damageObject;
 
 public abstract class bonus {
@@ -20,7 +24,7 @@ public abstract class bonus {
 		
 	}
 	
-	public void invisible()
+	public void invisible(Entity user)
 	{
 		
 	}
@@ -44,12 +48,58 @@ public abstract class bonus {
 		
 	}
 	
+	// used for Melee Attacks since 
 	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		
 	}
+	// used for Ranged Attacks since ranged attacks can be blocked by obstacles.
 	
-	public void onAttackPosition(Entity user,int x, int y)
+	public void onAttackPosition(Entity user,int targetX, int targetY)
+	{
+		
+	}
+	
+	protected boolean outOfBounds(int i,int j)
+	{
+		return i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height;
+
+	}
+	
+	protected boolean canMove(int i, int j)
+	{
+		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
+		ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
+		if(i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height)
+		{
+			return true;
+		}
+		else if(Core.level.item[i][j].id != Tile.blank)
+		{
+			return false;
+		}
+		else 
+		{
+			for(EnemyEntities e:presentEnemies)
+			{
+				if(e.getlocationX()==i&&e.getlocationY()==j)
+				{
+					return false;
+				}
+			}
+		}
+		
+		if(Core.level.solid[i][j].id == Tile.blank)
+		{
+			
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	protected void hitEffects(Entity user, int x, int y)
 	{
 		
 	}
@@ -70,11 +120,11 @@ public abstract class bonus {
 		
 	}
 	
-	protected void explode(Entity user, bonus effect, int x, int y)
+	protected void explode(Entity user, bonus effect, int x, int y, int radius)
 	{
-		for(int xradius = x-1;xradius<=x+1;xradius++)
+		for(int xradius = x-radius;xradius<=x+radius;xradius++)
 		{
-			for(int yradius = y-1;yradius<=y+1;yradius++)
+			for(int yradius = y-radius;yradius<=y+radius;yradius++)
 			{
 				
 				System.out.println("explode hit X: " + xradius + " Y: " + yradius);

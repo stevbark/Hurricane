@@ -1,16 +1,13 @@
 package net.anorrah.items.bonus;
 
+import java.util.ArrayList;
+
 import net.anorrah.Core;
+import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
-import net.anorrah.Tile;
-import net.anorrah.items.damageObject;
-import net.anorrah.items.damageObject.Type;
 
-public class rangedBonus extends bonus {
+public abstract class rangedBonus extends bonus {
 
-	
-	
-	
 	public void onAttackPosition(Entity user,int targetX, int targetY)
 	{
 		int x = user.getlocationX();
@@ -19,7 +16,13 @@ public class rangedBonus extends bonus {
 		xSpeed =(int) Math.signum(xSpeed);
 		int ySpeed =targetY-y;
 		ySpeed=(int) Math.signum(ySpeed);
-		System.out.println("ranged xSpeed: " +xSpeed + "ySpeed: " + ySpeed );
+		System.out.println("ranged xSpeed: " +xSpeed + " ySpeed: " + ySpeed );
+		
+//		for(EnemyEntities cur:m)
+//		{
+//			System.out.println("enemy is " + cur);
+//		}
+		
 		while(!outOfBounds(x,y) &&canMove(x+xSpeed,y+ySpeed)&& (x!=targetX||y!=targetY))
 		{
 			if(canMove(x+xSpeed,y+ySpeed))
@@ -29,6 +32,9 @@ public class rangedBonus extends bonus {
 				
 			}
 		}
+		
+		System.out.println("shot from X: " + user.getlocationX() + " Y: " + user.getlocationY());
+		
 		if(x==targetX&&y==targetY)
 		{
 			System.out.println("ranged hit X: " + x + " Y: " + y);
@@ -38,36 +44,8 @@ public class rangedBonus extends bonus {
 			System.out.println("ranged miss... Hit:X " + x + " Y: "+ y);
 		}
 		
-		explode(user,new ImOnFire(new damageObject(10,Type.fire),3),x,y);
 		
-		
+		hitEffects(user,x,y);
 	}
-	
-	private boolean outOfBounds(int i,int j)
-	{
-		return i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height;
-
-	}
-	
-	private boolean canMove(int i, int j)
-	{
-		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
-		
-		if(i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height)
-		{
-			return true;
-		}
-		else if(Core.level.item[i][j].id != Tile.blank)
-		{
-			return false;
-		}
-		
-		else if(Core.level.solid[i][j].id == Tile.blank)
-		{
-			return true;
-		}
-		return false;
-	}
-	
 	
 }
