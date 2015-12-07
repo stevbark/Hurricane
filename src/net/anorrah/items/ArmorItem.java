@@ -12,7 +12,7 @@ import net.anorrah.items.bonus.venganceBonus;
 
 public class ArmorItem extends ItemObject {
 
-//	double defence;
+//	double defense;
 	bonus bon = new knockback();
 	public ArmorItem( int currentLevel) {
 		super(currentLevel);

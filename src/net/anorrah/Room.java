@@ -1,26 +1,29 @@
 package net.anorrah;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Room {
 	public int levelNum = 0;
 	public int roomid = -1;
-	private double chanceEmpty = 70;
-	private double chanceEnemy = 35;
-	private double chanceBlocked = 30;
+	private double chanceEmpty = 75;
+	private double chanceEnemy = 70;
+	private double chanceBlocked = 35;
 	
 	public boolean hasExit = false;
 	public boolean isStart = false;
 	public boolean hasPlayer = false;
 	public boolean cleared = true;
-	
+	public int r =0;
 	public Item item = null;
-	public ArrayList<enemyEntities> enemies= new ArrayList<enemyEntities>();
+	public ArrayList<EnemyEntities> enemies= new ArrayList<EnemyEntities>();
 	public ArrayList<Solid> blocks = new ArrayList<Solid>();
 	public int left=0, right=0, up=0, down=0;//adjacent rooms
 	//private int chanceTrap = 100; not needed
+	
+	public EnemyEntities enemy;
 	
 	public Room(int levelnumber, int roomid)
 	{
@@ -37,8 +40,6 @@ public class Room {
 	{
 		//assign left, right, up, down if they exist
 		
-		
-		
 		for(int x = 2; x < Level.width-2; x++)
 		{
 			for(int y = 2; y < Level.height-2; y++)
@@ -50,13 +51,18 @@ public class Room {
 					{
 						//place an empty tile at [x,y] 
 					}
-					else if(dice > chanceEnemy- Math.ceil(levelNum/2))
+					else if(dice > chanceEnemy-Math.ceil(levelNum/2))
 					{
-						//place an enemy  at [x,y](roll again for enemy type)
-
+						enemy = new EnemyEntities(null, 
+								x*Tile.size,
+								y*Tile.size,
+								Tile.size,
+								Tile.size);
+						enemies.add(enemy);
 					}
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
 					{
+
 						int flip = (int)(Math.random()*2);
 						Solid block;
 						if(flip == 0)
@@ -87,9 +93,11 @@ public class Room {
 			}
 			
 		}
+		System.out.println("There are "+enemies.size()+" enemies in Room #"+roomid);
+		System.out.println("There are "+blocks.size()+" blocks in Room #"+roomid);
 	}
 	
-	public void render()
+	public void render(Graphics g)
 	{
 		
 	}

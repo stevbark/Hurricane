@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import net.anorrah.items.*;
+import java.util.Random;
 
 import javax.swing.JFrame;
 // head 17 width 21
@@ -48,7 +49,6 @@ public class Core extends Applet implements Runnable
 	
 	public static int offset_MAX_X, offset_MAX_Y, offset_MIN_X = 0, offset_MIN_Y = 0;
 	public static Rectangle camera = new Rectangle(0,0,VIEWPORT_SIZE.width,VIEWPORT_SIZE.height);
-	public tempEnemy TempEnemy;
 	private static Item itemtorender;
 	private static ItemObject tempholding;
 	private static String description;
@@ -92,7 +92,7 @@ public class Core extends Applet implements Runnable
 		offset_MAX_X = Level.width - VIEWPORT_SIZE.width;
 		offset_MAX_Y = Level.height - VIEWPORT_SIZE.height;
 		
-		initEntities();
+		initPlayer();
 		//player.setTilePosition(20, 20);
 		running = true;
 		new Thread(this).start();
@@ -151,12 +151,8 @@ public class Core extends Applet implements Runnable
 	}
 	
 	public void initEntities()
+	public void initPlayer()
 	{
-		TempEnemy = new tempEnemy(t, 
-				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2),
-				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) -30,
-				Tile.size,
-				Tile.size);
 		player = new EntityPlayer(t, 
 				(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) + offset_X,
 				(VIEWPORT_SIZE.height / 2) - (Tile.size / 2) + offset_Y,
@@ -165,7 +161,13 @@ public class Core extends Applet implements Runnable
 		 
 		entities.add(player);
 		player.setUp(player);
-		entities.add(TempEnemy);
+		
+		/*ArrayList<EnemyEntities> enemies = level.retrieveEnemies(); 
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			entities.add(enemies.get(i));
+		}*/
+		
 
 	}
 	
@@ -185,6 +187,9 @@ public class Core extends Applet implements Runnable
 		
 		if(inGame)
 		{
+			if(player.isDead()){
+				player.stopGame();
+			}
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);
@@ -225,6 +230,7 @@ public class Core extends Applet implements Runnable
 		{
 			entities.get(i).render(g);
 		}
+		
 		// UI DRAWING STARTS HERE
 		//g.setFont(new Font("Arial",Font.PLAIN,10));
 		
@@ -234,11 +240,16 @@ public class Core extends Applet implements Runnable
 		g.setColor(Color.BLACK);
 		g.fillRect(40, 10, 150, 20);
 		
-		g.setColor(Color.RED);
-		g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		g.setColor(Color.YELLOW);
+		g.drawRect(40, 10, 150, 20);
 		
+		if(!player.isDead()){
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		}
 		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		g.drawRect(40, 10, 150, 20);
 		
 		// Item
 		g.drawString("ITEM: ",220, stringOffsetY);
@@ -277,6 +288,14 @@ public class Core extends Applet implements Runnable
 			g.setColor(Color.white);
 			g.drawString("PAUSED", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
 		}
+		
+		if(player.isDead()){
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			g.setColor(Color.RED);
+			g.drawString("YOU ARE DEAD", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+
+		}
 
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);
@@ -285,7 +304,6 @@ public class Core extends Applet implements Runnable
 	
 	public void doATurn()
 	{
-		
 		for(int j = 0; j < entities.size(); j++)
 		{
 			Entity otherobj = entities.get(j);
@@ -322,7 +340,10 @@ public class Core extends Applet implements Runnable
 			if(!WaitForPlayer)
 			{
 				doATurn();
+				level.enemiesMove();
+				//level.moveEnemies();
 				WaitForPlayer = true;
+				
 			}
 			//doATurn();
 			try//give the thread some time to calculate
@@ -331,7 +352,7 @@ public class Core extends Applet implements Runnable
 			}
 			catch(Exception e)
 			{
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
 			}
 		}
 	}
