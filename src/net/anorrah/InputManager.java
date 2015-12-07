@@ -58,9 +58,22 @@ public class InputManager implements KeyListener, MouseListener
 			//Core.player.attack(null);
 			if(Core.running)
 			{
-				Core.player.attack(Core.player.getlocationX(),5);
-				Core.t.setWaitForPlayerToFalse();
+				System.out.println("About to attack");
+				int playerx = Core.player.getlocationX();
+				int playery = Core.player.getlocationY();
+				for(EnemyEntities bad : Core.level.enemies)
+				{
+					if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
+					{	
+						Core.player.attack(bad);
+					//	bad.takeDamage(Core.player.weapon);
+					}
+					
+					
+				}
+				
 			}
+			Core.t.setWaitForPlayerToFalse();
 			break;
 			
 		case KeyEvent.VK_ESCAPE:

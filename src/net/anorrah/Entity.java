@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.anorrah.items.MeleeWeaponItem;
+import net.anorrah.items.RangedWeaponItem;
 import net.anorrah.items.damageObject;
 import net.anorrah.items.bonus.bonus;
 
@@ -199,6 +201,32 @@ public abstract class Entity
 		}
 	}
 
+	public void takeDamage(MeleeWeaponItem damage)
+	{
+		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			
+			if(health<=0)
+			{
+				on_death();
+			}
+		}
+	}
+	public void takeDamage(RangedWeaponItem damage)
+	{
+		health -= damage.damage;
+		if(health <=0)
+		{
+			health = 0;
+			
+			if(health<=0)
+			{
+				on_death();
+			}
+		}
+	}
 	
 	public abstract void on_collided(Entity entity);
 

@@ -15,7 +15,7 @@ import net.anorrah.items.bonus.venganceBonus;
 
 public abstract class MeleeWeaponItem extends ItemObject{
 
-	int damage;
+	public int damage;
 	public int[] id;
 	
 	public MeleeWeaponItem(int levelBonus)  

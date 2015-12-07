@@ -32,6 +32,7 @@ public class EntityPlayer extends Entity
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
+	public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
@@ -261,16 +262,16 @@ public class EntityPlayer extends Entity
 	
 	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
 			//How do we target a specific enemy?
-			EnemyEntities enemy)
+			EnemyEntities bad)
 	{
 		
 		System.out.println("smacked!" + tX+" " +tY);
-		damageObject damage = new damageObject(0, Type.physical);
+		damageObject damage = new damageObject(weapon.damage, Type.physical);
 		for(bonus b:bonuses)
 		{
-			b.onAttack(this,enemy, damage, true);
+			b.onAttack(this,bad, damage, true);
 		}
-		enemy.takeDamage(damage);
+		bad.takeDamage(damage);
 		
 		//equippedWeapon.attack();
 	}
@@ -279,6 +280,7 @@ public class EntityPlayer extends Entity
 	{
 		for(bonus b:bonuses)
 		{
+			System.out.println("Smacked");
 			b.onAttackPosition(this, targX,targY);
 		}
 	}
