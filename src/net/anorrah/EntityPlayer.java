@@ -99,6 +99,7 @@ public class EntityPlayer extends Entity
 	public void setUp(Entity user)
 	{
 		equippedArmor.onEquip(user);
+		
 	//	bandAidObject regenTest= new bandAidObject(0);
 		//System.out.println("bandaid");
 	//	regenTest.onEquip(user);

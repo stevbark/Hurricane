@@ -191,11 +191,8 @@ public abstract class Entity
 		if(health <=0)
 		{
 			health = 0;
+			on_death();
 			
-			if(health<=0)
-			{
-				on_death();
-			}
 		}
 	}
 
