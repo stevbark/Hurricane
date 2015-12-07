@@ -218,7 +218,16 @@ public class Level
 			}
 		}
 	}
+	/*public  TreeMap<Integer,Room> getRooms()
+	{
+		return rooms;
+		
+	}*/
 	
+	public void removeEnemyFromRoom(EnemyEntities baddie)
+	{
+		rooms.get(playerlocation).enemies.remove(baddie);
+	}
 	private void loadroom()
 	{
 		

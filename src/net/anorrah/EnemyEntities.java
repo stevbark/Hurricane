@@ -113,7 +113,8 @@ public class EnemyEntities extends Entity {
 	
 	public void on_death() 
 	{
-		Core.remove(this);
+		Core.level.enemies.remove(this);
+		Core.level.removeEnemyFromRoom(this);
 	}
 	
 	public int getlocationX()
