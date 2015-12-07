@@ -150,7 +150,6 @@ public class Core extends Applet implements Runnable
 		itemclear();
 	}
 	
-	public void initEntities()
 	public void initPlayer()
 	{
 		player = new EntityPlayer(t, 
