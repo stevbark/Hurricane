@@ -121,6 +121,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+				case'R':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
 						if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
