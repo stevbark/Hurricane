@@ -142,8 +142,10 @@ public class InputManager implements KeyListener, MouseListener
 			Core.inGame = !Core.inGame;
 			if(Core.inGame)
 				System.out.println("unPaused");
-			else
+			else{
 				System.out.println("Paused");
+				
+			}
 			break;
 		
 		case KeyEvent.VK_ENTER:
