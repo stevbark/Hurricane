@@ -106,7 +106,7 @@ public class EnemyEntities extends Entity {
 	}*/
 	public void takeTurn() 
 	{
-		Core.level.findPathTowardsPlayer(tX/Tile.size, tY/Tile.size);
+		//Core.level.findPathTowardsPlayer(tX/Tile.size, tY/Tile.size);
 		canAttack();		
 	}
 	

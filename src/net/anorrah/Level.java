@@ -475,14 +475,15 @@ public class Level
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
 			e.takeTurn(); 
+			findPathTowardsPlayer(e.tX/Tile.size, e.tY/Tile.size);
 		}
 		//Updates the coordinates where the enemies are suppose to move
 		/*for(int i = 0; i < enemies.size()-1; i++)
 		{ 	
 			//System.out.println(enemies.get(i))
 			//enemies.get(i).move(updateX.get(i), updateY.get(i));
-    		enemies.get(i).updateX(updateX.get(i));
-    		enemies.get(i).updateY(updateY.get(i));	
+    		//enemies.get(i).updateX(updateX.get(i));
+    		//enemies.get(i).updateY(updateY.get(i));	
     	}*/
 	}
 	
@@ -499,8 +500,8 @@ public class Level
 	}
 	
 	//Holds the coordinates of where the enemies will move next
-	//ArrayList<Integer> updateX;// = new ArrayList<Integer>();
-	//ArrayList<Integer> updateY;// = new ArrayList<Integer>();
+	//ArrayList<Integer> updateX = new ArrayList<Integer>();
+	//ArrayList<Integer> updateY = new ArrayList<Integer>();
 	
 	//Where the pathfinding happens
 	public void findPathTowardsPlayer(int enemyX, int enemyY)
@@ -515,16 +516,11 @@ public class Level
         int length = path.getLength();
         System.out.println("Found path of length: " + length + ".");
         
-        //updateX = new ArrayList<Integer>();
-        //updateY = new ArrayList<Integer>();
-        
-        //updateX.add(path.getX(0));
-        //updateY.add(path.getY(0));
-        
-        for(int i = 0; i < length; i++) 
+        //return 
+        /*for(int i = 0; i < length; i++) 
         {
-        	//System.out.println("Move to: " + path.getX(i) + "," + path.getY(i) + ".");
-        }
+        	System.out.println("Move to: " + path.getX(i) + "," + path.getY(i) + ".");
+        }*/
 		
 	}
 	
