@@ -279,9 +279,12 @@ public class Level
 		{
 			solid[s.row][s.col]= s;
 		}
+		
+		enemies =  new ArrayList<EnemyEntities>();
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{
 			enemies.add(e);
+		//	Core.addEntity(e);
 		}
 		//Repeat this for rooms.get(playerlocation).enemies , items, and traps (when added)
 	}
@@ -361,6 +364,10 @@ public class Level
 		{
 			minRooms += 2;
 			maxRooms += minRooms;
+		}
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{
+			Core.remove(e);
 		}
 		setbackgroundtiles();
 		setedge();
@@ -474,13 +481,16 @@ public class Level
 	{
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
-			e.takeTurn(); 
+			e.takeTurn();
+			
+			// Arraylist<Int> = findpath(e.x,e.y);
+	//		e.move(updateX.get(i), updateY.get(i));
 		}
 		//Updates the coordinates where the enemies are suppose to move
 		/*for(int i = 0; i < enemies.size()-1; i++)
 		{ 	
 			//System.out.println(enemies.get(i))
-			//enemies.get(i).move(updateX.get(i), updateY.get(i));
+			//
     		enemies.get(i).updateX(updateX.get(i));
     		enemies.get(i).updateY(updateY.get(i));	
     	}*/
