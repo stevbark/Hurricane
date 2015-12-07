@@ -93,6 +93,7 @@ public class InputManager implements KeyListener, MouseListener
 				System.out.println("About to attack");
 				int playerx = Core.player.getlocationX();
 				int playery = Core.player.getlocationY();
+				//int playerDir = Core.player.
 				for(EnemyEntities bad : Core.level.enemies)
 				{
 					if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
