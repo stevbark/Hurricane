@@ -11,4 +11,5 @@ public class damageObject {
 		this.damage = damage;
 		this.type = type;
 	}
+	
 }

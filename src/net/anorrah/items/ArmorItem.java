@@ -27,15 +27,15 @@ public class ArmorItem extends ItemObject {
 		    add(new venganceBonus());
 		}};
 		generateBonus();
-		itemDescription = "live a while longer. blocks 2 (+"+enchantment+" level) damage per hit.";
+		super.itemDescription = "live a while longer. blocks 2 (+"+enchantment+" level) damage per hit.";
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String description() {
+	
+	/*public String description() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return super.itemDescription;
+	}*/
 	
 //	public void onBeenHit(enemyEntities enemy,damageObject damage)
 //	{

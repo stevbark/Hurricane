@@ -15,11 +15,11 @@ public class RangedWeaponItem extends ItemObject{
 		generateBonus();
 	}
 
-	@Override
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 //	public double attack()
 //	{

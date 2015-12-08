@@ -46,7 +46,9 @@ public abstract class ItemObject {
 		return charges;
 	}
 	
-	public abstract String description();
+	public String description(){
+		return itemDescription;
+	}
 	
 	public int generateBonus(int currentLevel) 	
 	{

@@ -11,13 +11,17 @@ public class castObject extends otherObject {
 		super(currentLevel);
 		charges = 4;
 		myBonus.add(new regenerationBonus(restoreATurn, 7));
+<<<<<<< HEAD
 		name="Cast";
+=======
+		super.itemDescription ="heals 10 hp per second for  7 secondsn";
+>>>>>>> f668498ae82103a5a99421ad6f358820a26c4bed
 	}
 
-	@Override
+/*	@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
