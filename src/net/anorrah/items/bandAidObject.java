@@ -10,6 +10,9 @@ public class bandAidObject extends otherObject {
 		super(currentLevel);
 		charges = 3;
 		myBonus.add(new regenerationBonus(restoreATurn,5));
+
+		name = "Band-Aid";
+
 		super.itemDescription = "now with Hello Kitty. Heals 10 hp per second for 5 seconds.";
 
 	}

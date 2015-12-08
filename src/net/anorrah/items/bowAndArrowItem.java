@@ -14,6 +14,7 @@ public class bowAndArrowItem extends RangedWeaponItem {
 		super.itemDescription ="Pew pew: This weapon deals 10 (+ "+enchantment+") points of damage per shot. This weapon is ranged.";
 
 		// TODO Auto-generated constructor stub
+		name="Bow";
 	}
 
 }

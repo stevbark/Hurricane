@@ -8,6 +8,7 @@ public class potionObject extends otherObject {
 		super(currentLevel);
 		// TODO Auto-generated constructor stub
 //		myBonus.add();
+		name="Potion";
 		charges = 1;
 		hasCharges= true;
 		super.itemDescription = "actually a placebo. Instantly heals 30 hp ";

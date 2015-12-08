@@ -27,6 +27,7 @@ public class Item extends Rectangle
 	public int[] id = {-1,-1};
 	public int row,col;
 	public ItemObject itemObject;
+	public String name = "NONE";
 	
 	public Item(Rectangle rec,int r, int c, int id[])
 	{
@@ -164,6 +165,9 @@ public class Item extends Rectangle
 		return itemObject;
 	}
 	
+	public String getName(){
+		return name;
+	}
 	public String itemDescription()
 	{
 		return itemObject.description();

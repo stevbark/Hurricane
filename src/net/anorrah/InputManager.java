@@ -86,6 +86,15 @@ public class InputManager implements KeyListener, MouseListener
 				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
+		case KeyEvent.VK_Q:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.player.meleeEquipped = !Core.player.meleeEquipped;
+				//Core.t.WaitForPlayer=false;
+				//Core.t.setWaitForPlayerToFalse();
+			}
+			break;
+			
 		case KeyEvent.VK_SPACE:
 			//Core.player.attack(null);
 			if(Core.running)

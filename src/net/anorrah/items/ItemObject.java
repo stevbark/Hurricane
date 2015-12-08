@@ -11,6 +11,7 @@ import net.anorrah.items.bonus.bonus;
 public abstract class ItemObject {
 	
 	public int[] id;
+	public String name="NONE";
 	public String itemDescription = "";
 	protected int enchantment;
 	protected ArrayList<bonus> possibleBonuses;
@@ -161,4 +162,7 @@ public abstract class ItemObject {
 		}
 	}
 	
+	public String getName(){
+		return name;
+	}
 }

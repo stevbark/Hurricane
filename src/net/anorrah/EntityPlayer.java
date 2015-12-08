@@ -16,6 +16,7 @@ public class EntityPlayer extends Entity
 	public int moveSpeed;
 	public static boolean isMoving = false;
 	public boolean isDead = false;
+	public boolean meleeEquipped = true;
 	
 	private static int moveDelta = 0;
 	
@@ -41,6 +42,8 @@ public class EntityPlayer extends Entity
 	public static PersonalItem rangeditem;
 	
 	//public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
+	public MeleeWeaponItem equippedWeapon;
+	public RangedWeaponItem equippedRanged;
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
@@ -79,6 +82,9 @@ public class EntityPlayer extends Entity
 			i.render(g);
 			ib.render(g);
 		}
+		public ItemObject getItem(){
+			return io;
+		}
 	}
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
@@ -103,6 +109,7 @@ public class EntityPlayer extends Entity
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
 		currentImage = super.id;
+		
 		//meleeitem.itemObject = new SwordItem("",Level.num_level);
 	}
 	
@@ -203,6 +210,20 @@ public class EntityPlayer extends Entity
 			meleeitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
 		}
 		meleeitem.io.onEquip(Core.player);
+	}
+	
+	public MeleeWeaponItem getMeleeItem(){
+		if(meleeitem.io instanceof MeleeWeaponItem)
+			return (MeleeWeaponItem) meleeitem.io;
+		else return null;
+	}
+	
+	public static PersonalItem getRangeItem(){
+		return rangeditem;
+	}
+	
+	public static PersonalItem getItem(){
+		return usableitem;
 	}
 	
 	public static void setRangeItem(RangedWeaponItem item)

@@ -7,6 +7,10 @@ public class AxeItem extends MeleeWeaponItem {
 
 	public AxeItem(int levelBonus) {
 		super(levelBonus);
+
+		super.itemDescription = "Axe";
+		name = "Axe";
+
 		super.itemDescription = "Stop, hammer time. This weapon deals 10 (+ "+enchantment+" level) points of damage per swing. Push enemies back on hit.";
 		
 		damage = 10+enchantment;
@@ -15,10 +19,10 @@ public class AxeItem extends MeleeWeaponItem {
 		
 	}
 
-	/*@Override
+	@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return super.itemDescription;
 	}
-*/
+
 }

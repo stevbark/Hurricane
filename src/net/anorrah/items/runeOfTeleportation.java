@@ -11,6 +11,7 @@ public class runeOfTeleportation extends otherObject {
 		hasCharges = true;
 		super.itemDescription = "Im gone. Teleport short distances ";
 		// TODO Auto-generated constructor stub
+		name="Rune of Teleportation";
 	}
 
 	/*@Override

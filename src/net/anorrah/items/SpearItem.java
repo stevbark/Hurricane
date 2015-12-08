@@ -6,8 +6,6 @@ import net.anorrah.items.bonus.spearBonus;
 public class SpearItem extends MeleeWeaponItem
 {
 	
-		
-		
 
 	public SpearItem(int levelBonus) {
 		
@@ -16,12 +14,13 @@ public class SpearItem extends MeleeWeaponItem
 		myBonus.add(new MeleeWeaponBonus(damage));
 		super.itemDescription = "I stab at thee. 8 damage + "+enchantment+" bonus to first enemy hit. second will take 10 damage.";
 		myBonus.add(new spearBonus());
+		name = "Spear";
 	}
 
-	/*@Override
+	@Override
 	public String description() {
 		// TODO Auto-generated method stub
-		return "Spear";
-	}*/
+		return super.itemDescription;
+	}
 	
 }

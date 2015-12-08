@@ -4,8 +4,6 @@ import net.anorrah.items.bonus.fireballBonus;
 
 public class FireballRod extends RangedWeaponItem {
 
-
-	
 	
 	public FireballRod(int currentLevel) {
 		super(currentLevel);
@@ -15,6 +13,7 @@ public class FireballRod extends RangedWeaponItem {
 		myBonus.add(new fireballBonus());
 		super.itemDescription = "The perfect solution to any problem.  A ball of fire that blows up all your enemies dealing 20 (+ "+2*enchantment+" ) points of damage on impact. Also starts a fire.";
 		// TODO Auto-generated constructor stub
+		name= "Fireball Rod";
 	}
 
 /*	@Override

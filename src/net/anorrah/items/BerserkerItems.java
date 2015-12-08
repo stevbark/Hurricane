@@ -11,6 +11,8 @@ public class BerserkerItems extends otherItemObject{
 		charges = 5;
 		super.itemDescription ="Not your day. Take damage in exchange for a damage boost.";
 		// TODO Auto-generated constructor stub
+		name = "Berserker's Soul";
+		
 	}
 	
 	/*@Override
