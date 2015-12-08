@@ -215,15 +215,15 @@ public class EntityPlayer extends Entity
 	}
 	
 //	// removes damage taken. For testing only
-	public void onHit(Entity enemy, damageObject damage)
-	{
-		for(bonus b:bonuses)
-		{
-			b.onBeenHit(this,enemy, damage);
-		}
-	//	takeDamage(damage);
-	//	equippedArmor.onBeenHit(enemy,damage);
-	}
+//	public void onHit(Entity enemy, damageObject damage)
+//	{
+//		for(bonus b:bonuses)
+//		{
+//			b.onBeenHit(this,enemy, damage);
+//		}
+//	//	takeDamage(damage);
+//	//	equippedArmor.onBeenHit(enemy,damage);
+//	}
 	public static void setMeleeItem(MeleeWeaponItem item)
 	{
 		meleeitem.io.onUnequip(Core.player);
