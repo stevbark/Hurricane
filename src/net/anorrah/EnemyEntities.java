@@ -16,7 +16,6 @@ public class EnemyEntities extends Entity {
 	protected final int max_Ydistance;
 	private int[] currentImage;
 	protected Image image;
-	protected boolean searching = true;
 	
 	public int time = 0;
 	
@@ -53,7 +52,7 @@ public class EnemyEntities extends Entity {
 			Ry = tY*32;
 			//System.out.println("enemy moved to x:" + tX + " y:" +tY);
 		}
-		else searching = false;
+		else canAttack();
 		turned = false;
 
 	}
@@ -67,10 +66,9 @@ public class EnemyEntities extends Entity {
 			{
 				return false;
 			}
-			else if((gk.level.solid[i][j].id == Tile.blank)  && (Core.level.checkIfPlayerCanMove(i,j)))
+			else if((gk.level.solid[i][j].id == Tile.blank)  && (Core.level.checkIfEnemyCanMove(i,j)))
 			{
 				System.out.println("\n enemy Moved to:\t" + i + " " + j);
-				searching = true;
 				return true;
 			}
 		}
@@ -122,12 +120,14 @@ public class EnemyEntities extends Entity {
 	//Look for the player if you are not next to them. If you are attack instead of move
 	public void takeTurn() 
 	{
-		if(searching)
+
+		int[] c = Core.level.findPathTowardsPlayer(tX, tY);
+		if(c != null)
 		{
-			int[] c = Core.level.findPathTowardsPlayer(tX, tY);
 			move(c[0],c[1]);
 		}
-		else canAttack();		
+		else canAttack();
+	
 	}
 	
 	public void on_death() 

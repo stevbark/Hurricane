@@ -523,7 +523,7 @@ public class Level
 	}
 	
 	//Player checks whether there is any enemy in this space or not
-	public boolean checkIfPlayerCanMove(int x, int y) {
+	public boolean checkIfEnemyCanMove(int x, int y) {
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
 			if((e.getlocationX()) == x && (e.getlocationY() == y)) 
@@ -559,11 +559,16 @@ public class Level
 		int[] nextStep = new int[2];
 		
 		AStarPathFinder pathFinder = new AStarPathFinder(map, MAX_PATH_LENGTH, false);
-        Path path = pathFinder.findPath(null, enemyX, enemyY, EntityPlayer.tX, EntityPlayer.tY);
+		Path path = pathFinder.findPath(null, enemyX, enemyY, EntityPlayer.tX, EntityPlayer.tY);
 		
-
-        //Crashes when an enemy is trapped between Obstacles
-        int length = path.getLength();
+		try
+		{
+			int length = path.getLength();
+		}
+		catch(NullPointerException e)
+		{
+			return null;
+		}
         
         int updateX = path.getX(1);
         int updateY = path.getY(1);

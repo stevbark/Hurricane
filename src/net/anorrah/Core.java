@@ -425,7 +425,6 @@ public class Core extends Applet implements Runnable
 			{
 				doATurn();
 				level.enemiesMove();
-				//level.moveEnemies();
 				WaitForPlayer = true;
 				
 			}

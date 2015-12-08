@@ -8,9 +8,9 @@ import java.awt.Rectangle;
 public class Room {
 	public int levelNum = 0;
 	public int roomid = -1;
-	private double chanceEmpty = 75;
-	private double chanceEnemy = 70;
-	private double chanceBlocked = 35;
+	private double chanceEmpty = 85;
+	private double chanceEnemy = 80;
+	private double chanceBlocked = 65;
 	
 	public boolean hasExit = false;
 	public boolean isStart = false;
@@ -67,7 +67,16 @@ public class Room {
 					}
 					else if(dice > chanceEnemy-Math.ceil(levelNum/2))
 					{
-						enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						int flip = (int)(Math.random()*2);
+						Solid block;
+						if(flip == 0)
+						{
+							enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
+						else
+						{
+							enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
 						enemies.add(enemy);
 					}
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
