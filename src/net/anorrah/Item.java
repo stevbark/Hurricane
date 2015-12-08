@@ -59,7 +59,6 @@ public class Item extends Rectangle
 	public ItemObject generateItem (int currentLevel)//called when picked up
 	{
 		double randomSeed = Math.random();
-		randomSeed=.45;
 		if(randomSeed < 0.25)
 		{
 			return generateArmor(currentLevel);
@@ -134,7 +133,6 @@ public class Item extends Rectangle
 	public ItemObject generateUsable(int currentLevel)
 	{
 		int randomItemSeed = ((int) (Math.random()*100))%8;
-		randomItemSeed = 1;
 		switch(randomItemSeed)
 		{
 		case 1:
