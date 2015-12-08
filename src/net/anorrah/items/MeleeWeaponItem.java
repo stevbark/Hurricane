@@ -35,8 +35,8 @@ public abstract class MeleeWeaponItem extends ItemObject{
 		
 	}
 
-	@Override
-	public abstract String description();
+	/*@Override
+	public abstract String description();*/
 
 //	public damageObject attack()
 //	{

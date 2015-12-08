@@ -10,12 +10,14 @@ public class bandAidObject extends otherObject {
 		super(currentLevel);
 		charges = 3;
 		myBonus.add(new regenerationBonus(restoreATurn,5));
+		super.itemDescription = "now with Hello Kitty. Heals 10 hp per second for 5 seconds.";
+
 	}
 
-	@Override
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return super.itemDescription;
+	}*/
 
 }

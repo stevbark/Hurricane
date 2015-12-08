@@ -9,13 +9,14 @@ public class runeOfTeleportation extends otherObject {
 		myBonus.add(new TeleportFromItemBonus());
 		charges=5;
 		hasCharges = true;
+		super.itemDescription = "Im gone. Teleport short distances ";
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }

@@ -13,17 +13,19 @@ public class SwordItem extends MeleeWeaponItem {
 		myBonus.add(new MeleeWeaponBonus(damage));
 		
 		str = r;
+		
+		super.itemDescription = "a trusty weapon. This weapon deals 10 (+"+enchantment+") points of damage per swing.";
 	}
 
 
 	
-	@Override
+	/*@Override
 	public String description() {
 		
 		return "stabby stabby stab! " + enchantment;
 	}
 	
-	
+	*/
 	
 	
 }

@@ -165,8 +165,7 @@ public class Item extends Rectangle
 	
 	public String itemDescription()
 	{
-		return "";
-	//	return itemObject.description();
+		return itemObject.description();
 	}
 	
 

@@ -9,9 +9,9 @@ public class LaserItem extends RangedWeaponItem{
 		super(levelBonus);
 		hasCharges = true;
 		charges = 7;
-		damage = (1*enchantment)+10;
+		damage = +10;
 		myBonus.add(new laserBonus((int) damage));
-		
+		super.itemDescription = "Bzzzzzzt: Deal 10 damage to everyone in a straight line.";
 		// TODO Auto-generated constructor stub
 	}
 

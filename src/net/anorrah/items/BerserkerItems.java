@@ -9,13 +9,14 @@ public class BerserkerItems extends otherItemObject{
 		myBonus.add(new berserkerBoost());
 		hasCharges = true;
 		charges = 5;
+		super.itemDescription ="Not your day. Take damage in exchange for a damage boost.";
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 }
