@@ -9,7 +9,6 @@ public class FoodItem extends ItemObject {
 	public FoodItem(int currentLevel) {
 		super(currentLevel);
 		hasCharges = true;
-
 		charges = 2;
 		
 

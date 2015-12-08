@@ -295,9 +295,17 @@ public class Core extends Applet implements Runnable
 		g.drawRect(40, 10, 150, 20);
 		
 		// Item
+		ItemObject usableItem = player.getUsableItem();
+		
 		g.drawString("ITEM: ",220, stringOffsetY);
 		g.drawRoundRect(255, 0, 33, 32, 5, 5);
 		
+		if(usableItem != null){
+			if(usableItem.hasCharges()){
+				g.drawString("USE: " +usableItem.charges(), 255, 50);
+			}
+			
+		}
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
@@ -335,6 +343,8 @@ public class Core extends Applet implements Runnable
 			g.setColor(Color.black);
 			g.drawString(description, 162, 322);
 		}
+		
+		
 		if(!inGame)
 		{
 			g.setColor(new Color(1,1,1,0.3f));
