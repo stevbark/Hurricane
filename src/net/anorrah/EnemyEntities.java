@@ -100,15 +100,14 @@ public class EnemyEntities extends Entity {
 	
 	public void attack()
 	{
-		damageObject damage = new damageObject(10, damageObject.Type.physical);
+		damageObject damage = new damageObject(3, damageObject.Type.physical);
 		
 		Core.player.onHit(this,damage);
 	}
 	
-	//Use super when a new sprite sheet is created
 	public void setImage(int[] id)
 	{
-		image = Tile.cannibal.getSubimage(id[0] * Tile.size, id[1] * Tile.size, width, height);
+		image = Tile.characters.getSubimage(id[0] * Tile.size, id[1] * Tile.size, width, height);
 	}
 	
 	public void render(Graphics g)
