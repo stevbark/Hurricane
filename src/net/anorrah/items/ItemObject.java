@@ -156,11 +156,13 @@ public abstract class ItemObject {
 	{
 		if(myBonus!=null){
 			
+			use();
 			for(bonus b:myBonus)
 			{	
-				b.onUseOnSelf(user);				
+				user.addToList(b);
+	//			b.onUseOnSelf(user);				
 			}
-		//	use();
+		//	
 			charges--;
 			if(hasCharges && charges <=0)
 			{

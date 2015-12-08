@@ -1,5 +1,7 @@
 package net.anorrah.items;
 
+import net.anorrah.Entity;
+import net.anorrah.items.bonus.regenerationBonus;
 import net.anorrah.items.bonus.tempHealthBonus;
 
 public class pendentOfFleetingHealth extends otherObject {
@@ -14,6 +16,11 @@ charges=3;
 		name="Pendant of Fleeting Health";
 	}
 
+	
+	public void onUseOnSelf(Entity user) {
+		myBonus.add(new tempHealthBonus(4,30));
+		super.onUseOnSelf(user);
+	}
 	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub

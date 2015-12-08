@@ -10,7 +10,7 @@ public class FoodItem extends ItemObject {
 		super(currentLevel);
 		hasCharges = true;
 		charges = 2;
-		myBonus.add(new regenerationBonus(restoreATurn, 10));
+		//myBonus.add(new regenerationBonus(restoreATurn, 10));
 
 		name="Food";
 
@@ -23,10 +23,10 @@ public class FoodItem extends ItemObject {
 		
 //		
 	}
-//	public void onUseOnSelf(Entity user) {
-//		myBonus.add(new regenerationBonus(restoreATurn, 10));
-//		
-//	}
+	public void onUseOnSelf(Entity user) {
+		myBonus.add(new regenerationBonus(restoreATurn, 10));
+		super.onUseOnSelf(user);
+	}
 
 /*	@Override
 	public String description() {
