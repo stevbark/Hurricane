@@ -40,6 +40,7 @@ public class EntityPlayer extends Entity
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
+	public static PersonalItem armorItem;
 	
 	//public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	public MeleeWeaponItem equippedWeapon;
@@ -101,8 +102,8 @@ public class EntityPlayer extends Entity
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
-		
-		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("",0), new NoBonus());
+		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,new ArmorItem(0), new NoBonus());
+		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("", 0), new NoBonus());
 		
 		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
 		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
@@ -116,10 +117,30 @@ public class EntityPlayer extends Entity
 
 	public void setUp(Entity user)
 	{
-		equippedArmor.onEquip(user);
-		setMeleeItem(new SwordItem("",0));
+		if( !(meleeitem.io instanceof NoItem))
+		{
+			equippedWeapon = (MeleeWeaponItem) meleeitem.io;
+			equippedWeapon.onEquip(this);
+		}
+		if( !(rangeditem.io instanceof NoItem))
+		{
+			equippedRanged = (RangedWeaponItem) rangeditem.io;
+			equippedRanged.onEquip(this);
+		}
+		if( !(armorItem.io instanceof NoItem))
+		{
+			equippedArmor = (ArmorItem) armorItem.io;
+			equippedArmor.onEquip(this);
+		}
+		if( !(usableitem.io instanceof NoItem))
+		{
+			useableItem = usableitem.io;
+			useableItem.onEquip(this);
+		}
+	//	knockback x = new knockback();
+	//	addToList(x);
 	//	bandAidObject regenTest= new bandAidObject(0);
-		//System.out.println("bandaid");
+	//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
 	//	tempHealthBonus b = new tempHealthBonus(4,100);
 	//	addToList(b);
@@ -131,17 +152,14 @@ public class EntityPlayer extends Entity
 //		addToList(iv);
 	}
 	
-	/*public static void setUsableItem(ItemObject item)
+	public static void setArmor(ArmorItem item)
 	{
-		usableitem.io.onUnequip(Core.player); 
+		armorItem.io.onUnequip(Core.player); 
 		
+		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,item, new NoBonus());
 		
-		if(item instanceof potionObject)
-		{
-			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.potionitem,item, new NoBonus());
-		}
-	}*/
+		armorItem.io.onEquip(Core.player);
+	}
 	
 	public ItemObject getUsableItem()
 	{
@@ -196,8 +214,8 @@ public class EntityPlayer extends Entity
 		usableitem.io.onEquip(Core.player);
 	}
 	
-	// removes damage taken. For testing only
-	/*public void onHit(Entity enemy, damageObject damage)
+//	// removes damage taken. For testing only
+	public void onHit(Entity enemy, damageObject damage)
 	{
 		for(bonus b:bonuses)
 		{
@@ -205,7 +223,7 @@ public class EntityPlayer extends Entity
 		}
 	//	takeDamage(damage);
 	//	equippedArmor.onBeenHit(enemy,damage);
-	}*/
+	}
 	public static void setMeleeItem(MeleeWeaponItem item)
 	{
 		meleeitem.io.onUnequip(Core.player);

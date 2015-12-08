@@ -164,7 +164,7 @@ public abstract class ItemObject {
 			if(hasCharges && charges <=0)
 			{
 				assert(Core.player.getUsableItem() == this);
-				Core.player.setUsableItem(null);
+				Core.player.setUsableItem(new NoItem(0));
 			}
 		}
 	}

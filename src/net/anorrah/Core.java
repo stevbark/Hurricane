@@ -164,7 +164,11 @@ public class Core extends Applet implements Runnable
 	
 	public static void equipitem()
 	{
-		if(tempholding instanceof MeleeWeaponItem)
+		if(tempholding instanceof ArmorItem)
+		{
+			EntityPlayer.setArmor((ArmorItem)tempholding);
+		}
+		else if(tempholding instanceof MeleeWeaponItem)
 		{
 			EntityPlayer.setMeleeItem((MeleeWeaponItem)tempholding);
 		}
