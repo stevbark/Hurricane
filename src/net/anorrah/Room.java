@@ -67,16 +67,33 @@ public class Room {
 					}
 					else if(dice > chanceEnemy-Math.ceil(levelNum/2))
 					{
-						int flip = (int)(Math.random()*2);
+						int roll = (int)(Math.random()*5);
 						Solid block;
-						if(flip == 0)
+						if(roll == 0)
+						{
+							enemy = new EnemyEntities(null, Tile.axis_LEFT, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
+						else if(roll == 1)
 						{
 							enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
+						else if(roll == 2)
+						{
+							enemy = new EnemyEntities(null, Tile.charger_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
+						else if(roll == 3)
+						{
+							enemy = new EnemyEntities(null, Tile.mage_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+						}
+						else if(roll == 4)
+						{
+							enemy = new EnemyEntities(null, Tile.theif_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
 						}
 						else
 						{
-							enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
+							enemy = new EnemyEntities(null, Tile.rat_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
 						}
+						
 						enemies.add(enemy);
 					}
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))
