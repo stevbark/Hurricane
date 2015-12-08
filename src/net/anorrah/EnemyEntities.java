@@ -1,6 +1,7 @@
 package net.anorrah;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import net.anorrah.items.MeleeWeaponItem;
 import net.anorrah.items.RangedWeaponItem;
@@ -14,22 +15,25 @@ public class EnemyEntities extends Entity {
 	protected final int max_Xdistance;
 	protected final int max_Ydistance;
 	private int[] currentImage;
+	protected Image image;
+	protected boolean searching = true;
+	
 	public int time = 0;
 	
 	double hp;
 	private boolean turned;
 	
-	public EnemyEntities(Core gk, double x, double y, int width, int height)
+	public EnemyEntities(Core gk, int[] enemyType, double x, double y, int width, int height)
 	{
-		super(Tile.playertile_DOWN,x,y,width,height);
-		tX = (int) x;
-		tY = (int) y;
-		//System.out.println("Enemy X: "+tX/Tile.size);
-		//System.out.println("Enemy Y: "+tY/Tile.size);
+		super(enemyType,x,y,width,height);
+		tX = (int) x/Tile.size;
+		tY = (int) y/Tile.size;
+		Rx = (int) tX*Tile.size;
+		Ry = (int) tY*Tile.size;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
 		this.gk = gk;
-		currentImage = super.id;
+		currentImage = enemyType;
 		health=10;
 	}
 	@Override
@@ -49,7 +53,9 @@ public class EnemyEntities extends Entity {
 			Ry = tY*32;
 			//System.out.println("enemy moved to x:" + tX + " y:" +tY);
 		}
+		else searching = false;
 		turned = false;
+
 	}
 	
 	public boolean canMove(int i, int j)
@@ -61,9 +67,10 @@ public class EnemyEntities extends Entity {
 			{
 				return false;
 			}
-			else if((gk.level.solid[i][j].id == Tile.blank)  && (Core.level.canMove(i,j)))
+			else if((gk.level.solid[i][j].id == Tile.blank)  && (Core.level.checkIfPlayerCanMove(i,j)))
 			{
 				System.out.println("\n enemy Moved to:\t" + i + " " + j);
+				searching = true;
 				return true;
 			}
 		}
@@ -72,22 +79,22 @@ public class EnemyEntities extends Entity {
 	
 	public void canAttack()
 	{
-		int enemyX = (int) x/Tile.size;
-		int enemyY = (int) y/Tile.size;
+		//int enemyX = (int) x/Tile.size;
+		//int enemyY = (int) y/Tile.size;
 		//System.out.println("Enemy is here: (" + x + ", " + y + ")");
-		if(gk.player.tX == enemyX-1 && gk.player.tY == enemyY)
+		if(gk.player.tX == tX-1 && gk.player.tY == tY)
 		{
 			attack();
 		}
-		else if(gk.player.tX == enemyX && gk.player.tY == enemyY-1)
+		else if(gk.player.tX == tX && gk.player.tY == tY-1)
 		{
 			attack();
 		}
-		else if(gk.player.tX == enemyX+1 && gk.player.tY == enemyY)
+		else if(gk.player.tX == tX+1 && gk.player.tY == tY)
 		{
 			attack();
 		}
-		else if(gk.player.tX == enemyX && gk.player.tY == enemyY+1)
+		else if(gk.player.tX == tX && gk.player.tY == tY+1)
 		{
 			attack();
 		}
@@ -100,42 +107,43 @@ public class EnemyEntities extends Entity {
 		Core.player.onHit(this,damage);
 	}
 	
-	/*public void render(Graphics g)
+	//Use super when a new sprite sheet is created
+	public void setImage(int[] id)
 	{
-		currentImage = Tile.fireball_icon;
-		super.setImage(currentImage);
-		g.drawImage(image, Rx, Ry,null);
-		
-	}*/
+		image = Tile.cannibal.getSubimage(id[0] * Tile.size, id[1] * Tile.size, width, height);
+	}
+	
+	public void render(Graphics g)
+	{
+		setImage(currentImage);
+		g.drawImage(image, Rx, Ry, null);
+	}
+	
+	//Look for the player if you are not next to them. If you are attack instead of move
 	public void takeTurn() 
 	{
-		Core.level.findPathTowardsPlayer(tX/Tile.size, tY/Tile.size);
-		canAttack();		
+		if(searching)
+		{
+			int[] c = Core.level.findPathTowardsPlayer(tX, tY);
+			move(c[0],c[1]);
+		}
+		else canAttack();		
 	}
 	
 	public void on_death() 
 	{
-		
 		//Core.level.enemies.remove(this);
 		Core.level.removeEnemyFromRoom(this);
 	}
 	
 	public int getlocationX()
 	{
-		return tX/Tile.size;
+		return tX;
 	}
 	
 	public int getlocationY()
 	{
-		return tY/Tile.size;
-	}
-	public void updateX(int x) 
-	{
-		tX = x;	
-	}
-	public void updateY(int y) 
-	{
-		tY = y;
+		return tY;
 	}
 	
 	public void takeDamage(damageObject damage)
