@@ -47,7 +47,7 @@ public class EntityPlayer extends Entity
 	public RangedWeaponItem equippedRanged;
 	
 	private ArmorItem equippedArmor;
-	private ItemObject useableItem;
+	private static ItemObject useableItem;
 	
 	public static int facing = 4;//default is facing downward
 	
@@ -171,7 +171,7 @@ public class EntityPlayer extends Entity
 	public static void setUsableItem(ItemObject item)
 	{
 		usableitem.io.onUnequip(Core.player); 
-		
+		useableItem = new NoItem(0);
 		
 		if(item instanceof potionObject)
 		{
@@ -213,7 +213,12 @@ public class EntityPlayer extends Entity
 			// items never have independent bonuses
 			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
+		else if(item instanceof NoItem)
+		{
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
+		}
 		usableitem.io.onEquip(Core.player);
+		useableItem = usableitem.io;
 	}
 	
 	// removes damage taken. For testing only

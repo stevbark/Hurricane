@@ -1,6 +1,7 @@
 package net.anorrah.items;
 
 import net.anorrah.Entity;
+import net.anorrah.items.bonus.regenerationBonus;
 
 public class potionObject extends otherObject {
 
@@ -14,6 +15,9 @@ public class potionObject extends otherObject {
 		super.itemDescription = "actually a placebo. Instantly heals 30 hp ";
 	}
 	
+
+
+
 	public void onUseOnSelf(Entity user)
 	{
 		user.heal(30);
