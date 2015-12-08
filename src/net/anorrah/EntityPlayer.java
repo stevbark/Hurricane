@@ -214,7 +214,7 @@ public class EntityPlayer extends Entity
 		usableitem.io.onEquip(Core.player);
 	}
 	
-//	// removes damage taken. For testing only
+	// removes damage taken. For testing only
 //	public void onHit(Entity enemy, damageObject damage)
 //	{
 //		for(bonus b:bonuses)
