@@ -274,6 +274,8 @@ public class EntityPlayer extends Entity
 		else return null;
 	}
 	
+
+	
 	public static void setRangeItem(RangedWeaponItem item)
 	{
 		rangeditem.io.onUnequip(Core.player);
@@ -472,6 +474,12 @@ public class EntityPlayer extends Entity
 //		
 //		//equippedWeapon.attack();
 //	}
+	
+	public void onUseOnSelf()
+	{
+		useableItem.onUseOnSelf(this);
+	}
+	
 	
 	public void attack(int targX, int targY)
 	{
