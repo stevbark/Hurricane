@@ -106,6 +106,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case 'U':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -114,6 +115,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case 'L':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -122,6 +124,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case'R':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -130,15 +133,12 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				
 				}
-<<<<<<< HEAD
-				//if(Core.player.isDead) Core.restart = true;
-=======
 				
 				//	Core.player.attack(Core.player.tX, 1);
 				
->>>>>>> 8261174a46f63554b0d25073a3c32851f524e6f4
 			}
 			Core.t.setWaitForPlayerToFalse();
 			break;
