@@ -103,7 +103,7 @@ public class EntityPlayer extends Entity
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
 		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,new ArmorItem(0), new NoBonus());
-		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("", 0), new NoBonus());
+		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new WhipItem( 0), new NoBonus());
 		
 		rangeditem = new PersonalItem(ItemsAndBonuses.bowitem, new bowAndArrowItem(0), new NoBonus());
 		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
