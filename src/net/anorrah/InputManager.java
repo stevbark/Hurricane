@@ -108,39 +108,67 @@ public class InputManager implements KeyListener, MouseListener
 				
 				switch (facing){
 				case 'D':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(playerx, 10000);
 					}
 					break;
 				case 'U':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(playerx, 0);
 					}
 					break;
 				case 'L':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(0, playery);
 					}
 					break;
 				case'R':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(10000, playery);
 					}
 					break;
 				

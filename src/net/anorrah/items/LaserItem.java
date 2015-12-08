@@ -8,8 +8,8 @@ public class LaserItem extends RangedWeaponItem{
 
 	public LaserItem(int levelBonus) {
 		super(levelBonus);
-		hasCharges = true;
-		charges = 7;
+	//	hasCharges = true;
+	//	charges = 7;
 
 		damage = (1*enchantment)+10;
 

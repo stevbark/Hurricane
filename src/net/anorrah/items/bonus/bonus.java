@@ -37,7 +37,7 @@ public abstract class bonus {
 			turnsLeft--;
 			if(turnsLeft<=0)
 			{
-				Core.player.removeFromList(this);
+				user.removeFromList(this);
 			}
 				
 		}
