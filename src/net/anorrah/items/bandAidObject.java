@@ -10,6 +10,7 @@ public class bandAidObject extends otherObject {
 		super(currentLevel);
 		charges = 3;
 		myBonus.add(new regenerationBonus(restoreATurn,5));
+		name = "Band-Aid";
 	}
 
 	@Override

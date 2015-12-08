@@ -201,6 +201,18 @@ public class EntityPlayer extends Entity
 		meleeitem.io.onEquip(Core.player);
 	}
 	
+	public MeleeWeaponItem getMeleeItem(){
+		return weapon;
+	}
+	
+	public static PersonalItem getRangeItem(){
+		return rangeditem;
+	}
+	
+	public static PersonalItem getItem(){
+		return usableitem;
+	}
+	
 	public static void setRangeItem(RangedWeaponItem item)
 	{
 		rangeditem.io.onUnequip(Core.player);

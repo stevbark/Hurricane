@@ -17,6 +17,7 @@ public class ArmorItem extends ItemObject {
 	public ArmorItem( int currentLevel) {
 		super(currentLevel);
 		myBonus.add(new ArmorBonus( enchantment));
+		name = "Armor";
 		
 		possibleBonuses = new ArrayList<bonus>() {{
 		    add(new knockback());

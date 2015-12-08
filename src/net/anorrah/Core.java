@@ -338,11 +338,24 @@ public class Core extends Applet implements Runnable
 			
 
 			g.setColor(Color.white);
-			// Stats
+			// Stats on ESC
 			int statsOffsetX = 17;
 			g.drawRoundRect(10, 10, 200, 400, 20, 20);
 			g.drawString("STATS: ", statsOffsetX, stringOffsetY);
 			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, statsOffsetX,stringOffsetY+20);
+			g.drawString("MELEE WEAPON:", statsOffsetX, stringOffsetY+40);
+			
+			// Sword isn't equipped but shown anyways(?) not in menu
+			MeleeWeaponItem melee = player.getMeleeItem();
+			g.drawString(melee.getName(), statsOffsetX, stringOffsetY+60);
+			g.drawString("DMG: "+melee.damage, statsOffsetX, stringOffsetY+80);
+			g.drawString(melee.itemDescription, statsOffsetX, stringOffsetY+100);
+
+			/* Please input an attack value
+			int meleeDmg = player.getMeleeItem().i.
+			*/
+			//bonuses unknown
+			//String meleeItemBonuses = player.getMeleeItem().b.
 			
 			
 			// Items

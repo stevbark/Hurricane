@@ -6,8 +6,6 @@ import net.anorrah.items.bonus.spearBonus;
 public class SpearItem extends MeleeWeaponItem
 {
 	
-		
-		
 
 	public SpearItem(int levelBonus) {
 		
@@ -16,6 +14,7 @@ public class SpearItem extends MeleeWeaponItem
 		myBonus.add(new MeleeWeaponBonus(damage));
 		super.itemDescription = "Spear";
 		myBonus.add(new spearBonus());
+		name = "Spear";
 	}
 
 	@Override

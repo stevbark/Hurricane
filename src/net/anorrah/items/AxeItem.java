@@ -5,6 +5,7 @@ public class AxeItem extends MeleeWeaponItem {
 	public AxeItem(int levelBonus) {
 		super(levelBonus);
 		super.itemDescription = "Axe";
+		name = "Axe";
 		
 	}
 

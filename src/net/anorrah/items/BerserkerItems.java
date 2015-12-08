@@ -10,6 +10,8 @@ public class BerserkerItems extends otherItemObject{
 		hasCharges = true;
 		charges = 5;
 		// TODO Auto-generated constructor stub
+		name = "Berserker's Soul";
+		
 	}
 	
 	@Override

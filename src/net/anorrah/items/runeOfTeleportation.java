@@ -10,6 +10,7 @@ public class runeOfTeleportation extends otherObject {
 		charges=5;
 		hasCharges = true;
 		// TODO Auto-generated constructor stub
+		name="Rune of Teleportation";
 	}
 
 	@Override

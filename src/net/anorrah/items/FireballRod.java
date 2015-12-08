@@ -4,8 +4,6 @@ import net.anorrah.items.bonus.fireballBonus;
 
 public class FireballRod extends RangedWeaponItem {
 
-
-	
 	
 	public FireballRod(int currentLevel) {
 		super(currentLevel);
@@ -14,6 +12,7 @@ public class FireballRod extends RangedWeaponItem {
 		damage = (2*enchantment)+20;
 		myBonus.add(new fireballBonus());
 		// TODO Auto-generated constructor stub
+		name= "Fireball Rod";
 	}
 
 	@Override
