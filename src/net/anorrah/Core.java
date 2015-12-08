@@ -347,9 +347,59 @@ public class Core extends Applet implements Runnable
 			g.fillRoundRect(160, 310, 352, 60, 5, 5);
 			
 			itemtorender.render(g);
-			
+			String des1 ="";
+			String des2 ="";
+			String des3 ="";
 			g.setColor(Color.black);
-			g.drawString(description, 162, 322);
+			
+			
+			if(description.length() > 108)
+			{
+				des1 = description.substring(0, 54);
+				des2 = description.substring(54, 108);
+				des3 = description.substring(108, description.length()-1);
+				
+				
+				if(description.substring(54).startsWith(" "))
+				{
+					g.drawString(des1, 162, 322);
+					g.drawString(des2, 162, 334);
+				}
+				else
+				{
+					g.drawString(des1.concat("-"), 162, 322);
+					if(description.substring(108).startsWith(" "))
+					{
+						g.drawString(des2, 162, 334);
+						g.drawString(des3, 162, 346);
+					}
+					else
+					{
+						g.drawString(des2.concat("-"), 162, 334);
+						g.drawString(des3, 162, 346);
+					}
+				}
+				
+				
+			}
+			else if(description.length() > 54)
+			{
+				des1 = description.substring(0, 54);
+				des2 = description.substring(54, description.length()-1);
+				
+				if(description.substring(54).startsWith(" "))
+				{
+					g.drawString(des1, 162, 322);
+					g.drawString(des2, 162, 334);
+				}
+				else
+				{
+					g.drawString(des1.concat("-"), 162, 322);
+					g.drawString(des2, 162, 334);
+				}
+			}
+			else g.drawString(description, 162, 322);
+			
 		}
 		
 		
