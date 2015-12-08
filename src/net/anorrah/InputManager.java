@@ -106,6 +106,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case 'U':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -114,6 +115,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case 'L':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -122,6 +124,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				case'R':
 					for(EnemyEntities bad : Core.level.enemies)
 					{
@@ -130,6 +133,7 @@ public class InputManager implements KeyListener, MouseListener
 							Core.player.attack(bad);
 						}
 					}
+					break;
 				
 				}
 				
