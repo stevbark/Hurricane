@@ -218,12 +218,20 @@ public class EntityPlayer extends Entity
 		else return null;
 	}
 	
-	public static PersonalItem getRangeItem(){
-		return rangeditem;
+	public static RangedWeaponItem getRangeItem(){
+		if(rangeditem.io instanceof RangedWeaponItem)
+			return (RangedWeaponItem) rangeditem.io;
+		else return null;
 	}
 	
-	public static PersonalItem getItem(){
-		return usableitem;
+	public ArmorItem getArmorItem(){
+		return equippedArmor;
+	}
+	
+	public static ItemObject getItem(){
+		if(usableitem.io instanceof ItemObject)
+			return (ItemObject)usableitem.io;
+		else return null;
 	}
 	
 	public static void setRangeItem(RangedWeaponItem item)
