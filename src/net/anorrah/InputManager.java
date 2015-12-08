@@ -182,7 +182,7 @@ public class InputManager implements KeyListener, MouseListener
 	{	
 		Core.t.setWaitForPlayerToFalse();
 		//If you are facing an enemy, you should be able to deal damage
-		Core.player.attack(Core.player.getlocationX(),Core.player.getlocationY());
+		//Core.player.attack(Core.player.getlocationX(),Core.player.getlocationY());
 		//System.out.println("Attack at X: " + Math.floor(e.getPoint().getX()/Tile.size) + " Y: " + Math.floor(e.getPoint().getY()/Tile.size));
 	}
 
