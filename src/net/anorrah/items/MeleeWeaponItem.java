@@ -27,6 +27,7 @@ public abstract class MeleeWeaponItem extends ItemObject{
 		    add(new EnfeeblementBonus());
 		    add(new VampiricBonus());
 		}};
+		generateBonus();
 	}
 	
 	public void render(Graphics g)

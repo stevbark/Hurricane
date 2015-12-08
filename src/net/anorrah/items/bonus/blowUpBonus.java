@@ -24,6 +24,7 @@ public class blowUpBonus extends bonus {
 		{
 			if(e.getlocationX()==targetX &&e.getlocationY()==targetY)
 			{
+				
 				e.takeDamage(new damageObject(onHitDamage,Type.fire));
 				e.addToList(burnEffect);
 				System.out.println("enemy hit at X:" + targetX + " Y: "+ targetY);

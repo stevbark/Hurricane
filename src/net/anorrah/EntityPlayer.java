@@ -40,7 +40,7 @@ public class EntityPlayer extends Entity
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
 	
-	public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
+	//public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
@@ -95,7 +95,9 @@ public class EntityPlayer extends Entity
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
+		
 		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("",0), new NoBonus());
+		
 		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
 		usableitem = new PersonalItem(ItemsAndBonuses.no_item, new NoItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
@@ -108,18 +110,18 @@ public class EntityPlayer extends Entity
 	public void setUp(Entity user)
 	{
 		equippedArmor.onEquip(user);
-		
+		setMeleeItem(new SwordItem("",0));
 	//	bandAidObject regenTest= new bandAidObject(0);
 		//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
 	//	tempHealthBonus b = new tempHealthBonus(4,100);
 	//	addToList(b);
-		fireballBonus z = new fireballBonus();
-		addToList(z);
-		GABonus ga = new GABonus();
-		addToList(ga);
-		invisibilityBonus iv = new invisibilityBonus(3);
-		addToList(iv);
+//		fireballBonus z = new fireballBonus();
+//		addToList(z);
+//		GABonus ga = new GABonus();
+//		addToList(ga);
+//		invisibilityBonus iv = new invisibilityBonus(3);
+//		addToList(iv);
 	}
 	
 	public ItemObject getUsableItem()
@@ -416,7 +418,6 @@ public class EntityPlayer extends Entity
 	{
 		for(bonus b:bonuses)
 		{
-			System.out.println("Smacked");
 			b.onAttackPosition(this, targX,targY);
 		}
 	}
