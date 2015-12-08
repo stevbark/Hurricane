@@ -7,7 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+
 import net.anorrah.items.*;
+
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -124,6 +126,32 @@ public class Core extends Applet implements Runnable
 			i = Tile.axe_icon;
 		else if(io instanceof WhipItem)
 			i = Tile.whip_icon;
+		
+		else if(io instanceof bowAndArrowItem)
+			i = Tile.bow_icon;
+		else if(io instanceof FireballRod)
+			i = Tile.fireball_icon;
+		else if(io instanceof LaserItem)
+			i = Tile.laser_icon;
+		
+		else if(io instanceof potionObject)
+			i = Tile.empty_item;
+		else if(io instanceof bandAidObject)
+			i = Tile.empty_item;
+		else if(io instanceof castObject)
+			i = Tile.empty_item;
+		else if(io instanceof FoodItem)
+			i = Tile.empty_item;
+		
+		else if(io instanceof BerserkerItems)
+			i = Tile.empty_item;
+		else if(io instanceof runeOfTeleportation)
+			i = Tile.empty_item;
+		else if(io instanceof ringOfInvisibility)
+			i = Tile.empty_item;
+		else if(io instanceof pendentOfFleetingHealth)
+			i = Tile.empty_item;
+		
 		itemtorender = new Item(new Rectangle(Level.center_w*32,(Level.center_h-1)*32,32,32),Level.center_w,Level.center_h,i);
 		description = des;
 	}
@@ -216,8 +244,14 @@ public class Core extends Applet implements Runnable
 			}
 		}
 		level.tick();
-		entities.remove(removethese);
+		for(Entity toRemove:removethese)
+		{
+			entities.remove(toRemove);
+		}
+	//	entities.remove(removethese);
 		removethese.clear();
+		level.getPlayerRoom().cleanup();
+		level.cleanup();
 	}
 	
 	
@@ -245,6 +279,10 @@ public class Core extends Applet implements Runnable
 		g.setColor(Color.YELLOW);
 		g.drawRect(40, 10, 150, 20);
 		
+		if(player.health >0){
+			g.setColor(Color.RED);
+			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
+		}
 		if(!player.isDead()){
 			g.setColor(Color.RED);
 			g.fill3DRect(40, 10, (int)(150*((double)player.getHealth()/(double)player.maxHealth)), 20, false);
@@ -252,6 +290,8 @@ public class Core extends Applet implements Runnable
 		
 		g.setColor(Color.YELLOW);
 		g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, 17,stringOffsetY);
+		g.drawRect(40, 10, 150, 20);
+		
 		g.drawRect(40, 10, 150, 20);
 		
 		// Item
@@ -287,9 +327,35 @@ public class Core extends Applet implements Runnable
 		if(!inGame)
 		{
 			g.setColor(new Color(1,1,1,0.3f));
+			g.setColor(Color.black);
+			
 			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
+			
+			/*
 			g.setColor(Color.white);
 			g.drawString("PAUSED", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+			*/
+			
+
+			g.setColor(Color.white);
+			// Stats
+			int statsOffsetX = 17;
+			g.drawRoundRect(10, 10, 200, 400, 20, 20);
+			g.drawString("STATS: ", statsOffsetX, stringOffsetY);
+			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, statsOffsetX,stringOffsetY+20);
+			
+			
+			// Items
+			int itemOffsetX = 220;
+			g.drawRoundRect(itemOffsetX, 10, 200, 200, 20, 20);
+			/*
+			g.drawString("ITEM: " ,itemOffsetX+10 , 20);
+			if(player.usableitem != null){
+				g.drawString("Desc: "+ player.getUsableItem().description(), itemOffsetX+10, 40);
+			}
+			*/
+			
+
 		}
 		
 		if(player.isDead()){

@@ -1,6 +1,9 @@
 package net.anorrah.items.bonus;
 
+import java.util.ArrayList;
+
 import net.anorrah.Core;
+import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
 import net.anorrah.Tile;
 import net.anorrah.items.damageObject;
@@ -66,7 +69,7 @@ public abstract class bonus {
 	protected boolean canMove(int i, int j)
 	{
 		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
-		
+		ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
 		if(i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height)
 		{
 			return true;
@@ -75,9 +78,20 @@ public abstract class bonus {
 		{
 			return false;
 		}
-		
-		else if(Core.level.solid[i][j].id == Tile.blank)
+		else 
 		{
+			for(EnemyEntities e:presentEnemies)
+			{
+				if(e.getlocationX()==i&&e.getlocationY()==j)
+				{
+					return false;
+				}
+			}
+		}
+		
+		if(Core.level.solid[i][j].id == Tile.blank)
+		{
+			
 			return true;
 		}
 		return false;

@@ -3,12 +3,24 @@ package net.anorrah;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import net.anorrah.items.ArmorItem;
 import net.anorrah.items.AxeItem;
+import net.anorrah.items.BerserkerItems;
+import net.anorrah.items.FireballRod;
+import net.anorrah.items.FoodItem;
 import net.anorrah.items.HammerItem;
 import net.anorrah.items.ItemObject;
+import net.anorrah.items.LaserItem;
 import net.anorrah.items.SpearItem;
 import net.anorrah.items.SwordItem;
 import net.anorrah.items.WhipItem;
+import net.anorrah.items.bandAidObject;
+import net.anorrah.items.bowAndArrowItem;
+import net.anorrah.items.castObject;
+import net.anorrah.items.pendentOfFleetingHealth;
+import net.anorrah.items.potionObject;
+import net.anorrah.items.ringOfInvisibility;
+import net.anorrah.items.runeOfTeleportation;
 
 public class Item extends Rectangle 
 {
@@ -46,22 +58,34 @@ public class Item extends Rectangle
 	
 	public ItemObject generateItem (int currentLevel)//called when picked up
 	{
-		/*if(Math.random() < 0.33)
+		double randomSeed = Math.random();
+		randomSeed=.9;
+		if(randomSeed < 0.25)
+		{
+			return generateArmor(currentLevel);
+		}
+		else if(randomSeed < 0.50)
 		{
 			//create melee object\
 			return generateMelee(currentLevel);
 		}
-		else if(Math.random() < 0.66)
+		else if(randomSeed < 0.75)
 		{
 			//create range
 			return generateRange(currentLevel);
 		}
-		else if(Math.random() <= 1)
+		else if(randomSeed <= 1)
 		{
 			//create usable
 			return generateUsable(currentLevel);
-		}*/
-		itemObject = generateMelee(currentLevel);
+		}
+	//	itemObject = generateMelee(currentLevel);
+		return itemObject;
+	}
+	
+	public ItemObject generateArmor(int currentLevel)
+	{
+		itemObject = new ArmorItem( currentLevel); 
 		return itemObject;
 	}
 	
@@ -91,17 +115,60 @@ public class Item extends Rectangle
 	
 	public ItemObject generateRange(int currentLevel)
 	{
+		int randomItemSeed = ((int) (Math.random()*100))%3;
+		switch(randomItemSeed)
+		{
+		case 1:
+			itemObject = new bowAndArrowItem(currentLevel);
+			break; 
+		case 2:
+			itemObject = new FireballRod(currentLevel);
+			break; 
+		default:
+			itemObject = new LaserItem(currentLevel);
+			break; 
+		}
 		return itemObject;
 	}
 	
 	public ItemObject generateUsable(int currentLevel)
 	{
+		int randomItemSeed = ((int) (Math.random()*100))%8;
+		randomItemSeed = 1;
+		switch(randomItemSeed)
+		{
+		case 1:
+			itemObject = new potionObject( currentLevel);
+			break; 
+		case 2:
+			itemObject = new bandAidObject(currentLevel);
+			break; 
+		case 3:
+			itemObject = new castObject(currentLevel);
+			break; 
+		case 4:
+			itemObject = new FoodItem(currentLevel);
+			break; 
+		case 5:
+			itemObject = new BerserkerItems(currentLevel);
+			break; 
+		case 6:
+			itemObject = new runeOfTeleportation(currentLevel);
+			break; 
+		case 7:
+			itemObject = new ringOfInvisibility(currentLevel);
+			break; 	
+		default:
+			itemObject = new pendentOfFleetingHealth(currentLevel);
+			break; 
+		}
 		return itemObject;
 	}
 	
 	public String itemDescription()
 	{
-		return itemObject.description();
+		return "";
+	//	return itemObject.description();
 	}
 	
 

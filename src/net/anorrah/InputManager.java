@@ -91,20 +91,54 @@ public class InputManager implements KeyListener, MouseListener
 			if(Core.running)
 			{
 				System.out.println("About to attack");
+				//System.out.println("invisibility is " + Core.player.amIInvisible());
 				int playerx = Core.player.getlocationX();
 				int playery = Core.player.getlocationY();
 				//int playerDir = Core.player.
-				for(EnemyEntities bad : Core.level.enemies)
-				{
-					if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
-					{	
-						Core.player.attack(bad);
-					//	bad.takeDamage(Core.player.weapon);
+				char facing = Core.player.getDirection();
+				
+				switch (facing){
+				case 'D':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
+						{	
+							Core.player.attack(bad);
+						}
 					}
-					
-					
+				case 'U':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+				case 'L':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+				case'R':
+					for(EnemyEntities bad : Core.level.enemies)
+					{
+						if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
+						{	
+							Core.player.attack(bad);
+						}
+					}
+				
 				}
+<<<<<<< HEAD
 				//if(Core.player.isDead) Core.restart = true;
+=======
+				
+				//	Core.player.attack(Core.player.tX, 1);
+				
+>>>>>>> 8261174a46f63554b0d25073a3c32851f524e6f4
 			}
 			Core.t.setWaitForPlayerToFalse();
 			break;
@@ -113,8 +147,10 @@ public class InputManager implements KeyListener, MouseListener
 			Core.inGame = !Core.inGame;
 			if(Core.inGame)
 				System.out.println("unPaused");
-			else
+			else{
 				System.out.println("Paused");
+				
+			}
 			break;
 		
 		case KeyEvent.VK_ENTER:
