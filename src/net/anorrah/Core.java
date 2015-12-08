@@ -224,6 +224,7 @@ public class Core extends Applet implements Runnable
 			}
 			
 			player.changeDirection();
+			// player.onUseOnSelf();
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);

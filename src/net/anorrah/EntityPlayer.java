@@ -477,10 +477,12 @@ public class EntityPlayer extends Entity
 	
 	public void onUseOnSelf()
 	{
+
 		if(!(useableItem instanceof NoItem))
 		{
 			useableItem.onUseOnSelf(this);
 		}
+
 	}
 	
 	

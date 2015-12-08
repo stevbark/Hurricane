@@ -97,8 +97,10 @@ public class InputManager implements KeyListener, MouseListener
 		case KeyEvent.VK_E:
 			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
 			{
+				Core.player.onUseOnSelf();
 				//Core.t.WaitForPlayer=false;
-				//Core.t.setWaitForPlayerToFalse();
+				Core.t.setWaitForPlayerToFalse();
+				
 			}
 			break;
 		case KeyEvent.VK_SPACE:
