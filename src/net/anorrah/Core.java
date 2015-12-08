@@ -373,14 +373,32 @@ public class Core extends Applet implements Runnable
 			//String meleeItemBonuses = player.getMeleeItem().b.
 			
 			// RANGED
+			RangedWeaponItem ranged = player.getRangeItem();
 			g.drawString(itemTitleOffset+"RANGED WEAPON:", statsOffsetX, stringOffsetY+120);
-			// name, stats, desc 
-			
-			g.drawString(itemTitleOffset+"ITEM: ", statsOffsetX, stringOffsetY+200);
-
-			
-			
+			// name, stats, desc
+			if(ranged != null){
+				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+70, stringOffsetY+120);
+				g.drawString(itemDescOffset+ranged.damage, statsOffsetX, stringOffsetY+140);
+				g.drawString(itemDescOffset+ranged.itemDescription, statsOffsetX, stringOffsetY+160);
+			}
 			// Items
+			g.drawString(itemTitleOffset+"ITEM: ", statsOffsetX, stringOffsetY+200);
+			// name, stats, desc
+			ItemObject item = player.getUsableItem();
+			if(item != null){
+				g.drawString(itemDescOffset+item.getName(), statsOffsetX+30, stringOffsetY+200);
+				g.drawString(itemDescOffset+item.itemDescription, statsOffsetX, stringOffsetY+220);
+			}
+			// Armor
+			g.drawString(itemTitleOffset+"ARMOR: ", statsOffsetX, stringOffsetY+280);
+			// name, stats, desc?
+			ArmorItem armor = player.getArmorItem();
+			if(armor != null){
+				g.drawString(itemDescOffset+armor.getName(), statsOffsetX+45, stringOffsetY+280);
+				g.drawString(itemDescOffset+armor.itemDescription, statsOffsetX, stringOffsetY+300);
+			}
+			
+			
 			
 			/*
 			g.drawString("ITEM: " ,itemOffsetX+10 , 20);
