@@ -224,6 +224,7 @@ public class Core extends Applet implements Runnable
 			}
 			
 			player.changeDirection();
+			// player.onUseOnSelf();
 			for(int i = 0; i < entities.size(); i++)
 			{
 				Entity ent = entities.get(i);
@@ -306,10 +307,13 @@ public class Core extends Applet implements Runnable
 		
 		if(usableItem != null){
 			if(usableItem.hasCharges()){
-				g.drawString("USE: " +usableItem.charges(), 255, 50);
+				g.setColor(Color.WHITE);
+				g.drawString(" "+usableItem.charges(), 277, 28);
+				g.setColor(Color.YELLOW);
 			}
 			
 		}
+		
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
@@ -374,15 +378,12 @@ public class Core extends Applet implements Runnable
 			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, statsOffsetX,stringOffsetY+20);
 			g.drawString(itemTitleOffset + "MELEE WEAPON: ", statsOffsetX, stringOffsetY+40);
 			
-			// Sword isn't equipped but shown anyways(?) not in menu
+			// MELEE
 			MeleeWeaponItem melee = player.getMeleeItem();
 			g.drawString(itemDescOffset+melee.getName(), statsOffsetX+100, stringOffsetY+40);
 			g.drawString(itemDescOffset+ "DMG: "+melee.damage, statsOffsetX, stringOffsetY+60);
 			g.drawString(itemDescOffset+ melee.itemDescription, statsOffsetX, stringOffsetY+80);
 
-			/* Please input an attack value
-			int meleeDmg = player.getMeleeItem().i.
-			*/
 			//bonuses unknown
 			//String meleeItemBonuses = player.getMeleeItem().b.
 			
@@ -391,7 +392,7 @@ public class Core extends Applet implements Runnable
 			g.drawString(itemTitleOffset+"RANGED WEAPON:", statsOffsetX, stringOffsetY+120);
 			// name, stats, desc
 			if(ranged != null){
-				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+70, stringOffsetY+120);
+				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+110, stringOffsetY+120);
 				g.drawString(itemDescOffset+ranged.damage, statsOffsetX, stringOffsetY+140);
 				g.drawString(itemDescOffset+ranged.itemDescription, statsOffsetX, stringOffsetY+160);
 			}

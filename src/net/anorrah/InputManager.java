@@ -94,7 +94,15 @@ public class InputManager implements KeyListener, MouseListener
 				//Core.t.setWaitForPlayerToFalse();
 			}
 			break;
-			
+		case KeyEvent.VK_E:
+			if(Core.inGame && !Core.player.isMoving && !Core.itempicked)
+			{
+				Core.player.onUseOnSelf();
+				//Core.t.WaitForPlayer=false;
+				Core.t.setWaitForPlayerToFalse();
+				
+			}
+			break;
 		case KeyEvent.VK_SPACE:
 			//Core.player.attack(null);
 			if(Core.running)
@@ -108,39 +116,67 @@ public class InputManager implements KeyListener, MouseListener
 				
 				switch (facing){
 				case 'D':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx && bad.getlocationY()== playery+1)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(playerx, 10000);
 					}
 					break;
 				case 'U':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx && bad.getlocationY()== playery-1)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(playerx, 0);
 					}
 					break;
 				case 'L':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx-1 && bad.getlocationY()== playery)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(0, playery);
 					}
 					break;
 				case'R':
-					for(EnemyEntities bad : Core.level.enemies)
+					if(Core.player.meleeEquipped)
 					{
-						if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
-						{	
-							Core.player.attack(bad);
+						for(EnemyEntities bad : Core.level.enemies)
+						{
+							if (bad.getlocationX() == playerx+1 && bad.getlocationY()== playery)
+							{	
+								Core.player.attack(bad);
+							}
 						}
+					}
+					else
+					{
+						Core.player.attack(10000, playery);
 					}
 					break;
 				
@@ -189,7 +225,8 @@ public class InputManager implements KeyListener, MouseListener
 //these need to be here
 	public void mouseClicked(MouseEvent e)//whenever a button has been pressed and Released 
 	{	
-		Core.t.setWaitForPlayerToFalse();
+//		Core.player.onUseOnSelf();
+//		System.out.println("mouse");
 		//If you are facing an enemy, you should be able to deal damage
 		//Core.player.attack(Core.player.getlocationX(),Core.player.getlocationY());
 		//System.out.println("Attack at X: " + Math.floor(e.getPoint().getX()/Tile.size) + " Y: " + Math.floor(e.getPoint().getY()/Tile.size));

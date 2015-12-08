@@ -8,7 +8,7 @@ public class WhipItem extends MeleeWeaponItem
 	public WhipItem(int levelBonus) 
 	{
 		super(levelBonus);
-		super.itemDescription = "Archaeologist�s weapon of choice. This weapon deals 8 (+ enchantment) points of damage per flick. Also hits enemies behind target.";
+		super.itemDescription = "Archaeologist's weapon of choice. This weapon deals 8 (+ "+enchantment+") points of damage per flick. Also hits enemies behind target.";
 		
 		damage = 8+enchantment;
 		myBonus.add(new MeleeWeaponBonus(damage));

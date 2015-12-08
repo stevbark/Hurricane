@@ -21,10 +21,15 @@ public class bandAidObject extends otherObject {
 	}
 
 	
-	public void onUseOnSelf(Entity user) {
-		myBonus.add(new regenerationBonus(restoreATurn,5));
-		
+	protected void use()
+	{
+//		myBonus.add(new regenerationBonus(restoreATurn,5));
 	}
+	
+//	public void onUseOnSelf(Entity user) {
+//		myBonus.add(new regenerationBonus(restoreATurn,5));
+//		
+//	}
 	
 	/*@Override
 	public String description() {

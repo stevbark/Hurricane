@@ -160,13 +160,19 @@ public abstract class ItemObject {
 			{	
 				b.onUseOnSelf(user);				
 			}
+		//	use();
 			charges--;
 			if(hasCharges && charges <=0)
 			{
 				assert(Core.player.getUsableItem() == this);
+				
 				Core.player.setUsableItem(new NoItem(0));
 			}
 		}
+	}
+	protected void use()
+	{
+		
 	}
 	
 	public String getName(){

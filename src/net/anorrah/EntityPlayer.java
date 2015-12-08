@@ -47,7 +47,7 @@ public class EntityPlayer extends Entity
 	public RangedWeaponItem equippedRanged;
 	
 	private ArmorItem equippedArmor;
-	private ItemObject useableItem;
+	private static ItemObject useableItem;
 	
 	public static int facing = 4;//default is facing downward
 	
@@ -105,7 +105,7 @@ public class EntityPlayer extends Entity
 		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,new ArmorItem(0), new NoBonus());
 		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("", 0), new NoBonus());
 		
-		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
+		rangeditem = new PersonalItem(ItemsAndBonuses.bowitem, new bowAndArrowItem(0), new NoBonus());
 		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
@@ -137,12 +137,14 @@ public class EntityPlayer extends Entity
 			useableItem = usableitem.io;
 			useableItem.onEquip(this);
 		}
-	//	knockback x = new knockback();
-	//	addToList(x);
+//		knockback x = new knockback();
+//		addToList(x);
 	//	bandAidObject regenTest= new bandAidObject(0);
+	//	regenerationBonus x = new regenerationBonus(5, 5);
+	//	addToList(x);
 	//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
-	//	tempHealthBonus b = new tempHealthBonus(4,100);
+	//	tempHealthBonus b = new tempHealthBonus(4,4);
 	//	addToList(b);
 //		fireballBonus z = new fireballBonus();
 //		addToList(z);
@@ -169,7 +171,7 @@ public class EntityPlayer extends Entity
 	public static void setUsableItem(ItemObject item)
 	{
 		usableitem.io.onUnequip(Core.player); 
-		
+		useableItem = new NoItem(0);
 		
 		if(item instanceof potionObject)
 		{
@@ -211,7 +213,12 @@ public class EntityPlayer extends Entity
 			// items never have independent bonuses
 			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
+		else if(item instanceof NoItem)
+		{
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
+		}
 		usableitem.io.onEquip(Core.player);
+		useableItem = usableitem.io;
 	}
 	
 	// removes damage taken. For testing only
@@ -271,6 +278,8 @@ public class EntityPlayer extends Entity
 			return (ItemObject)usableitem.io;
 		else return null;
 	}
+	
+
 	
 	public static void setRangeItem(RangedWeaponItem item)
 	{
@@ -471,12 +480,51 @@ public class EntityPlayer extends Entity
 //		//equippedWeapon.attack();
 //	}
 	
+	public void onUseOnSelf()
+	{
+
+		if(!(useableItem instanceof NoItem))
+		{
+			useableItem.onUseOnSelf(this);
+		}
+
+	}
+	
+	
 	public void attack(int targX, int targY)
 	{
+		
 		for(bonus b:bonuses)
-		{
-			b.onAttackPosition(this, targX,targY);
-		}
+			{
+				b.onAttackPosition(this, targX,targY);
+			}
+		
+		
+		
+//		if(meleeEquipped)
+//		{
+//			EnemyEntities target = null;
+//			ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
+//			for(EnemyEntities e:presentEnemies)
+//			{
+//				if(e.getlocationX()==targX&&e.getlocationY()==targX)
+//				{
+//					target = e;
+//				}
+//			}
+//			if(target!=null)
+//			for(bonus b:bonuses)
+//			{
+//				b.onAttack(this, target,new damageObject(0,Type.physical), true);
+//			}
+//		}
+//		else
+//		{
+//			for(bonus b:bonuses)
+//			{
+//				b.onAttackPosition(this, targX,targY);
+//			}
+//		}
 	}
 	
 	public void tick(double delta)

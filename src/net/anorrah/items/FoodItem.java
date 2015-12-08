@@ -10,17 +10,23 @@ public class FoodItem extends ItemObject {
 		super(currentLevel);
 		hasCharges = true;
 		charges = 2;
-		
+		myBonus.add(new regenerationBonus(restoreATurn, 10));
 
 		name="Food";
 
-		super.itemDescription ="SO rotten. heals 10 hp per second for 10 seconds. cannot move while eating.";
+		super.itemDescription ="SO rotten. heals 10 hp per second for 10 seconds.";
 	}
 	
-	public void onUseOnSelf(Entity user) {
-		myBonus.add(new regenerationBonus(restoreATurn, 10));
+	
+	protected void use()
+	{
 		
+//		
 	}
+//	public void onUseOnSelf(Entity user) {
+//		myBonus.add(new regenerationBonus(restoreATurn, 10));
+//		
+//	}
 
 /*	@Override
 	public String description() {
