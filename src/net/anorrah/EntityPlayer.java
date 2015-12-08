@@ -194,22 +194,22 @@ public class EntityPlayer extends Entity
 		else if(item instanceof BerserkerItems)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof runeOfTeleportation)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof ringOfInvisibility)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.axeitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof pendentOfFleetingHealth)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		usableitem.io.onEquip(Core.player);
 	}

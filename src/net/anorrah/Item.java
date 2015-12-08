@@ -98,9 +98,9 @@ public class Item extends Rectangle
 		case 1:
 			itemObject = new SwordItem("Sword", currentLevel);
 			break; 
-		case 2:
+		/*case 2:
 			itemObject = new HammerItem(currentLevel);
-			break; 
+			break; */
 		case 3:
 			itemObject = new AxeItem(currentLevel);
 			break; 
@@ -152,9 +152,9 @@ public class Item extends Rectangle
 		case 5:
 			itemObject = new BerserkerItems(currentLevel);
 			break; 
-		case 6:
+		/*case 6:
 			itemObject = new runeOfTeleportation(currentLevel);
-			break; 
+			break; */
 		case 7:
 			itemObject = new ringOfInvisibility(currentLevel);
 			break; 	

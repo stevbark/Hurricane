@@ -19,9 +19,9 @@ public class ArmorItem extends ItemObject {
 		name = "Armor";
 		
 		possibleBonuses = new ArrayList<bonus>() {{
-		    add(new knockback());
+		  /*  add(new knockback());*/
 		    add(new GABonus());
-		    add(new TeleportBonus());
+		    /*add(new TeleportBonus());*/
 		    add(new DuelingBonus());
 		    add(new venganceBonus());
 		}};
