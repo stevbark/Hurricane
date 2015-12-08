@@ -17,10 +17,10 @@ public class SpearItem extends MeleeWeaponItem
 		name = "Spear";
 	}
 
-	/*@Override
+	@Override
 	public String description() {
 		// TODO Auto-generated method stub
-		return "Spear";
-	}*/
+		return super.itemDescription;
+	}
 	
 }

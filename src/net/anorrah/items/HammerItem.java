@@ -17,12 +17,12 @@ public class HammerItem extends MeleeWeaponItem  {
 		myBonus.add(new knockbackWeaponBonus());
 		
 	}
-/*
+
 	@Override
 	public String description() 
 	{
-		return "Hammer";
-	}*/
+		return super.itemDescription;
+	}
 
 	
 	

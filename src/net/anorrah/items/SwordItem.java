@@ -19,13 +19,13 @@ public class SwordItem extends MeleeWeaponItem {
 
 
 	
-	/*@Override
+	@Override
 	public String description() {
 		
-		return "stabby stabby stab! " + enchantment;
+		return super.itemDescription;
 	}
 	
-	*/
+	
 	
 	
 }

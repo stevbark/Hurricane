@@ -9,11 +9,10 @@ public class FoodItem extends ItemObject {
 		super(currentLevel);
 		charges = 2;
 		myBonus.add(new regenerationBonus(restoreATurn, 10));
-<<<<<<< HEAD
+
 		name="Food";
-=======
+
 		super.itemDescription ="SO rotten. heals 10 hp per second for 10 seconds. cannot move while eating.";
->>>>>>> f668498ae82103a5a99421ad6f358820a26c4bed
 	}
 
 /*	@Override
@@ -25,5 +24,4 @@ public class FoodItem extends ItemObject {
 =======
 		return null;
 	}*/
->>>>>>> f668498ae82103a5a99421ad6f358820a26c4bed
 }
