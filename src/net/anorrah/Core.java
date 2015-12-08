@@ -390,10 +390,7 @@ public class Core extends Applet implements Runnable
 		for(int j = 0; j < entities.size(); j++)
 		{
 			Entity otherobj = entities.get(j);
-			
 			otherobj.takeTurn();
-			
-			//System.out.println("Someone took a turn, " + otherobj.x + " " + otherobj.y);
 		}
 		
 		// cleanup and delete dead

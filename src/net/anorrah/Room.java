@@ -67,11 +67,7 @@ public class Room {
 					}
 					else if(dice > chanceEnemy-Math.ceil(levelNum/2))
 					{
-						enemy = new EnemyEntities(null, 
-								x*Tile.size,
-								y*Tile.size,
-								Tile.size,
-								Tile.size);
+						enemy = new EnemyEntities(null, Tile.cannibal_DOWN, x*Tile.size, y*Tile.size, Tile.size, Tile.size);
 						enemies.add(enemy);
 					}
 					else if(dice > chanceBlocked-Math.ceil(levelNum/2))

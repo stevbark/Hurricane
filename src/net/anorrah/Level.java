@@ -519,21 +519,27 @@ public class Level
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
 			e.takeTurn();
-		//	e.move(e.getlocationX(), e.getlocationY()-1);
-			// Arraylist<Int> = findpath(e.x,e.y);
-	//		e.move(updateX.get(i), updateY.get(i));
 		}
-		//Updates the coordinates where the enemies are suppose to move
-		/*for(int i = 0; i < enemies.size()-1; i++)
-		{ 	
-			//System.out.println(enemies.get(i))
-			//
-    		enemies.get(i).updateX(updateX.get(i));
-    		enemies.get(i).updateY(updateY.get(i));	
-    	}*/
 	}
 	
 	//Player checks whether there is any enemy in this space or not
+	public boolean checkIfPlayerCanMove(int x, int y) {
+		for(EnemyEntities e: rooms.get(playerlocation).enemies)
+		{ 	
+			if((e.getlocationX()) == x && (e.getlocationY() == y)) 
+			{
+				return false;
+			}
+			
+		}
+		if(Core.player.tX == x && Core.player.tY == y)
+		{
+				return false;
+		}
+		return true;
+	}
+	
+	//Enemies check whether there is another enemy or player in the space they wish to proceed to
 	public boolean canMove(int x, int y) {
 		for(EnemyEntities e: rooms.get(playerlocation).enemies)
 		{ 	
@@ -541,42 +547,30 @@ public class Level
 			{
 				return false;
 			}
+			
 		}
 		return true;
 	}
 	
-	//Holds the coordinates of where the enemies will move next
-	//ArrayList<Integer> updateX;// = new ArrayList<Integer>();
-	//ArrayList<Integer> updateY;// = new ArrayList<Integer>();
-	
 	//Where the pathfinding happens
-	public void findPathTowardsPlayer(int enemyX, int enemyY)
+	public int[] findPathTowardsPlayer(int enemyX, int enemyY)
 	{
 		Map map = new Map(solid);
-
+		int[] nextStep = new int[2];
+		
 		AStarPathFinder pathFinder = new AStarPathFinder(map, MAX_PATH_LENGTH, false);
         Path path = pathFinder.findPath(null, enemyX, enemyY, EntityPlayer.tX, EntityPlayer.tY);
 		
-        //System.out.println(path.getX(0) + ", "+ path.getY(0));
+
         //Crashes when an enemy is trapped between Obstacles
-//        int length = path.getLength();
-        int length=0;
-        //System.out.println("Found path of length: " + length + ".");
+        int length = path.getLength();
         
-        //updateX = new ArrayList<Integer>();
-        //updateY = new ArrayList<Integer>();
+        int updateX = path.getX(1);
+        int updateY = path.getY(1);
+        nextStep[0] = updateX;
+        nextStep[1] = updateY;
         
-        //updateX.add(path.getX(0));
-        //updateY.add(path.getY(0));
-        
-        
-        
-        for(int i = 0; i < length; i++) 
-        {
-        	//System.out.println("Move to: " + path.getX(i) + "," + path.getY(i) + ".");
-        }
+        return nextStep;
 		
 	}
-	
-	//Somehow need to call the move method in EnemyEntities
 }
