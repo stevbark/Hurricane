@@ -1,6 +1,12 @@
 package net.anorrah.items;
 
+import java.util.ArrayList;
+
 import net.anorrah.Entity;
+import net.anorrah.items.bonus.EnfeeblementBonus;
+import net.anorrah.items.bonus.VampiricBonus;
+import net.anorrah.items.bonus.bonus;
+import net.anorrah.items.bonus.fireMeleeBonus;
 import net.anorrah.items.bonus.regenerationBonus;
 
 public class FoodItem extends ItemObject {
@@ -24,7 +30,13 @@ public class FoodItem extends ItemObject {
 //		
 	}
 	public void onUseOnSelf(Entity user) {
-		myBonus.add(new regenerationBonus(restoreATurn, 10));
+//		myBonus= new ArrayList<bonus>() {{
+//				new regenerationBonus(restoreATurn, 10);
+//			   
+//			}};
+	//	myBonus.clear();
+	//	myBonus.add(new regenerationBonus(restoreATurn, 10));
+		onlyForRegen = new regenerationBonus(restoreATurn, 10);
 		super.onUseOnSelf(user);
 	}
 

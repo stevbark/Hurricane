@@ -19,7 +19,9 @@ public class BerserkerItems extends otherItemObject{
 	
 	
 	public void onUseOnSelf(Entity user) {
-		myBonus.add(new berserkerBoost());
+		
+		onlyForRegen = new berserkerBoost();
+		//myBonus.add(new berserkerBoost());
 		super.onUseOnSelf(user);
 
 	}

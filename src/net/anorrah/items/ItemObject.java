@@ -18,7 +18,7 @@ public abstract class ItemObject {
 	protected  ArrayList<bonus> myBonus; 
 	protected int charges;
 	protected boolean hasCharges = false;
-	
+	protected bonus onlyForRegen = null;
 	// only for rendering junk
 	protected bonus generatedBonus = null;
 	
@@ -157,10 +157,10 @@ public abstract class ItemObject {
 		if(myBonus!=null){
 			
 			use();
-			for(bonus b:myBonus)
+			//for(bonus b:myBonus)
 			{	
-				user.addToList(b);
-	//			b.onUseOnSelf(user);				
+				user.addToList(onlyForRegen);
+		//		b.onUseOnSelf(user);				
 			}
 		//	
 			charges--;

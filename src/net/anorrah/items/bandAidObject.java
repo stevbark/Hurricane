@@ -27,7 +27,8 @@ public class bandAidObject extends otherObject {
 	}
 	
 	public void onUseOnSelf(Entity user) {
-		myBonus.add(new regenerationBonus(restoreATurn,5));
+		onlyForRegen = new regenerationBonus(restoreATurn,5);
+	//	myBonus.add(new regenerationBonus(restoreATurn,5));
 		super.onUseOnSelf(user);
 
 	}

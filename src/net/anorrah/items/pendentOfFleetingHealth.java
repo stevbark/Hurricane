@@ -18,6 +18,9 @@ charges=3;
 
 	
 	public void onUseOnSelf(Entity user) {
+		
+		onlyForRegen = new tempHealthBonus(4,30);
+
 		myBonus.add(new tempHealthBonus(4,30));
 		super.onUseOnSelf(user);
 	}

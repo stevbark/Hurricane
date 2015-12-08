@@ -18,7 +18,8 @@ charges=3;
 	}
 
 	public void onUseOnSelf(Entity user) {
-		myBonus.add(new invisibilityBonus(3));
+		onlyForRegen = new invisibilityBonus(3);
+//		myBonus.add(new invisibilityBonus(3));
 		super.onUseOnSelf(user);
 	}
 	/*@Override
