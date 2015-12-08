@@ -25,7 +25,7 @@ public class ArmorItem extends ItemObject {
 		    add(new DuelingBonus());
 		    add(new venganceBonus());
 		}};
-		
+		generateBonus();
 		 
 		// TODO Auto-generated constructor stub
 	}

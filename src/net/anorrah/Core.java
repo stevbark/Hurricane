@@ -26,6 +26,7 @@ public class Core extends Applet implements Runnable
 	public static boolean running = false;
 	public static boolean inGame = true;
 	public static boolean itempicked = false;
+	public static boolean restart = false;
 	
 	public final int TARGET_FPS = 60;
 	public final long OPTIMAL_TIME = 1000000000/TARGET_FPS;
@@ -217,6 +218,7 @@ public class Core extends Applet implements Runnable
 			if(player.isDead()){
 				player.stopGame();
 			}
+			
 			player.changeDirection();
 			for(int i = 0; i < entities.size(); i++)
 			{
@@ -361,11 +363,25 @@ public class Core extends Applet implements Runnable
 			g.fillRect(0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height);
 			g.setColor(Color.RED);
 			g.drawString("YOU ARE DEAD", (VIEWPORT_SIZE.width/2)-25, VIEWPORT_SIZE.height/2);
+			/*
+			if(restart){
+				t = new Core();
+				player = new EntityPlayer(t, 
+						(VIEWPORT_SIZE.width / 2) - (Tile.size / 2) + offset_X,
+						(VIEWPORT_SIZE.height / 2) - (Tile.size / 2) + offset_Y,
+						Tile.size,
+						Tile.size);
+				
+			}
+			*/
 
 		}
 
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);
+//		removethese.clear();
+//		level.getPlayerRoom().cleanup();
+//		level.cleanup();
 		g.dispose();//reset the image each tick
 	}
 	
@@ -377,6 +393,10 @@ public class Core extends Applet implements Runnable
 			otherobj.takeTurn();
 		}
 		
+		// cleanup and delete dead
+//		removethese.clear();
+//		level.getPlayerRoom().cleanup();
+//		level.cleanup();
 	}
 	
 	public void run() 

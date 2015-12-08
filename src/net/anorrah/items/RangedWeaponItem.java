@@ -12,6 +12,7 @@ public class RangedWeaponItem extends ItemObject{
 	{
 		super(levelBonus);
 		possibleBonuses = new ArrayList<bonus>();
+		generateBonus();
 	}
 
 	@Override

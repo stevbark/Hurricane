@@ -1,12 +1,20 @@
 package net.anorrah.items.bonus;
 
-import java.util.ArrayList;
-
 import net.anorrah.Core;
 import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
+import net.anorrah.items.damageObject;
+import net.anorrah.items.damageObject.Type;
 
-public abstract class rangedBonus extends bonus {
+public class laserBonus extends bonus{
+	
+private int weaponDamage;
+	
+	public laserBonus(int damage)
+	{
+		
+		this.weaponDamage = damage;
+	}
 
 	public void onAttackPosition(Entity user,int targetX, int targetY)
 	{
@@ -23,42 +31,36 @@ public abstract class rangedBonus extends bonus {
 //			System.out.println("enemy is " + cur);
 //		}
 		
-		while(!outOfBounds(x,y) &&canMove(x+xSpeed,y+ySpeed)&& (x!=targetX||y!=targetY))
+		while(!outOfBounds(x,y) )
 		{
-			ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
-			for(EnemyEntities e:presentEnemies)
-			{
-				if(e.getlocationX()==x&&e.getlocationY()==y)
-				{
-					hitEffects(user,x,y);
-					return;
-				}
-			}
 			
 				x+=xSpeed;
 				y+=ySpeed;
 				
-			
-			
+				for(EnemyEntities bad : Core.level.enemies)
+				{
+					if (bad.getlocationX() == x && bad.getlocationY()== y)
+					{	
+						hitEffects(user,bad,x,y);
+					}
+				}
 			
 		}
 		
 		System.out.println("shot from X: " + user.getlocationX() + " Y: " + user.getlocationY());
 		
+		System.out.println("ranged hit X: " + x + " Y: " + y);
 		
 		
 		
-		if(x==targetX&&y==targetY)
-		{
-			System.out.println("ranged hit X: " + x + " Y: " + y);
-		}
-		else
-		{
-			System.out.println("ranged miss... Hit:X " + x + " Y: "+ y);
-		}
 		
 		
-		hitEffects(user,x,y);
+	//	hitEffects(user,x,y);
+	}
+	
+	protected void hitEffects(Entity user, Entity target, int x, int y)
+	{
+		target.takeDamage(new damageObject(weaponDamage,Type.dark));//takeDamage(new damageObject(weaponDamage,Type));
 	}
 	
 }
