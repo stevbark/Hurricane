@@ -16,6 +16,7 @@ public class EntityPlayer extends Entity
 	public int moveSpeed;
 	public static boolean isMoving = false;
 	public boolean isDead = false;
+	public boolean meleeEquipped = true;
 	
 	private static int moveDelta = 0;
 	
@@ -39,8 +40,11 @@ public class EntityPlayer extends Entity
 	public static PersonalItem meleeitem;
 	public static PersonalItem usableitem;
 	public static PersonalItem rangeditem;
+	public static PersonalItem armorItem;
 	
 	//public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
+	public MeleeWeaponItem equippedWeapon;
+	public RangedWeaponItem equippedRanged;
 	
 	private ArmorItem equippedArmor;
 	private ItemObject useableItem;
@@ -79,6 +83,9 @@ public class EntityPlayer extends Entity
 			i.render(g);
 			ib.render(g);
 		}
+		public ItemObject getItem(){
+			return io;
+		}
 	}
 	
 	public EntityPlayer(Core gk, double x, double y, int width, int height)
@@ -95,24 +102,45 @@ public class EntityPlayer extends Entity
 		maxHealth = 100;
 		max_Xdistance = gk.level.width;
 		max_Ydistance = gk.level.height;
-		
-		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("",0), new NoBonus());
+		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,new ArmorItem(0), new NoBonus());
+		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("", 0), new NoBonus());
 		
 		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
-		usableitem = new PersonalItem(ItemsAndBonuses.no_item, new NoItem(0), new NoBonus());
+		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
 		currentImage = super.id;
+		
 		//meleeitem.itemObject = new SwordItem("",Level.num_level);
 	}
 	
 
 	public void setUp(Entity user)
 	{
-		equippedArmor.onEquip(user);
-		setMeleeItem(new SwordItem("",0));
+		if( !(meleeitem.io instanceof NoItem))
+		{
+			equippedWeapon = (MeleeWeaponItem) meleeitem.io;
+			equippedWeapon.onEquip(this);
+		}
+		if( !(rangeditem.io instanceof NoItem))
+		{
+			equippedRanged = (RangedWeaponItem) rangeditem.io;
+			equippedRanged.onEquip(this);
+		}
+		if( !(armorItem.io instanceof NoItem))
+		{
+			equippedArmor = (ArmorItem) armorItem.io;
+			equippedArmor.onEquip(this);
+		}
+		if( !(usableitem.io instanceof NoItem))
+		{
+			useableItem = usableitem.io;
+			useableItem.onEquip(this);
+		}
+	//	knockback x = new knockback();
+	//	addToList(x);
 	//	bandAidObject regenTest= new bandAidObject(0);
-		//System.out.println("bandaid");
+	//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
 	//	tempHealthBonus b = new tempHealthBonus(4,100);
 	//	addToList(b);
@@ -122,6 +150,15 @@ public class EntityPlayer extends Entity
 //		addToList(ga);
 //		invisibilityBonus iv = new invisibilityBonus(3);
 //		addToList(iv);
+	}
+	
+	public static void setArmor(ArmorItem item)
+	{
+		armorItem.io.onUnequip(Core.player); 
+		
+		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,item, new NoBonus());
+		
+		armorItem.io.onEquip(Core.player);
 	}
 	
 	public ItemObject getUsableItem()
@@ -157,26 +194,36 @@ public class EntityPlayer extends Entity
 		else if(item instanceof BerserkerItems)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof runeOfTeleportation)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.spearitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof ringOfInvisibility)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.axeitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		else if(item instanceof pendentOfFleetingHealth)
 		{
 			// items never have independent bonuses
-			usableitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
+			usableitem = new PersonalItem(ItemsAndBonuses.no_item,item, new NoBonus());
 		}
 		usableitem.io.onEquip(Core.player);
 	}
 	
+	// removes damage taken. For testing only
+//	public void onHit(Entity enemy, damageObject damage)
+//	{
+//		for(bonus b:bonuses)
+//		{
+//			b.onBeenHit(this,enemy, damage);
+//		}
+//	//	takeDamage(damage);
+//	//	equippedArmor.onBeenHit(enemy,damage);
+//	}
 	public static void setMeleeItem(MeleeWeaponItem item)
 	{
 		meleeitem.io.onUnequip(Core.player);
@@ -201,6 +248,28 @@ public class EntityPlayer extends Entity
 			meleeitem = new PersonalItem(ItemsAndBonuses.whipitem,item, new NoBonus());
 		}
 		meleeitem.io.onEquip(Core.player);
+	}
+	
+	public MeleeWeaponItem getMeleeItem(){
+		if(meleeitem.io instanceof MeleeWeaponItem)
+			return (MeleeWeaponItem) meleeitem.io;
+		else return null;
+	}
+	
+	public static RangedWeaponItem getRangeItem(){
+		if(rangeditem.io instanceof RangedWeaponItem)
+			return (RangedWeaponItem) rangeditem.io;
+		else return null;
+	}
+	
+	public ArmorItem getArmorItem(){
+		return equippedArmor;
+	}
+	
+	public static ItemObject getItem(){
+		if(usableitem.io instanceof ItemObject)
+			return (ItemObject)usableitem.io;
+		else return null;
 	}
 	
 	public static void setRangeItem(RangedWeaponItem item)

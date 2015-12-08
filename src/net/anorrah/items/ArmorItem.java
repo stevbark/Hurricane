@@ -13,28 +13,28 @@ import net.anorrah.items.bonus.venganceBonus;
 public class ArmorItem extends ItemObject {
 
 //	double defense;
-	bonus bon = new knockback();
 	public ArmorItem( int currentLevel) {
 		super(currentLevel);
 		myBonus.add(new ArmorBonus( enchantment));
+		name = "Armor";
 		
 		possibleBonuses = new ArrayList<bonus>() {{
-		    add(new knockback());
+		  /*  add(new knockback());*/
 		    add(new GABonus());
-		    add(new TeleportBonus());
+		    /*add(new TeleportBonus());*/
 		    add(new DuelingBonus());
 		    add(new venganceBonus());
 		}};
 		generateBonus();
-		itemDescription = "live a while longer. blocks 2 (+"+enchantment+" level) damage per hit.";
+		super.itemDescription = "live a while longer. blocks 2 (+"+enchantment+" level) damage per hit.";
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String description() {
+	
+	/*public String description() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return super.itemDescription;
+	}*/
 	
 //	public void onBeenHit(enemyEntities enemy,damageObject damage)
 //	{

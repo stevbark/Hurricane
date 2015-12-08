@@ -61,6 +61,8 @@ public class Tile
 	public static int[] chest_open  = {0,0};
 	public static int[] chest_closed  = {1,0};
 	//item icons
+	public static int[] armor_item = {0,2};
+
 	public static int[] empty_item = {2,0};
 	public static int[] sword_icon = {0,1};
 	public static int[] hammer_icon = {1,1};

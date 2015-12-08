@@ -14,7 +14,7 @@ import net.anorrah.items.bonus.knockback;
 import net.anorrah.items.bonus.venganceBonus;
 
 public abstract class MeleeWeaponItem extends ItemObject{
-
+//	public String name;
 	public int damage;
 	public int[] id;
 	
@@ -35,8 +35,13 @@ public abstract class MeleeWeaponItem extends ItemObject{
 		
 	}
 
-	@Override
+
 	public abstract String description();
+	
+	
+
+	/*@Override
+	public abstract String description();*/
 
 //	public damageObject attack()
 //	{

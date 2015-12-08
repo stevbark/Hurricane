@@ -1,5 +1,6 @@
 package net.anorrah.items;
 
+import net.anorrah.Entity;
 import net.anorrah.items.bonus.regenerationBonus;
 
 public class bandAidObject extends otherObject {
@@ -8,14 +9,27 @@ public class bandAidObject extends otherObject {
 	 
 	public bandAidObject(int currentLevel) {
 		super(currentLevel);
+		hasCharges = true;
+
 		charges = 3;
 		myBonus.add(new regenerationBonus(restoreATurn,5));
+
+		name = "Band-Aid";
+
+		super.itemDescription = "now with Hello Kitty. Heals 10 hp per second for 5 seconds.";
+
 	}
 
-	@Override
+	
+	public void onUseOnSelf(Entity user) {
+		myBonus.add(new regenerationBonus(restoreATurn,5));
+		
+	}
+	
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return super.itemDescription;
+	}*/
 
 }

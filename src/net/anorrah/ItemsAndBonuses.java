@@ -6,6 +6,10 @@ public class ItemsAndBonuses
 {
 	private static final int meleeicon_x = 14, icon_y = 0, itemicon_x = 8, rangedicon_x = 18;
 	
+	//armor
+	public static final Item armoritem = new Item(new Rectangle(meleeicon_x*Tile.size, icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.armor_item);
+
+	
 	//Melee
 	public static final Item no_meleeitem = new Item(new Rectangle(meleeicon_x*Tile.size, icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.empty_item);
 	public static final Item sworditem = new Item(new Rectangle(meleeicon_x*Tile.size,icon_y*Tile.size,Tile.size,Tile.size),0,0,Tile.sword_icon);

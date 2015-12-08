@@ -8,8 +8,10 @@ public class potionObject extends otherObject {
 		super(currentLevel);
 		// TODO Auto-generated constructor stub
 //		myBonus.add();
+		name="Potion";
 		charges = 1;
 		hasCharges= true;
+		super.itemDescription = "actually a placebo. Instantly heals 30 hp ";
 	}
 	
 	public void onUseOnSelf(Entity user)
@@ -17,10 +19,10 @@ public class potionObject extends otherObject {
 		user.heal(30);
 		super.onUseOnSelf(user);
 	}
-	@Override
+	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 }

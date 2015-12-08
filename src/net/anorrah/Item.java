@@ -27,6 +27,7 @@ public class Item extends Rectangle
 	public int[] id = {-1,-1};
 	public int row,col;
 	public ItemObject itemObject;
+	public String name = "NONE";
 	
 	public Item(Rectangle rec,int r, int c, int id[])
 	{
@@ -59,6 +60,7 @@ public class Item extends Rectangle
 	public ItemObject generateItem (int currentLevel)//called when picked up
 	{
 		double randomSeed = Math.random();
+	//	randomSeed=.1;
 		if(randomSeed < 0.25)
 		{
 			return generateArmor(currentLevel);
@@ -96,9 +98,9 @@ public class Item extends Rectangle
 		case 1:
 			itemObject = new SwordItem("Sword", currentLevel);
 			break; 
-		case 2:
+		/*case 2:
 			itemObject = new HammerItem(currentLevel);
-			break; 
+			break; */
 		case 3:
 			itemObject = new AxeItem(currentLevel);
 			break; 
@@ -150,9 +152,9 @@ public class Item extends Rectangle
 		case 5:
 			itemObject = new BerserkerItems(currentLevel);
 			break; 
-		case 6:
+		/*case 6:
 			itemObject = new runeOfTeleportation(currentLevel);
-			break; 
+			break; */
 		case 7:
 			itemObject = new ringOfInvisibility(currentLevel);
 			break; 	
@@ -163,10 +165,12 @@ public class Item extends Rectangle
 		return itemObject;
 	}
 	
+	public String getName(){
+		return name;
+	}
 	public String itemDescription()
 	{
-		return "";
-	//	return itemObject.description();
+		return itemObject.description();
 	}
 	
 

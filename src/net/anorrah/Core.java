@@ -164,7 +164,11 @@ public class Core extends Applet implements Runnable
 	
 	public static void equipitem()
 	{
-		if(tempholding instanceof MeleeWeaponItem)
+		if(tempholding instanceof ArmorItem)
+		{
+			EntityPlayer.setArmor((ArmorItem)tempholding);
+		}
+		else if(tempholding instanceof MeleeWeaponItem)
 		{
 			EntityPlayer.setMeleeItem((MeleeWeaponItem)tempholding);
 		}
@@ -295,16 +299,35 @@ public class Core extends Applet implements Runnable
 		g.drawRect(40, 10, 150, 20);
 		
 		// Item
+		ItemObject usableItem = player.getUsableItem();
+		
 		g.drawString("ITEM: ",220, stringOffsetY);
 		g.drawRoundRect(255, 0, 33, 32, 5, 5);
 		
+		if(usableItem != null){
+			if(usableItem.hasCharges()){
+				g.drawString("USE: " +usableItem.charges(), 255, 50);
+			}
+			
+		}
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
+		if(player.meleeEquipped){
+			g.setColor(Color.WHITE);
+			g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
+			g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
+			g.setColor(Color.YELLOW);
+		}
 		
 		// Secondary Weapon
 		g.drawString("RANGED: ", weaponOffsetX+ 117, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+175, 0, 33, 32, 5, 5);
+		if(!player.meleeEquipped){
+			g.setColor(Color.WHITE);
+			g.drawString("RANGED: ", weaponOffsetX+ 117, stringOffsetY);
+			g.drawRoundRect(weaponOffsetX+175, 0, 33, 32, 5, 5);
+		}
 		
 		g.setColor(Color.red);
 		g.drawString("LEVEL: " + level.num_level , 590, 510);
@@ -324,6 +347,8 @@ public class Core extends Applet implements Runnable
 			g.setColor(Color.black);
 			g.drawString(description, 162, 322);
 		}
+		
+		
 		if(!inGame)
 		{
 			g.setColor(new Color(1,1,1,0.3f));
@@ -338,16 +363,57 @@ public class Core extends Applet implements Runnable
 			
 
 			g.setColor(Color.white);
-			// Stats
+			// Stats on ESC
 			int statsOffsetX = 17;
-			g.drawRoundRect(10, 10, 200, 400, 20, 20);
+
+			String itemTitleOffset = "  ";
+			String itemDescOffset = "    ";
+			
+			g.drawRoundRect(10, 10, VIEWPORT_SIZE.width-20, VIEWPORT_SIZE.height-20, 20, 20);
 			g.drawString("STATS: ", statsOffsetX, stringOffsetY);
 			g.drawString("HP:   " + player.getHealth() + "/" + player.maxHealth, statsOffsetX,stringOffsetY+20);
+			g.drawString(itemTitleOffset + "MELEE WEAPON: ", statsOffsetX, stringOffsetY+40);
 			
+			// Sword isn't equipped but shown anyways(?) not in menu
+			MeleeWeaponItem melee = player.getMeleeItem();
+			g.drawString(itemDescOffset+melee.getName(), statsOffsetX+100, stringOffsetY+40);
+			g.drawString(itemDescOffset+ "DMG: "+melee.damage, statsOffsetX, stringOffsetY+60);
+			g.drawString(itemDescOffset+ melee.itemDescription, statsOffsetX, stringOffsetY+80);
+
+			/* Please input an attack value
+			int meleeDmg = player.getMeleeItem().i.
+			*/
+			//bonuses unknown
+			//String meleeItemBonuses = player.getMeleeItem().b.
 			
+			// RANGED
+			RangedWeaponItem ranged = player.getRangeItem();
+			g.drawString(itemTitleOffset+"RANGED WEAPON:", statsOffsetX, stringOffsetY+120);
+			// name, stats, desc
+			if(ranged != null){
+				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+70, stringOffsetY+120);
+				g.drawString(itemDescOffset+ranged.damage, statsOffsetX, stringOffsetY+140);
+				g.drawString(itemDescOffset+ranged.itemDescription, statsOffsetX, stringOffsetY+160);
+			}
 			// Items
-			int itemOffsetX = 220;
-			g.drawRoundRect(itemOffsetX, 10, 200, 200, 20, 20);
+			g.drawString(itemTitleOffset+"ITEM: ", statsOffsetX, stringOffsetY+200);
+			// name, stats, desc
+			ItemObject item = player.getUsableItem();
+			if(item != null){
+				g.drawString(itemDescOffset+item.getName(), statsOffsetX+30, stringOffsetY+200);
+				g.drawString(itemDescOffset+item.itemDescription, statsOffsetX, stringOffsetY+220);
+			}
+			// Armor
+			g.drawString(itemTitleOffset+"ARMOR: ", statsOffsetX, stringOffsetY+280);
+			// name, stats, desc?
+			ArmorItem armor = player.getArmorItem();
+			if(armor != null){
+				g.drawString(itemDescOffset+armor.getName(), statsOffsetX+45, stringOffsetY+280);
+				g.drawString(itemDescOffset+armor.itemDescription, statsOffsetX, stringOffsetY+300);
+			}
+			
+			
+			
 			/*
 			g.drawString("ITEM: " ,itemOffsetX+10 , 20);
 			if(player.usableitem != null){

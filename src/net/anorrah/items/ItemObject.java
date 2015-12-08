@@ -11,6 +11,7 @@ import net.anorrah.items.bonus.bonus;
 public abstract class ItemObject {
 	
 	public int[] id;
+	public String name="NONE";
 	public String itemDescription = "";
 	protected int enchantment;
 	protected ArrayList<bonus> possibleBonuses;
@@ -45,7 +46,16 @@ public abstract class ItemObject {
 		return charges;
 	}
 	
-	public abstract String description();
+	public String description(){
+		if(generatedBonus !=null)
+		{
+			return itemDescription + " " + generatedBonus.description(); 
+		}
+		else
+		{
+			return itemDescription;
+		}
+	}
 	
 	public int generateBonus(int currentLevel) 	
 	{
@@ -154,9 +164,12 @@ public abstract class ItemObject {
 			if(hasCharges && charges <=0)
 			{
 				assert(Core.player.getUsableItem() == this);
-				Core.player.setUsableItem(null);
+				Core.player.setUsableItem(new NoItem(0));
 			}
 		}
 	}
 	
+	public String getName(){
+		return name;
+	}
 }
