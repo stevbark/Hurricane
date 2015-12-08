@@ -131,7 +131,17 @@ public class EntityPlayer extends Entity
 //		addToList(iv);
 	}
 	
-
+	/*public static void setUsableItem(ItemObject item)
+	{
+		usableitem.io.onUnequip(Core.player); 
+		
+		
+		if(item instanceof potionObject)
+		{
+			// items never have independent bonuses
+			usableitem = new PersonalItem(ItemsAndBonuses.potionitem,item, new NoBonus());
+		}
+	}*/
 	
 	public ItemObject getUsableItem()
 	{

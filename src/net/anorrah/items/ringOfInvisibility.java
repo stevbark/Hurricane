@@ -7,6 +7,8 @@ public class ringOfInvisibility extends otherObject {
 	
 	public ringOfInvisibility(int currentLevel) {
 		super(currentLevel);
+		hasCharges = true;
+charges=3;
 		myBonus.add(new invisibilityBonus(3));
 		super.itemDescription =" Ring of Invisibility:      untargetable for 3 turns.";
 		// TODO Auto-generated constructor stub

@@ -10,6 +10,8 @@ public class castObject extends otherObject {
 	
 	public castObject(int currentLevel) {
 		super(currentLevel);
+		hasCharges = true;
+
 		charges = 4;
 		myBonus.add(new regenerationBonus(restoreATurn, 7));
 

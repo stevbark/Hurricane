@@ -9,6 +9,8 @@ public class bandAidObject extends otherObject {
 	 
 	public bandAidObject(int currentLevel) {
 		super(currentLevel);
+		hasCharges = true;
+
 		charges = 3;
 		myBonus.add(new regenerationBonus(restoreATurn,5));
 
