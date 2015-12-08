@@ -105,7 +105,7 @@ public class EntityPlayer extends Entity
 		armorItem = new PersonalItem(ItemsAndBonuses.armoritem,new ArmorItem(0), new NoBonus());
 		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("", 0), new NoBonus());
 		
-		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
+		rangeditem = new PersonalItem(ItemsAndBonuses.bowitem, new bowAndArrowItem(0), new NoBonus());
 		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
@@ -137,12 +137,14 @@ public class EntityPlayer extends Entity
 			useableItem = usableitem.io;
 			useableItem.onEquip(this);
 		}
-	//	knockback x = new knockback();
-	//	addToList(x);
+//		knockback x = new knockback();
+//		addToList(x);
 	//	bandAidObject regenTest= new bandAidObject(0);
+	//	regenerationBonus x = new regenerationBonus(5, 5);
+	//	addToList(x);
 	//System.out.println("bandaid");
 	//	regenTest.onEquip(user);
-	//	tempHealthBonus b = new tempHealthBonus(4,100);
+	//	tempHealthBonus b = new tempHealthBonus(4,4);
 	//	addToList(b);
 //		fireballBonus z = new fireballBonus();
 //		addToList(z);
@@ -473,10 +475,38 @@ public class EntityPlayer extends Entity
 	
 	public void attack(int targX, int targY)
 	{
+		
 		for(bonus b:bonuses)
-		{
-			b.onAttackPosition(this, targX,targY);
-		}
+			{
+				b.onAttackPosition(this, targX,targY);
+			}
+		
+		
+		
+//		if(meleeEquipped)
+//		{
+//			EnemyEntities target = null;
+//			ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
+//			for(EnemyEntities e:presentEnemies)
+//			{
+//				if(e.getlocationX()==targX&&e.getlocationY()==targX)
+//				{
+//					target = e;
+//				}
+//			}
+//			if(target!=null)
+//			for(bonus b:bonuses)
+//			{
+//				b.onAttack(this, target,new damageObject(0,Type.physical), true);
+//			}
+//		}
+//		else
+//		{
+//			for(bonus b:bonuses)
+//			{
+//				b.onAttackPosition(this, targX,targY);
+//			}
+//		}
 	}
 	
 	public void tick(double delta)

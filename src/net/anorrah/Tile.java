@@ -95,9 +95,10 @@ public class Tile
 	public static int[] cannibal_UP = {1, 0};
 	public static int[] cannibal_LEFT = {2, 0};
 	public static int[] cannibal_RIGHT = {3, 0};
+	public static int[] axis_DOWN = {0, 0};
 	
 	public static int size = 32;
-	public static BufferedImage background, items, characters, solid, cannibal;
+	public static BufferedImage background, items, characters, solid, cannibal, axis;
 	
 	public Tile()
 	{
@@ -108,6 +109,7 @@ public class Tile
 			Tile.items = ImageIO.read(new File("res/images/items.png"));
 			Tile.characters = ImageIO.read(new File("res/images/character_test.png"));
 			Tile.cannibal = ImageIO.read(new File("res/images/cannibal.png"));
+			Tile.axis = ImageIO.read(new File("res/images/axis.png"));
 		}
 		catch(Exception e)
 		{
