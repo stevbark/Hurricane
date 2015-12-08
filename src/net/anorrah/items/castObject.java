@@ -20,7 +20,7 @@ public class castObject extends otherObject {
 	}
 
 	public void onUseOnSelf(Entity user) {
-		new berserkerBoost() = new regenerationBonus(restoreATurn, 7);
+		onlyForRegen = new regenerationBonus(restoreATurn, 7);
 	//	myBonus.add(new regenerationBonus(restoreATurn, 7));
 		super.onUseOnSelf(user);
 
