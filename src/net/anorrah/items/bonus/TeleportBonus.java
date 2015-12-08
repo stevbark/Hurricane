@@ -15,4 +15,12 @@ public class TeleportBonus extends bonus {
 		}
 	}
 	
+	public String description()
+	{
+		return "when the wearer takes damage, the wearer has a 15 percent chance to teleport to a random square within 5 squares of wearer’s current location. This cannot teleport the wearer into or through walls, enemies or other obstacles.";
+			
+	} 
+	 
+
+	
 }

@@ -9,5 +9,11 @@ public class VampiricBonus extends bonus {
 	{
 		user.heal(3);
 	}	
+	
+	public String description()
+	{
+		return "vampiric: hitting enemies heals 3 damage to you";
+		
+	} 
 
 }

@@ -22,5 +22,11 @@ public class venganceBonus extends bonus {
 			
 		}
 	}
+	public String description()
+	{
+		return "if the wearer is successfully hit, the wearer has a 50 percent chance to ignore half the damage and deal half the damage back to the attacker. this effect is applied after damage reduction.";
+			
+	} 
+	 
 
 }

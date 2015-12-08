@@ -15,4 +15,10 @@ public class EnfeeblementBonus extends bonus{
 		
 	}
 	
+	public String description()
+	{
+		return "Feeble: enemies have a 50 percen chance to deal 10 less damage next turn";
+		
+	} 
+	
 }

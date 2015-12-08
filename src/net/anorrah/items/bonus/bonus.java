@@ -109,6 +109,12 @@ public abstract class bonus {
 		
 	}
 	
+	public String description()
+	{
+		return "";
+		
+	}
+	
 	protected void explode(Entity user, bonus effect, int x, int y, int radius)
 	{
 		for(int xradius = x-radius;xradius<=x+radius;xradius++)
