@@ -223,9 +223,10 @@ public abstract class Entity
 			on_death();
 			
 		}
+		System.out.println("enemy at X:" +tX+ " Y: "+tY);
 	}
 
-	public void takeDamage(MeleeWeaponItem damage)
+/*	public void takeDamage(MeleeWeaponItem damage)
 	{
 		health -= damage.damage;
 		if(health <=0)
@@ -250,7 +251,7 @@ public abstract class Entity
 				on_death();
 			}
 		}
-	}
+	}*/
 	
 	public abstract void on_collided(Entity entity);
 

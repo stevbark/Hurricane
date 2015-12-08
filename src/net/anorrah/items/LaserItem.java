@@ -1,6 +1,7 @@
 package net.anorrah.items;
 
 import net.anorrah.items.bonus.fireballBonus;
+import net.anorrah.items.bonus.laserBonus;
 
 public class LaserItem extends RangedWeaponItem{
 
@@ -9,11 +10,13 @@ public class LaserItem extends RangedWeaponItem{
 		hasCharges = true;
 		charges = 7;
 		damage = (1*enchantment)+10;
-	//	myBonus.add(new ());
+		myBonus.add(new laserBonus((int) damage));
 		
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
 	
 	
 }

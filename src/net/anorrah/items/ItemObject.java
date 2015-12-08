@@ -26,7 +26,7 @@ public abstract class ItemObject {
 		enchantment = generateBonus(currentLevel); 	
 		myBonus = new ArrayList<bonus>();
 		possibleBonuses = new ArrayList<bonus>();
-		generateBonus();
+		
 	}
 	
 	public boolean hasCharges()
@@ -104,13 +104,14 @@ public abstract class ItemObject {
 	
 	public Object generateBonus()
 	{
-		 if( ((int) (Math.random()*100)) <20)
+		// if( ((int) (Math.random()*100)) <50)
 		 {
 			 if(possibleBonuses.size()>0)
 			 {
 				 int idx = new Random().nextInt(possibleBonuses.size());
 				 generatedBonus = possibleBonuses.get(idx);
 				 myBonus.add(generatedBonus);
+				 System.out.println("bonus " + generatedBonus.getClass());
 				 
 			 }
 		 }

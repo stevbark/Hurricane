@@ -69,7 +69,7 @@ public abstract class bonus {
 	protected boolean canMove(int i, int j)
 	{
 		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
-		ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
+		
 		if(i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height)
 		{
 			return true;
@@ -78,18 +78,7 @@ public abstract class bonus {
 		{
 			return false;
 		}
-		else 
-		{
-			for(EnemyEntities e:presentEnemies)
-			{
-				if(e.getlocationX()==i&&e.getlocationY()==j)
-				{
-					return false;
-				}
-			}
-		}
-		
-		if(Core.level.solid[i][j].id == Tile.blank)
+		else if(Core.level.solid[i][j].id == Tile.blank)
 		{
 			
 			return true;
@@ -126,8 +115,8 @@ public abstract class bonus {
 		{
 			for(int yradius = y-radius;yradius<=y+radius;yradius++)
 			{
-				
-				System.out.println("explode hit X: " + xradius + " Y: " + yradius);
+				effect.onAttackPosition(user, xradius, yradius);
+				//System.out.println("explode hit X: " + xradius + " Y: " + yradius);
 			}
 		}
 	}

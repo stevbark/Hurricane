@@ -366,6 +366,9 @@ public class Core extends Applet implements Runnable
 
 		g = this.getGraphics();
 		g.drawImage(screen, 0, 0, VIEWPORT_SIZE.width, VIEWPORT_SIZE.height, 0, 0, pixel.width, pixel.height, null);
+//		removethese.clear();
+//		level.getPlayerRoom().cleanup();
+//		level.cleanup();
 		g.dispose();//reset the image each tick
 	}
 	
@@ -380,6 +383,10 @@ public class Core extends Applet implements Runnable
 			//System.out.println("Someone took a turn, " + otherobj.x + " " + otherobj.y);
 		}
 		
+		// cleanup and delete dead
+//		removethese.clear();
+//		level.getPlayerRoom().cleanup();
+//		level.cleanup();
 	}
 	
 	public void run() 
