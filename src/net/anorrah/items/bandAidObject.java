@@ -1,5 +1,6 @@
 package net.anorrah.items;
 
+import net.anorrah.Entity;
 import net.anorrah.items.bonus.regenerationBonus;
 
 public class bandAidObject extends otherObject {
@@ -17,6 +18,12 @@ public class bandAidObject extends otherObject {
 
 	}
 
+	
+	public void onUseOnSelf(Entity user) {
+		myBonus.add(new regenerationBonus(restoreATurn,5));
+		
+	}
+	
 	/*@Override
 	public String description() {
 		// TODO Auto-generated method stub

@@ -47,7 +47,14 @@ public abstract class ItemObject {
 	}
 	
 	public String description(){
-		return itemDescription;
+		if(generatedBonus !=null)
+		{
+			return itemDescription + " " + generatedBonus.description(); 
+		}
+		else
+		{
+			return itemDescription;
+		}
 	}
 	
 	public int generateBonus(int currentLevel) 	

@@ -17,7 +17,11 @@ public class knockback extends bonus {
 			enemy.move(vectorX, vectorY);
 		}
 			
-		
+
 	}
-	
+	public String description()
+	{
+		return "Move melee attackers away from the wearer one space when they attack the wearer. If the attackers would be moved into a wall or another enemy, they are unaffected by the  armor’s power.";
+			
+	} 
 }

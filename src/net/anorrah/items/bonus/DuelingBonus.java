@@ -20,5 +20,11 @@ public class DuelingBonus extends bonus{
 			damage.damage = 0;
 		}
 	}
+	
+	public String description()
+	{
+		return "Wearer can only take damage from enemies directly adjacent to the wearer. This effect does not apply to ongoing damage (fire, poison, etc.) that originated from a source not adjacent to the wearer.";
+			
+	} 
 
 }

@@ -17,8 +17,14 @@ public class fireMeleeBonus extends bonus {
 		int randomSeed = ((int) (Math.random()*100))%4;
 		if(randomSeed == 0)
 		{
-			enemy.addToList(new ImOnFire(5 + (int)(weaponDamage/20),3) );
+			enemy.addToList(new ImOnFire(5 ,3) );
 		}
 	}
+	
+	public String description()
+	{
+		return "Fire: sets enemy on fire dealing 5 damage for 3 turns ";
+		
+	} 
 	
 }
