@@ -16,6 +16,7 @@ public class EntityPlayer extends Entity
 	public int moveSpeed;
 	public static boolean isMoving = false;
 	public boolean isDead = false;
+	public boolean meleeEquipped = true;
 	
 	private static int moveDelta = 0;
 	

@@ -301,10 +301,21 @@ public class Core extends Applet implements Runnable
 		// Primary Weapon 
 		g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
+		if(player.meleeEquipped){
+			g.setColor(Color.WHITE);
+			g.drawString("MELEE: ", weaponOffsetX, stringOffsetY);
+			g.drawRoundRect(weaponOffsetX+47, 0, 33, 32, 5, 5);
+			g.setColor(Color.YELLOW);
+		}
 		
 		// Secondary Weapon
 		g.drawString("RANGED: ", weaponOffsetX+ 117, stringOffsetY);
 		g.drawRoundRect(weaponOffsetX+175, 0, 33, 32, 5, 5);
+		if(!player.meleeEquipped){
+			g.setColor(Color.WHITE);
+			g.drawString("RANGED: ", weaponOffsetX+ 117, stringOffsetY);
+			g.drawRoundRect(weaponOffsetX+175, 0, 33, 32, 5, 5);
+		}
 		
 		g.setColor(Color.red);
 		g.drawString("LEVEL: " + level.num_level , 590, 510);
