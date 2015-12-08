@@ -105,7 +105,7 @@ public class EntityPlayer extends Entity
 		meleeitem = new PersonalItem(ItemsAndBonuses.sworditem,new SwordItem("",0), new NoBonus());
 		
 		rangeditem = new PersonalItem(ItemsAndBonuses.no_rangeitem, new NoItem(0), new NoBonus());
-		usableitem = new PersonalItem(ItemsAndBonuses.no_item, new NoItem(0), new NoBonus());
+		usableitem = new PersonalItem(ItemsAndBonuses.fooditem, new FoodItem(0), new NoBonus());
 		equippedArmor = new ArmorItem(0);
 		this.gk = gk;
 		currentImage = super.id;

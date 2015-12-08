@@ -7,6 +7,7 @@ public class FoodItem extends ItemObject {
 	private int restoreATurn = 10;
 	public FoodItem(int currentLevel) {
 		super(currentLevel);
+		hasCharges = true;
 		charges = 2;
 		myBonus.add(new regenerationBonus(restoreATurn, 10));
 
