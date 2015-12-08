@@ -104,7 +104,7 @@ public abstract class ItemObject {
 	
 	public Object generateBonus()
 	{
-		// if( ((int) (Math.random()*100)) <50)
+		 if( ((int) (Math.random()*100)) <50)
 		 {
 			 if(possibleBonuses.size()>0)
 			 {
