@@ -392,7 +392,7 @@ public class Core extends Applet implements Runnable
 			g.drawString(itemTitleOffset+"RANGED WEAPON:", statsOffsetX, stringOffsetY+120);
 			// name, stats, desc
 			if(ranged != null){
-				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+70, stringOffsetY+120);
+				g.drawString(itemDescOffset+ranged.getName(), statsOffsetX+110, stringOffsetY+120);
 				g.drawString(itemDescOffset+ranged.damage, statsOffsetX, stringOffsetY+140);
 				g.drawString(itemDescOffset+ranged.itemDescription, statsOffsetX, stringOffsetY+160);
 			}
