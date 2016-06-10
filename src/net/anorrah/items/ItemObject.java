@@ -19,7 +19,6 @@ public abstract class ItemObject {
 	protected int charges;
 	protected boolean hasCharges = false;
 	protected bonus onlyForRegen = null;
-	// only for rendering junk
 	protected bonus generatedBonus = null;
 	
 	public ItemObject(int currentLevel)
@@ -35,7 +34,6 @@ public abstract class ItemObject {
 		return hasCharges;
 	}
 	
-	// only for rendering junk
 	public bonus getBonus()
 	{
 		return generatedBonus;
@@ -57,22 +55,17 @@ public abstract class ItemObject {
 		}
 	}
 	
+	// This is to generate random bonuses based on the floor the player is on. 
 	public int generateBonus(int currentLevel) 	
 	{
 		int bonusSeed = ((int) (Math.random()*100))%10;
-		switch(bonusSeed)
-		{
-			default:
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-			case 4:
+		
+			if(bonusSeed >=0 &&bonusSeed <=4)
+			{
 				return currentLevel;
-				
-			case 5:
-			case 6:
-			case 7:
+			}				
+			else if(bonusSeed >=5 &&bonusSeed <=7)
+			{
 				if( ((int) (Math.random()*100))%2 ==0)
 				{
 					return currentLevel +1; 
@@ -88,34 +81,40 @@ public abstract class ItemObject {
 						return 0;
 					}
 				}
+			}
 				
-			case 8:
-			case 9:
+				else if(bonusSeed >=8 &&bonusSeed <=9)
+				{
 				
-				if( ((int) (Math.random()*100))%2 ==0)
-				{
-					return currentLevel +2; 
-				}
-				else
-				{
-					if(currentLevel -2 >0)
-					{	
-						return currentLevel -2;
+					if( ((int) (Math.random()*100))%2 ==0)
+					{
+						return currentLevel +2; 
 					}
 					else
 					{
-						return 0;
+						if(currentLevel -2 >0)
+						{	
+							return currentLevel -2;
+						}
+						else
+						{
+							return 0;
+						}
 					}
 				}
+			
+			return currentLevel;
 		}
 
 			
-	}
+	
 	
 	public Object generateBonus()
 	{
 		 if( ((int) (Math.random()*100)) <50)
 		 {
+			 // Since all items have this function run but some items will have no possible bonuses, 
+			 // this statement will prevent any sort of problems. 
 			 if(possibleBonuses.size()>0)
 			 {
 				 int idx = new Random().nextInt(possibleBonuses.size());
@@ -132,6 +131,7 @@ public abstract class ItemObject {
 	{
 		if(myBonus !=null)
 		{
+			// Items are remembered as a list of bonuses. Once equipped each item will be added to the list of bonuses for the player.
 			for(bonus b:myBonus)
 			{
 				b.onEquipped(user);
@@ -142,6 +142,7 @@ public abstract class ItemObject {
 	
 	public void onUnequip(Entity user)
 	{
+		// Since items are remembered as a list of bonuses removing the item will not change the player without removing the bonuses associated with it.
 		if(myBonus !=null)
 		{
 			for(bonus b:myBonus)
@@ -157,13 +158,10 @@ public abstract class ItemObject {
 		if(myBonus!=null){
 			
 			use();
-			//for(bonus b:myBonus)
 			{	
 				user.addToList(onlyForRegen);
-		//		b.onUseOnSelf(user);				
 			}
-		//	
-			charges--;
+					charges--;
 			if(hasCharges && charges <=0)
 			{
 				assert(Core.player.getUsableItem() == this);

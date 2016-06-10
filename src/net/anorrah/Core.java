@@ -194,11 +194,7 @@ public class Core extends Applet implements Runnable
 		entities.add(player);
 		player.setUp(player);
 		
-		/*ArrayList<EnemyEntities> enemies = level.retrieveEnemies(); 
-		for(int i = 0; i < enemies.size(); i++)
-		{
-			entities.add(enemies.get(i));
-		}*/
+		
 		
 
 	}

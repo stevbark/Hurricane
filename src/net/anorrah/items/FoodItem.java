@@ -16,7 +16,6 @@ public class FoodItem extends ItemObject {
 		super(currentLevel);
 		hasCharges = true;
 		charges = 2;
-		//myBonus.add(new regenerationBonus(restoreATurn, 10));
 
 		name="Food";
 
@@ -27,26 +26,11 @@ public class FoodItem extends ItemObject {
 	protected void use()
 	{
 		
-//		
 	}
 	public void onUseOnSelf(Entity user) {
-//		myBonus= new ArrayList<bonus>() {{
-//				new regenerationBonus(restoreATurn, 10);
-//			   
-//			}};
-	//	myBonus.clear();
-	//	myBonus.add(new regenerationBonus(restoreATurn, 10));
 		onlyForRegen = new regenerationBonus(restoreATurn, 10);
 		super.onUseOnSelf(user);
 	}
 
-/*	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		return "MMmmm Mmm good";
-	}
-=======
-		return null;
-	}*/
+
 }

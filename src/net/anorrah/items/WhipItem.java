@@ -13,13 +13,11 @@ public class WhipItem extends MeleeWeaponItem
 		damage = 8+enchantment;
 		myBonus.add(new MeleeWeaponBonus(damage));
 		myBonus.add(new spearBonus());
-		// TODO Auto-generated constructor stub
 		name="Whip";
 	}
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
 		return super.itemDescription;
 	}
 	

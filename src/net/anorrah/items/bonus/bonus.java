@@ -1,9 +1,6 @@
 package net.anorrah.items.bonus;
 
-import java.util.ArrayList;
-
 import net.anorrah.Core;
-import net.anorrah.EnemyEntities;
 import net.anorrah.Entity;
 import net.anorrah.Tile;
 import net.anorrah.items.damageObject;
@@ -48,13 +45,12 @@ public abstract class bonus {
 		
 	}
 	
-	// used for Melee Attacks since 
+	// used for Melee Attacks since we know the attacks cannot miss. 
 	public void onAttack(Entity user, Entity enemy,damageObject damage, boolean onHit)
 	{
 		
 	}
-	// used for Ranged Attacks since ranged attacks can be blocked by obstacles.
-	
+	// used for Ranged Attacks since ranged attacks can be blocked by obstacles or not hit any target.
 	public void onAttackPosition(Entity user,int targetX, int targetY)
 	{
 		
@@ -68,7 +64,6 @@ public abstract class bonus {
 	
 	protected boolean canMove(int i, int j)
 	{
-		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		
 		if(i < 0 || j < 0 || i >= Core.level.width || j >= Core.level.height)
 		{
@@ -122,7 +117,6 @@ public abstract class bonus {
 			for(int yradius = y-radius;yradius<=y+radius;yradius++)
 			{
 				effect.onAttackPosition(user, xradius, yradius);
-				//System.out.println("explode hit X: " + xradius + " Y: " + yradius);
 			}
 		}
 	}

@@ -22,6 +22,7 @@ import net.anorrah.items.potionObject;
 import net.anorrah.items.ringOfInvisibility;
 import net.anorrah.items.runeOfTeleportation;
 
+// Displays the item on the screen, does not contain the item logic
 public class Item extends Rectangle 
 {
 	public int[] id = {-1,-1};

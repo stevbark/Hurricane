@@ -26,10 +26,7 @@ private int weaponDamage;
 		ySpeed=(int) Math.signum(ySpeed);
 		System.out.println("ranged xSpeed: " +xSpeed + " ySpeed: " + ySpeed );
 		
-//		for(EnemyEntities cur:m)
-//		{
-//			System.out.println("enemy is " + cur);
-//		}
+
 		
 		while(!outOfBounds(x,y) )
 		{

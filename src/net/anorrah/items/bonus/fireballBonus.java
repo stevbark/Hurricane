@@ -1,8 +1,6 @@
 package net.anorrah.items.bonus;
 
 import net.anorrah.Entity;
-import net.anorrah.items.damageObject;
-import net.anorrah.items.damageObject.Type;
 
 public class fireballBonus extends rangedBonus {
 	

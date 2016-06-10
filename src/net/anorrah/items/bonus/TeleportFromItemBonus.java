@@ -5,6 +5,7 @@ import net.anorrah.Entity;
 import net.anorrah.items.damageObject;
 import net.anorrah.items.damageObject.Type;
 
+
 public class TeleportFromItemBonus  extends bonus {
 	
 	public void onUseOnSelf(Entity user) 

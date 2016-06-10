@@ -12,7 +12,6 @@ public class bandAidObject extends otherObject {
 		hasCharges = true;
 
 		charges = 3;
-	//	myBonus.add(new regenerationBonus(restoreATurn,5));
 
 		name = "Band-Aid";
 
@@ -23,20 +22,14 @@ public class bandAidObject extends otherObject {
 	
 	protected void use()
 	{
-//		myBonus.add(new regenerationBonus(restoreATurn,5));
 	}
 	
 	public void onUseOnSelf(Entity user) {
 		onlyForRegen = new regenerationBonus(restoreATurn,5);
-	//	myBonus.add(new regenerationBonus(restoreATurn,5));
 		super.onUseOnSelf(user);
 
 	}
 	
-	/*@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return super.itemDescription;
-	}*/
+	
 
 }

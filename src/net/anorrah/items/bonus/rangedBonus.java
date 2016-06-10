@@ -18,10 +18,7 @@ public abstract class rangedBonus extends bonus {
 		ySpeed=(int) Math.signum(ySpeed);
 		System.out.println("ranged xSpeed: " +xSpeed + " ySpeed: " + ySpeed );
 		
-//		for(EnemyEntities cur:m)
-//		{
-//			System.out.println("enemy is " + cur);
-//		}
+
 		
 		while(!outOfBounds(x,y) &&canMove(x+xSpeed,y+ySpeed)&& (x!=targetX||y!=targetY))
 		{
@@ -43,7 +40,7 @@ public abstract class rangedBonus extends bonus {
 			
 		}
 		
-		System.out.println("shot from X: " + user.getlocationX() + " Y: " + user.getlocationY());
+		//System.out.println("shot from X: " + user.getlocationX() + " Y: " + user.getlocationY());
 		
 		
 		

@@ -13,7 +13,6 @@ public class castObject extends otherObject {
 		hasCharges = true;
 
 		charges = 4;
-		//myBonus.add(new regenerationBonus(restoreATurn, 7));
 
 		name="Cast";
 		super.itemDescription ="heals 10 hp per second for  7 secondsn";
@@ -21,22 +20,12 @@ public class castObject extends otherObject {
 
 	public void onUseOnSelf(Entity user) {
 		onlyForRegen = new regenerationBonus(restoreATurn, 7);
-	//	myBonus.add(new regenerationBonus(restoreATurn, 7));
 		super.onUseOnSelf(user);
 
 	}
 	protected void use()
 	{
-	//	myBonus.add(new regenerationBonus(restoreATurn, 7));
 	}
-//	public void onUseOnSelf(Entity user) {
-//		myBonus.add(new regenerationBonus(restoreATurn, 7));
-//		
-//	}
-/*	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+
 
 }

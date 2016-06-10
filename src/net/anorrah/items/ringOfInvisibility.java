@@ -13,19 +13,13 @@ public class ringOfInvisibility extends otherObject {
 charges=3;
 		myBonus.add(new invisibilityBonus(3));
 		super.itemDescription =" Ring of Invisibility:      untargetable for 3 turns.";
-		// TODO Auto-generated constructor stub
 		name="Ring of Invisibility";
 	}
 
 	public void onUseOnSelf(Entity user) {
 		onlyForRegen = new invisibilityBonus(3);
-//		myBonus.add(new invisibilityBonus(3));
 		super.onUseOnSelf(user);
 	}
-	/*@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+	
 
 }

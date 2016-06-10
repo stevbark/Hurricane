@@ -70,7 +70,6 @@ public abstract class Entity
 		}
 		bad.takeDamage(damage);
 		
-		//equippedWeapon.attack();
 	} 
 	
 	public boolean amIInvisible()
@@ -148,14 +147,7 @@ public abstract class Entity
 	
 	public void move(int i, int j)
 	{
-//		if(canMove(i,j))
-//		{
-//			tX =i;
-//			tY=j;
-//			Rx = tX*32;
-//			Ry = tY*32;
-//			System.out.println("enemy moved to x:" + tX + " y:" +tY);
-//		}
+		
 	}
 	
 	public void setImage(int[] id)
@@ -223,35 +215,10 @@ public abstract class Entity
 			on_death();
 			
 		}
-		System.out.println("enemy at X:" +tX+ " Y: "+tY);
+		
 	}
 
-/*	public void takeDamage(MeleeWeaponItem damage)
-	{
-		health -= damage.damage;
-		if(health <=0)
-		{
-			health = 0;
-			
-			if(health<=0)
-			{
-				on_death();
-			}
-		}
-	}
-	public void takeDamage(RangedWeaponItem damage)
-	{
-		health -= damage.damage;
-		if(health <=0)
-		{
-			health = 0;
-			
-			if(health<=0)
-			{
-				on_death();
-			}
-		}
-	}*/
+
 	
 	public abstract void on_collided(Entity entity);
 

@@ -137,21 +137,7 @@ public class EntityPlayer extends Entity
 			useableItem = usableitem.io;
 			useableItem.onEquip(this);
 		}
-//		knockback x = new knockback();
-//		addToList(x);
-	//	bandAidObject regenTest= new bandAidObject(0);
-	//	regenerationBonus x = new regenerationBonus(5, 5);
-	//	addToList(x);
-	//System.out.println("bandaid");
-	//	regenTest.onEquip(user);
-	//	tempHealthBonus b = new tempHealthBonus(4,4);
-	//	addToList(b);
-//		fireballBonus z = new fireballBonus();
-//		addToList(z);
-//		GABonus ga = new GABonus();
-//		addToList(ga);
-//		invisibilityBonus iv = new invisibilityBonus(3);
-//		addToList(iv);
+
 	}
 	
 	public static void setArmor(ArmorItem item)
@@ -221,16 +207,7 @@ public class EntityPlayer extends Entity
 		useableItem = usableitem.io;
 	}
 	
-	// removes damage taken. For testing only
-//	public void onHit(Entity enemy, damageObject damage)
-//	{
-//		for(bonus b:bonuses)
-//		{
-//			b.onBeenHit(this,enemy, damage);
-//		}
-//	//	takeDamage(damage);
-//	//	equippedArmor.onBeenHit(enemy,damage);
-//	}
+	
 	public static void setMeleeItem(MeleeWeaponItem item)
 	{
 		meleeitem.io.onUnequip(Core.player);
@@ -303,17 +280,13 @@ public class EntityPlayer extends Entity
 	
 	public boolean canMove(int i, int j)
 	{
-		//System.out.println("\nCurrently at:\t" + tX + " " + tY);
 		
 		if(i < 0 || j < 0 || i >= max_Xdistance || j >= max_Ydistance)
 			return true;
 		else if(gk.level.item[i][j].id != Tile.blank)
 		{
 			gk.level.item[i][j].id = Tile.chest_open;
-			//meleeitem.io = (MeleeWeaponItem) gk.level.item[i][j].generateItem(Level.num_level);
 			Core.item(gk.level.item[i][j].generateItem(Level.num_level),gk.level.item[i][j].itemDescription());
-			//gk.level.item[i][j].id = Tile.blank;
-			//Core.itempicked = false; 
 			return false;
 		}
 		else if((gk.level.solid[i][j].id == Tile.blank) && (Core.level.canMove(i,j)))
@@ -464,21 +437,7 @@ public class EntityPlayer extends Entity
 	    
 	}
 	
-//	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
-//			//How do we target a specific enemy?
-//			EnemyEntities bad)
-//	{
-//		
-//		System.out.println("smacked!" + tX+" " +tY);
-//		damageObject damage = new damageObject(weapon.damage, Type.physical);
-//		for(bonus b:bonuses)
-//		{
-//			b.onAttack(this,bad, damage, true);
-//		}
-//		bad.takeDamage(damage);
-//		
-//		//equippedWeapon.attack();
-//	}
+
 	
 	public void onUseOnSelf()
 	{
@@ -498,33 +457,6 @@ public class EntityPlayer extends Entity
 			{
 				b.onAttackPosition(this, targX,targY);
 			}
-		
-		
-		
-//		if(meleeEquipped)
-//		{
-//			EnemyEntities target = null;
-//			ArrayList<EnemyEntities> presentEnemies = Core.level.enemies;
-//			for(EnemyEntities e:presentEnemies)
-//			{
-//				if(e.getlocationX()==targX&&e.getlocationY()==targX)
-//				{
-//					target = e;
-//				}
-//			}
-//			if(target!=null)
-//			for(bonus b:bonuses)
-//			{
-//				b.onAttack(this, target,new damageObject(0,Type.physical), true);
-//			}
-//		}
-//		else
-//		{
-//			for(bonus b:bonuses)
-//			{
-//				b.onAttackPosition(this, targX,targY);
-//			}
-//		}
 	}
 	
 	public void tick(double delta)
@@ -541,19 +473,7 @@ public class EntityPlayer extends Entity
 		rangeditem.render(g);
 		usableitem.render(g);
 		g.drawImage(image, Rx, Ry,null);
-		/*if(down)
-		{
-			//render the animation state
-			g.drawImage(Tile.characters, this.x , 
-					this.y, 
-					this.x + width, 
-					this.y + height, 
-					pIMG_DOWN[anim_frame][0] * Tile.size, 
-					pIMG_DOWN[anim_frame][1] * Tile.size, 
-					pIMG_DOWN[anim_frame][0] * Tile.size + Tile.size, 
-					pIMG_DOWN[anim_frame][1] * Tile.size + Tile.size, null);
-		}
-		*/
+		
 	}
 
 	public void on_collided(Entity entity) 
@@ -589,58 +509,5 @@ public class EntityPlayer extends Entity
 		tY = j;
 	}
 	
-//	public void onHit(Entity enemy, damageObject damage)
-//	{
-//		for(bonus b:bonuses)
-//		{
-//			b.onBeenHit(this,enemy, damage);
-//		}
-//		takeDamage(damage);
-//	//	equippedArmor.onBeenHit(enemy,damage);
-//	}
-	
 
-	
-	// this was moved to the Entity baseclass.  
-//	public void heal(int heal)
-//	{
-//		if(health + heal >maxHealth)
-//		{
-//			health = maxHealth;
-//		}
-//		else
-//		{
-//			health+=heal;
-//		}
-//	}
-	
-//	public void takeTurn()
-//	{
-//		for(bonus b: bonuses)
-//		{
-//			b.doOnTurn();
-//		}
-//		cleanup();
-//	}
-//
-//	public void addToList(bonus toAdd)
-//	{
-//		System.out.println(toAdd.isTemp);
-//		bonuses.add(toAdd);
-//	}
-//	
-//	// we cant remove directly from the list because we may be iteration through it and we will get an exception.
-//	public void removeFromList(bonus toRemove)
-//	{
-//		toBeRemovedBonuses.add(toRemove);
-//	}
-//	
-//	private void cleanup()
-//	{
-//		for(bonus b: toBeRemovedBonuses)
-//		{
-//			bonuses.remove(b);
-//		}
-//		toBeRemovedBonuses.clear();
-//	}
 }

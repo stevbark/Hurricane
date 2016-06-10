@@ -21,7 +21,6 @@ public class AxeItem extends MeleeWeaponItem {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
 		return super.itemDescription;
 	}
 
