@@ -57,9 +57,7 @@ public abstract class Entity
 		collider = new Rectangle((int)x, (int)y, width,height);
 	}
 	
-	public void attack(//int xloc, int yloc) I think we should attack a space, not an enemy. 
-			//How do we target a specific enemy?
-			EnemyEntities bad)
+	public void attack(EnemyEntities bad)
 	{
 		
 		System.out.println("smacked!" + tX+" " +tY);

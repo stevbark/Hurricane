@@ -42,7 +42,6 @@ public class EntityPlayer extends Entity
 	public static PersonalItem rangeditem;
 	public static PersonalItem armorItem;
 	
-	//public MeleeWeaponItem weapon = new SwordItem("rat-stabber", 0);
 	public MeleeWeaponItem equippedWeapon;
 	public RangedWeaponItem equippedRanged;
 	
@@ -51,8 +50,6 @@ public class EntityPlayer extends Entity
 	
 	public static int facing = 4;//default is facing downward
 	
-//	private ArrayList<bonus> bonuses = new ArrayList<bonus>();
-//	private ArrayList<bonus> toBeRemovedBonuses = new ArrayList<bonus>();
 	
 	private static class PersonalItem
 	{
@@ -111,7 +108,6 @@ public class EntityPlayer extends Entity
 		this.gk = gk;
 		currentImage = super.id;
 		
-		//meleeitem.itemObject = new SwordItem("",Level.num_level);
 	}
 	
 
